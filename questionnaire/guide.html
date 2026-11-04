@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Что обычно автоматизируют — 12 отраслей и 8 групп процессов</title>
+<meta name="description" content="Простым языком: в каких отраслях чаще всего автоматизируют процессы, с каких 8 групп задач начинают, как понять, что пора, и что автоматизировать не стоит.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0a0c14">
+<link rel="canonical" href="https://drobik832-sudo.github.io/Ferma/guide.html">
+<link rel="alternate" hreflang="ru" href="https://drobik832-sudo.github.io/Ferma/guide.html">
+<link rel="alternate" hreflang="en" href="https://drobik832-sudo.github.io/Ferma/guide-en.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Опросник боли — автоматизация бизнес-процессов">
+<meta property="og:url" content="https://drobik832-sudo.github.io/Ferma/guide.html">
+<meta property="og:title" content="Что обычно автоматизируют — 12 отраслей и 8 групп процессов">
+<meta property="og:description" content="В каких отраслях чаще всего автоматизируют процессы, с чего начинают и как понять, что пора. Простым языком, без жаргона.">
+<meta property="og:image" content="https://drobik832-sudo.github.io/Ferma/og-guide.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Что обычно автоматизируют — 12 отраслей и 8 групп процессов">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Что обычно автоматизируют — 12 отраслей и 8 групп процессов">
+<meta name="twitter:description" content="В каких отраслях чаще всего автоматизируют процессы, с чего начинают и как понять, что пора.">
+<meta name="twitter:image" content="https://drobik832-sudo.github.io/Ferma/og-guide.png">
+<meta name="twitter:image:alt" content="Что обычно автоматизируют — 12 отраслей и 8 групп процессов">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Что обычно автоматизируют — 12 отраслей и 8 групп процессов",
+  "description": "В каких отраслях чаще всего автоматизируют процессы, с каких 8 групп задач начинают, как понять, что пора, и что автоматизировать не стоит.",
+  "inLanguage": "ru-RU",
+  "url": "https://drobik832-sudo.github.io/Ferma/guide.html",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Опросник боли — автоматизация бизнес-процессов",
+    "url": "https://drobik832-sudo.github.io/Ferma/"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Опросник боли", "item": "https://drobik832-sudo.github.io/Ferma/" },
+    { "@type": "ListItem", "position": 2, "name": "Что обычно автоматизируют", "item": "https://drobik832-sudo.github.io/Ferma/guide.html" }
+  ]
+}
+</script>
+<style>
+  :root{
+    --bg:#0a0c14;
+    --card:rgba(18,25,42,0.75);
+    --text:#e8eef7;
+    --muted:#94a3b8;
+    --accent:#38bdf8;
+    --accent-dark:#0ea5e9;
+    --border:rgba(30,41,59,0.6);
+    --radius:14px;
+    --shadow:0 10px 30px -10px rgba(0,0,0,0.6);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+    background:var(--bg); color:var(--text);
+    line-height:1.5; min-height:100vh;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .container{max-width:760px;margin:0 auto;padding:24px 16px 80px}
+  header{margin-bottom:8px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent)}
+  h1{font-size:1.45rem;font-weight:700;letter-spacing:-0.02em}
+  .sub{color:var(--muted);font-size:0.9rem;margin-top:4px}
+  .lang{position:absolute;top:20px;right:16px}
+  .lang a{display:inline-flex;padding:6px 12px;border:1px solid var(--border);border-radius:999px;font-size:0.8rem;font-weight:700;color:var(--muted)}
+  .lang a:hover{border-color:#334155;color:var(--text);text-decoration:none}
+  .lang .cur{color:var(--text);border-color:var(--accent)}
+  h2{font-size:1.1rem;font-weight:700;margin:34px 0 6px;display:flex;align-items:center;gap:8px}
+  .section-desc{color:var(--muted);font-size:0.9rem;margin-bottom:16px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow);overflow-wrap:anywhere}
+  .card:hover{border-color:#334155}
+  .card h3{font-size:0.95rem;margin-bottom:8px;color:var(--accent)}
+  .card p{color:var(--muted);font-size:0.92rem;margin-bottom:8px}
+  .card ul{margin:0 0 4px 18px;color:var(--muted);font-size:0.92rem}
+  .card li{margin-bottom:4px}
+  .card li b{color:var(--text);font-weight:600}
+  details.card{padding:0;overflow:hidden}
+  details.card summary{
+    list-style:none;cursor:pointer;padding:16px 20px;display:flex;align-items:baseline;gap:10px;
+    font-size:0.95rem;font-weight:600;color:var(--text);
+  }
+  details.card summary::-webkit-details-marker{display:none}
+  details.card summary::after{content:'+';margin-left:auto;color:var(--accent);font-size:1.2rem;font-weight:400;flex-shrink:0}
+  details.card[open] summary::after{content:'–'}
+  details.card summary:hover{background:rgba(23,33,56,0.6)}
+  details.card .card-body{padding:0 20px 18px;border-top:1px solid var(--border)}
+  .num{width:22px;height:22px;border-radius:50%;background:var(--card);border:1px solid var(--border);color:var(--accent);font-weight:800;font-size:0.85rem;display:inline-grid;place-items:center;flex-shrink:0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:560px){.grid2{grid-template-columns:1fr}}
+  .cta{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    background:linear-gradient(135deg, rgba(56,189,248,0.14), rgba(14,165,233,0.06));
+    border:1px solid rgba(56,189,248,0.35);border-radius:var(--radius);
+    padding:18px 20px;margin:18px 0;box-shadow:var(--shadow);
+  }
+  .cta .cta-text{font-size:0.95rem;font-weight:600}
+  .cta .cta-sub{color:var(--muted);font-size:0.82rem;font-weight:400;margin-top:2px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:none;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all .2s;background:var(--accent);color:#01151c;box-shadow:0 0 16px rgba(56,191,248,0.35);white-space:nowrap}
+  .btn:hover{background:#7dd3fc;text-decoration:none;transform:translateY(-1px)}
+  .steps{counter-reset:step;list-style:none;margin:0;padding:0}
+  .steps li{
+    counter-increment:step;position:relative;padding:0 0 16px 44px;color:var(--muted);font-size:0.92rem;
+  }
+  .steps li:last-child{padding-bottom:2px}
+  .steps li::before{
+    content:counter(step);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;
+    background:var(--card);border:1px solid var(--border);color:var(--accent);
+    font-weight:800;font-size:0.85rem;display:grid;place-items:center;
+  }
+  .steps li b{color:var(--text);font-weight:600}
+  footer{margin-top:30px;color:var(--muted);font-size:0.8rem;text-align:center;padding-bottom:20px}
+  /* ФОН */
+  .bg-layer{position:fixed;inset:0;z-index:-1;background:#0a0c14;
+    background-image:radial-gradient(circle at 15% 20%, rgba(56,191,248,0.08), transparent 40%),
+                     radial-gradient(circle at 85% 80%, rgba(14,165,233,0.06), transparent 40%);}
+  .bg-grid{position:fixed;inset:0;z-index:-1;
+    background-image:linear-gradient(rgba(56,191,248,0.04) 1px, transparent 1px),
+                     linear-gradient(90deg,rgba(56,191,248,0.04) 1px, transparent 1px);
+    background-size:32px 32px;
+    mask-image:radial-gradient(circle at center, black 40%, transparent 85%);opacity:0.6;}
+</style>
+</head>
+<body>
+  <div class="bg-layer"></div>
+  <div class="bg-grid"></div>
+<div class="container">
+  <header>
+    <div class="lang"><b>RU</b> · <a href="guide-en.html" hreflang="en">EN</a></div>
+    <div class="brand"><div class="dot"></div><div>
+      <h1>Что обычно автоматизируют</h1>
+      <div class="sub">12 отраслей, 8 групп процессов и признаки, по которым понятно, что пора. Простым языком.</div>
+    </div></div>
+  </header>
+
+  <div class="cta">
+    <div>
+      <div class="cta-text">Не уверены, про вашу задачу ли речь?</div>
+      <div class="cta-sub">Пройдите короткий опросник — в конце получите карточку проблемы с оценкой.</div>
+    </div>
+    <a class="btn" href="./">Пройти опросник боли →</a>
+  </div>
+
+  <h2><span class="num">1</span><span>Кому помогает автоматизация</span></h2>
+  <div class="section-desc">Автоматизируют не «big business» — а любая компания, где одна и та же задача делается руками снова и снова. Вот 12 отраслей, где это чаще всего приносит быстрый эффект.</div>
+
+  <details class="card">
+    <summary>Стоматологии и клиники</summary>
+    <div class="card-body">
+      <ul>
+        <li><b>Запись и напоминания:</b> пациент записался — сам получил подтверждение и напоминание за день и за час.</li>
+        <li><b>Анкеты и согласия:</b> новый пациент заполняет анкету один раз, данные сами попадают в карту.</li>
+        <li><b>Работа с отзывами и напоминаниями о приёме</b> — чтобы кресло не простаивало.</li>
+      </ul>
+    </div>
+  </details>
+  <details class="card">
+    <summary>Автосервисы и шиномонтаж</summary>
+    <div class="card-body">
+      <ul>
+        <li><b>Запись на работы</b> с выбором времени и мастера — без звонков «когда вам удобно».</li>
+        <li><b>Заказ запчастей</b> по VIN/госномеру с уведомлением, когда пришли.</li>
+        <li><b>Уведомление о готовности</b> и история машины — клиент видит, что уже делали.</li>
+      </ul>
+    </div>
+  </details>
+  <details class="card">
+    <summary>Ремонт и отделка</summary>
+    <div class="card-body">
+      <ul>
+        <li><b>Заявка → замер → смета → договор</b> в одной цепочке, без потери клиента между этапами.</li>
+        <li><b>Фотоотчёты по объекту</b> уходят заказчику автоматически по этапам работ.</li>
+        <li><b>Контроль сроков и материалов</b> — прораб видит, что завтра заканчивается плитка.</li>
+      </ul>
+    </div>
+  </details>
+  <details class="card">
+    <summary>Строительные компании</summary>
+    <div class="card-body">
+      <ul>
+        <li><b>Заявки на объект</b> от прорабов: фото, объёмы, материалы — сразу в учёт.</li>
+        <li><b>Акты и закрывающие документы</b> формируются по шаблону, а не «в воскресенье вечером».</li>
+        <li><b>Отчётность по объектам</b> для руководителя собирается сама.</li>
+      </ul>
+    </div>
+  </details>
+  <details class="card">
+    <summary>Производство</summary>
+    <div class="card-body">
+      <ul>
+        <li><b>Заявки на ремонт оборудования</b> с приоритетом — станок не простаивает лишний день.</li>
+        <li><b>Учёт брака и списаний</b> по сменам, без бумажных журналов.</li>
+        <li><b>Отчёт по смене</b>: сколько сделали, сколько в брак, что заказать — одной кнопкой.</li>
+      </ul>
+    </div>
+  </details>
+  <details class="card">
+    <summary>Оптовая торговля и дистрибуция</summary>
+    <div class="card-body">
+      <ul>
+        <li><b>Заказы клиентов</b> принимаются через форму или бота, а не «напишите в вотсап».</li>
+        <li><b>Счета и документы</b> формируются по заказу автоматически.</li>
+        <li><b>Дебиторка:</b> система сама напоминает, кто просрочил оплату.</li>
+      </ul>
+    </div>
+  </details>
+  <details class="card">
+    <summary>Ритейл и торговые сети</summary>
+    <div class="card-body">
+      <ul>
+        <li><b>Остатки по магазинам</b> в одном окне — видно, что заканчивается.</li>
+        <li><b>Перемещение товара между точками</b> по заявке, а не по звонку.</li>
+        <li><b>Программа лояльности</b>: баллы начисляются и списываются сами.</li>
+      </ul>
+    </div>
+  </details>
+  <details class="card">
+    <summary>Логистика и грузоперевозки</summary>
+    <div class="card-body">
+      <ul>
+        <li><b>Заявка на перевозку → назначение машины</b> без получасового созвона диспетчеров.</li>
+        <li><b>Трекинг груза</b>: клиент сам видит, где машина.</li>
+        <li><b>Закрывающие документы</b> по рейсу формируются при доставке.</li>
+      </ul>
+    </div>
+  </details>
+  <details class="card">
+    <summary>Кафе, рестораны, доставка еды</summary>
+    <div class="card-body">
+      <ul>
+        <li><b>Заказы поставщикам</b> считаются сами по остаткам и прогнозу продаж.</li>
+        <li><b>Техкарты и списания</b> — себестоимость блюда видна сразу, не «в конце месяца».</li>
+        <li><b>Отчёт по смене</b>: выручка, списания, остатки — в одно сообщение утром.</li>
+      </ul>
+    </div>
+  </details>
+  <details class="card">
+    <summary>Услуги, агентства, студии</summary>
+    <div class="card-body">
+      <ul>
+        <li><b>Бриф → КП → договор → счёт</b> по одному клиенту, ничего не теряется.</li>
+        <li><b>Задачи по проекту</b> с дедлайнами уходят исполнителям сами.</li>
+        <li><b>Отчёты по проектам</b>: сколько часов ушло, сколько оплачено.</li>
+      </ul>
+    </div>
+  </details>
+  <details class="card">
+    <summary>Обучение, курсы, секции</summary>
+    <div class="card-body">
+      <ul>
+        <li><b>Заявка на курс → оплата → доступ к материалам</b> без участия администратора.</li>
+        <li><b>Расписание и напоминания</b> ученикам и тренерам.</li>
+        <li><b>ДЗ и прогресс</b>: ученик видит свои результаты, родитель — квитанции.</li>
+      </ul>
+    </div>
+  </details>
+  <details class="card">
+    <summary>Недвижимость и управляющие компании</summary>
+    <div class="card-body">
+      <ul>
+        <li><b>Заявки жильцов</b> («течёт кран») с фото, статусом и уведомлением о выполнении.</li>
+        <li><b>Квитанции и начисления</b> — рассылаются и принимают оплату автоматически.</li>
+        <li><b>Договоры с подрядчиками и акты</b> по объектам в одном месте.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2><span class="num">2</span><span>С чего начинают — 8 групп процессов</span></h2>
+  <div class="section-desc">Почти в любой компании автоматизацию начинают с одной из этих восьми групп. Найдите свою — дальше будет понятно, с чего конкретно начать.</div>
+
+  <div class="card">
+    <h3>1. Лиды и заявки</h3>
+    <p>Заявки с сайта, мессенджеров и почты попадают в одну систему, менеджер сразу видит, кому перезвонить. Начинают с автоответа и переноса заявки в CRM.</p>
+  </div>
+  <div class="card">
+    <h3>2. Клиентская поддержка</h3>
+    <p>Однотипные вопросы клиентов отвечает бот или база знаний, первая линия не тонет в очереди. Начинают с FAQ и статусов заказов.</p>
+  </div>
+  <div class="card">
+    <h3>3. Рутина и документы</h3>
+    <p>Документы, счета и отчёты собираются сами из данных, а не набиваются руками. Начинают с одного документа, который делают чаще всего.</p>
+  </div>
+  <div class="card">
+    <h3>4. Знания и обучение сотрудников</h3>
+    <p>Регламенты и инструкции лежат в одном месте, новичок не ждёт, пока «старожил освободится». Начинают с фиксации того, что уже знают лучшие.</p>
+  </div>
+  <div class="card">
+    <h3>5. Склад и закупки</h3>
+    <p>Остатки видны онлайн, дефицит заметен заранее, заказ поставщику уходит сам. Начинают с остатков и автозаказа по порогу.</p>
+  </div>
+  <div class="card">
+    <h3>6. Маркетинг и продажи</h3>
+    <p>Видно, сколько стоит заявка в каждом канале, каталог и прайс обновляются сами. Начинают с аналитики одного канала.</p>
+  </div>
+  <div class="card">
+    <h3>7. Старые программы</h3>
+    <p>Рядом со старой системой появляются новые модули и единый экран данных, не дожидаясь полной замены. Начинают с одного моста между системами.</p>
+  </div>
+  <div class="card">
+    <h3>8. Управление и цифры</h3>
+    <p>Руководитель видит ключевые цифры онлайн, а не узнаёт их на планёрке раз в неделю. Начинают с одного дашборда по главному показателю.</p>
+  </div>
+
+  <h2><span class="num">3</span><span>Как понять, что пора</span></h2>
+  <div class="section-desc">Не нужна «цифровая зрелость». Есть пять простых признаков — если совпало хотя бы два, автоматизация окупится быстро.</div>
+  <div class="card">
+    <ul>
+      <li>Одну и ту же задачу делают <b>руками больше пяти раз в день</b>, и каждый раз одинаково.</li>
+      <li>Ошибки происходят, когда человек <b>устал или спешит</b> — и потом приходится переделывать.</li>
+      <li>Клиент или коллега <b>ждёт ответа дольше, чем мог бы</b>.</li>
+      <li>Хотите посчитать, <b>«во сколько нам обходится эта рутина»</b>, — а цифр под рукой нет.</li>
+      <li>Когда уходит сотрудник, <b>вместе с ним уходят и знания</b> о том, как всё устроено.</li>
+    </ul>
+  </div>
+
+  <h2><span class="num">4</span><span>Что не стоит автоматизировать</span></h2>
+  <div class="section-desc">Автоматизация усиливает процесс — и хороший, и плохой. Поэтому сначала убедитесь, что процесс вообще стоит трогать.</div>
+  <div class="card">
+    <ul>
+      <li>То, что делается <b>раз в год</b> — настройка обойдётся дороже, чем ручная работа.</li>
+      <li>Решения, где важны <b>договорённости и вкус живых людей</b>.</li>
+      <li>Процессы, которые <b>каждый месяц меняются</b> — сначала устаканьте, потом автоматизируйте.</li>
+      <li>Мелочи по <b>10 минут в день</b> — вы потратите на них автоматизацию больше времени.</li>
+      <li>Задачи, где <b>нет доступа к данным</b> — сначала договоритесь о доступе, потом о роботе.</li>
+    </ul>
+  </div>
+
+  <h2><span class="num">5</span><span>Практический приоритет</span></h2>
+  <div class="section-desc">Порядок, который работает почти всегда:</div>
+  <div class="card">
+    <ol class="steps">
+      <li><b>Выберите одну задачу</b>, которая отнимает больше всего времени прямо сейчас.</li>
+      <li><b>Посчитайте масштаб:</b> сколько часов в месяц на неё уходит и сколько стоят ошибки.</li>
+      <li><b>Проверьте доступ к данным:</b> где лежат исходные цифры и кто даст к ним доступ.</li>
+      <li><b>Сделайте самый простой вариант</b>, который закрывает 80% рутины, — не идеальную систему.</li>
+      <li><b>Замерьте результат через 2–4 недели</b> и решите, что автоматизировать дальше.</li>
+    </ol>
+  </div>
+
+  <div class="cta">
+    <div>
+      <div class="cta-text">Готовы посмотреть на свою задачу?</div>
+      <div class="cta-sub">Опросник займёт несколько минут — в конце будет карточка проблемы с оценкой.</div>
+    </div>
+    <a class="btn" href="./">Пройти опросник боли →</a>
+  </div>
+</div>
+<footer>Что обычно автоматизируют · автоматизация бизнес-процессов</footer>
+</body>
+</html>

@@ -1,0 +1,2944 @@
+<!doctype html>
+<!-- deploy trigger -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Опросник боли — автоматизация бизнес-процессов</title>
+<meta name="description" content="Опишите одну задачу, которая отнимает время: опросник из 6 шагов, сигналы боли и итоговая карточка проблемы с оценкой.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0a0c14">
+<link rel="canonical" href="https://drobik832-sudo.github.io/Ferma/">
+<link rel="alternate" hreflang="ru" href="https://drobik832-sudo.github.io/Ferma/">
+<link rel="alternate" hreflang="en" href="https://drobik832-sudo.github.io/Ferma/index-en.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Опросник боли — автоматизация бизнес-процессов">
+<meta property="og:url" content="https://drobik832-sudo.github.io/Ferma/">
+<meta property="og:title" content="Опросник боли — автоматизация бизнес-процессов">
+<meta property="og:description" content="Опишите одну задачу, которая отнимает время: 6 шагов, сигналы боли и карточка проблемы с оценкой.">
+<meta property="og:image" content="https://drobik832-sudo.github.io/Ferma/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Опросник боли — автоматизация бизнес-процессов">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Опросник боли — автоматизация бизнес-процессов">
+<meta name="twitter:description" content="Опишите одну задачу, которая отнимает время: 6 шагов, сигналы боли и карточка проблемы с оценкой.">
+<meta name="twitter:image" content="https://drobik832-sudo.github.io/Ferma/og-cover.png">
+<meta name="twitter:image:alt" content="Опросник боли — автоматизация бизнес-процессов">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Опросник боли — автоматизация бизнес-процессов",
+  "description": "Опишите одну задачу, которая отнимает время: опросник из 6 шагов, сигналы боли и итоговая карточка проблемы с оценкой.",
+  "url": "https://drobik832-sudo.github.io/Ferma/",
+  "inLanguage": "ru-RU",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "featureList": [
+    "Пошаговый опросник из 6 шагов",
+    "12 сигналов боли и готовности",
+    "Автосохранение черновика в браузере",
+    "Итоговая карточка проблемы с оценкой",
+    "Экспорт результата в JSON и копирование текстом"
+  ]
+}
+</script>
+<style>
+  :root{
+    --bg:#0a0c14;
+    --card:rgba(18,25,42,0.75);
+    --card-hover:#172138;
+    --text:#e8eef7;
+    --muted:#94a3b8;
+    --accent:#38bdf8;
+    --accent-dark:#0ea5e9;
+    --success:#22c55e;
+    --warn:#f59e0b;
+    --danger:#ef4444;
+    --border:rgba(30,41,59,0.6);
+    --radius:14px;
+    --shadow:0 10px 30px -10px rgba(0,0,0,0.6);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+    background:var(--bg); color:var(--text);
+    line-height:1.5; min-height:100vh;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .container{max-width:760px;margin:0 auto;padding:24px 16px 80px}
+  header{margin-bottom:8px}
+  .brand{display:flex;align-items:center;gap:10px;align-items:center}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent)}
+  h1{font-size:1.45rem;font-weight:700;letter-spacing:-0.02em}
+  .sub{color:var(--muted);font-size:0.9rem;margin-top:4px}
+  .lang{position:absolute;top:20px;right:16px}
+  .lang a{display:inline-flex;padding:6px 12px;border:1px solid var(--border);border-radius:999px;font-size:0.8rem;font-weight:700;color:var(--muted)}
+  .lang a:hover{border-color:#334155;color:var(--text);text-decoration:none}
+  .lang .cur{color:var(--text);border-color:var(--accent)}
+  .tag{display:inline-block;font-size:0.75rem;padding:2px 8px;border-radius:999px;border:1px solid var(--border);color:var(--accent);margin-top:8px}
+  /* progress */
+  .progress{height:6px;background:#1e293b;border-radius:3px;overflow:hidden;margin:26px 0 10px}
+  .progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-dark));transition:width .35s ease;border-radius:3px;box-shadow:0 0 14px rgba(56,191,248,0.45)}
+  .progress-text{font-size:0.78rem;color:var(--muted);text-align:right}
+  /* steps */
+  .step{display:none;animation:fadeIn .32s ease}
+  .step.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .step-title{font-size:1.1rem;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .step-num{width:22px;height:22px;border-radius:50%;background:var(--card);border:1px solid var(--border);color:var(--accent);font-weight:800;font-size:0.85rem;display:grid;place-items:center;flex-shrink:0}
+  .step-desc{color:var(--muted);font-size:0.9rem;margin-bottom:18px}
+  /* cards */
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow);overflow-wrap:anywhere}
+  .card:hover{border-color:#334155}
+  .card h3{font-size:0.95rem;margin-bottom:10px;color:var(--accent)}
+  .card p{color:var(--muted);font-size:0.92rem;margin-bottom:10px}
+  .badge{display:inline-block;font-size:0.72rem;font-weight:800;padding:2px 8px;border-radius:6px;background:#0f172a;color:var(--accent);border:1px solid var(--border);margin-right:6px;margin-bottom:6px}
+  .badge-group{background:#141b2d;color:#cbd5e1}
+  /* inputs */
+  label{display:block;font-size:0.86rem;color:var(--muted);margin-bottom:6px;font-weight:600}
+  input,select,textarea{
+    width:100%;background:#0f172a;border:1px solid var(--border);color:var(--text);
+    border-radius:10px;padding:10px 12px;font-size:0.95rem;outline:none;transition:border .2s,box-shadow .2s
+  }
+  input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(56,191,248,0.15)}
+  textarea{resize:vertical;min-height:90px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.row{grid-template-columns:1fr}}
+  /* обязательные поля и ошибки */
+  .required{color:#ef4444;margin-left:2px;font-weight:800}
+  .field-error{color:#ef4444;font-size:0.78rem;margin-top:4px;display:block}
+  .input-error{border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,0.15)}
+  .field-hint{color:#94a3b8;font-size:0.78rem;margin-top:4px;display:block}
+  /* навигация и сохранение */
+  .nav{display:flex;gap:10px;align-items:center;margin-top:6px}
+  .btn.btn-sm{padding:8px 14px;font-size:0.85rem}
+  .save-status{font-size:0.72rem;color:#64748b;margin-top:2px;display:block}
+  .save-status.saving{color:#f59e0b}
+  .save-status.saved{color:#10b981}
+  /* chips / choices */
+  .choice-group{margin-top:6px}
+  .choice{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;background:#0f172a;cursor:pointer;transition:all .15s}
+  .choice:hover{border-color:#334155;background:#162034}
+  .choice.selected{border-color:var(--accent);background:#132a3d;color:var(--text)}
+  .choice input{width:auto;margin:0}
+  .choice-text{font-size:0.93rem;color:var(--text)}
+  .choice-hint{font-size:0.8rem;color:var(--muted);margin-left:auto}
+  /* radios inline — доступные элементы управления */
+  .inline{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .inline label{border:1px solid var(--border);background:#0f172a;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:600;font-size:0.88rem;color:var(--text);transition:all .2s;user-select:none}
+  .inline input{display:none}
+  .inline input:checked + .wrap{border-color:var(--accent);background:#132a3d;color:var(--accent);box-shadow:0 0 12px rgba(56,191,248,0.25)}
+  .wrap{position:relative;display:flex;align-items:center;gap:6px;overflow-wrap:anywhere}
+  /* инлайн-чекбоксы (симптомы, «Не знаю») */
+  .inline-item input{
+    width:auto;margin:0;margin-top:1px;appearance:none;
+    width:18px;height:18px;border:2px solid var(--border);
+    border-radius:4px;background:#0f172a;cursor:pointer;position:relative;
+  }
+  .inline-item input:checked{border-color:var(--accent);background:var(--accent)}
+  .inline-item input:checked::after{
+    content:'✓';position:absolute;left:50%;top:48%;
+    transform:translate(-50%,-50%);color:#01151c;font-size:12px;font-weight:700;line-height:1;
+  }
+  .inline-item input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  /* group tiles */
+  .group-tile{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border:1px solid var(--border);border-radius:12px;background:#0f172a;cursor:pointer;transition:all .2s;margin-bottom:10px;min-width:0;overflow-wrap:anywhere}
+  .group-tile:hover{border-color:#334155;background:#162034}
+  .group-tile.active{border-color:var(--accent);background:#132a3d;box-shadow:0 0 0 2px rgba(56,191,248,0.15)}
+  .group-tile input{width:auto;margin:0;margin-top:2px}
+  .group-info h4{font-size:0.95rem;margin-bottom:2px;color:var(--text);overflow-wrap:anywhere}
+  .group-info p{font-size:0.82rem;color:var(--muted);line-height:1.35;overflow-wrap:anywhere}
+  .group-code{font-weight:800;color:var(--accent);font-size:0.85rem}
+  /* deep questions */
+  .deep-card{background:#0f172a;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+  .deep-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .deep-code{font-weight:900;color:var(--accent);font-size:0.85rem}
+  .deep-title{font-size:0.92rem;color:var(--text);margin-bottom:2px;overflow-wrap:anywhere}
+  .deep-how{font-size:0.82rem;color:var(--muted)}
+  .deep-solutions{font-size:0.8rem;color:#94a3b8;margin-top:6px}
+  /* шкала: одна горизонтальная строка, кнопки не сжимаются и не переносятся по словам */
+  .scale-wrap{position:relative}
+  .scale{display:flex;gap:8px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+  .scale button{flex:0 0 auto;min-width:112px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:#0f172a;color:var(--muted);font-size:0.85rem;cursor:pointer;transition:all .2s;font-weight:700;line-height:1.25;text-align:center;white-space:nowrap}
+  .scale-hint{display:none;font-size:0.75rem;color:var(--muted);margin-top:6px}
+  .scale-wrap.overflow .scale-hint{display:block}
+  .scale button:hover{border-color:#334155;color:var(--text)}
+  .scale button.active{border-color:var(--accent);color:var(--accent);background:#0f243a;box-shadow:0 0 14px rgba(56,191,248,0.2)}
+  .scale button.na{background:#0f172a;color:#475569;border-color:#1e293b}
+  .scale button.na.active{color:#94a3b8}
+  .scale button.neznayu{background:#172536;color:#cbd5e1;border-color:#334155}
+  .scale button.neznayu:hover{border-color:#64748b;color:var(--text)}
+  .scale button.neznayu.active{border-color:var(--accent);color:var(--accent);background:#0f243a;box-shadow:0 0 14px rgba(56,191,248,0.2)}
+  .scale-legend{font-size:0.78rem;color:var(--muted);margin-bottom:8px;line-height:1.5}
+  .scale-legend b{color:var(--text)}
+  /* метрики эффекта под глубокими вопросами */
+  .effect-metric{margin-top:10px;padding:10px;background:#141b2d;border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;gap:8px}
+  .effect-metric .em-row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  .effect-metric label{font-size:0.78rem;color:var(--muted);margin-bottom:2px;display:block}
+  .effect-metric input{width:140px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;background:#0f172a;color:var(--text);font-size:0.85rem}
+  .effect-metric input:focus{border-color:var(--accent);outline:none}
+  .effect-calc{font-size:0.8rem;color:var(--accent);font-weight:700;margin-top:4px}
+  .effect-calc .em-label{color:var(--muted);font-weight:400}
+  /* signals */
+  .signal-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:#0f172a;cursor:pointer;margin-bottom:8px;transition:all .15s}
+  .signal-item:hover{border-color:#334155}
+  .signal-item.selected{border-color:var(--accent);background:#132a3d}
+  .signal-item input{width:auto}
+  .signal-text{font-size:0.9rem;color:var(--text);flex:1;overflow-wrap:anywhere}
+  .signal-pts{font-size:0.8rem;font-weight:800;color:var(--warn)}
+  .signal-source{font-size:0.72rem;color:var(--muted);flex:1;text-align:right}
+  .signal-item.auto{background:#1a2a3a;border-color:#334155}
+  .signal-item.auto.selected{background:#1f3a4f;border-color:var(--accent)}
+  .auto-badge{font-size:0.65rem;background:var(--accent);color:#000;padding:1px 6px;border-radius:4px;margin-left:6px;vertical-align:middle}
+  /* сигналы других групп */
+  .signal-item.other-group{opacity:0.75;filter:grayscale(0.4)}
+  .signal-item.other-group.nextpass{opacity:1;filter:none;border-color:var(--warn);background:#2a1b1b}
+  .other-badge{font-size:0.65rem;background:var(--warn);color:#000;padding:1px 6px;border-radius:4px;margin-left:6px;vertical-align:middle}
+  /* nav */
+  .nav{display:flex;justify-content:space-between;margin-top:22px;padding-top:16px;border-top:1px solid var(--border)}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:none;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all .2s}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn-primary{background:var(--accent);color:#01151c;box-shadow:0 0 16px rgba(56,191,248,0.35)}
+  .btn-primary:hover:not(:disabled){background:#7dd3fc;transform:translateY(-1px)}
+  .btn-accent{background:var(--accent);color:#01151c;box-shadow:0 0 16px rgba(56,191,248,0.35)}
+  .btn-accent:hover:not(:disabled){background:#7dd3fc;transform:translateY(-1px)}
+  .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+  .btn-ghost:hover{border-color:#334155}
+  .btn-danger{background:var(--danger);color:#fff}
+  .btn-danger:hover{background:#f87171}
+  .btn-sm{padding:8px 14px;font-size:0.85rem}
+  /* result */
+  .result{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+  .result h2{font-size:1.3rem;margin-bottom:6px}
+  .verdict{font-size:1.25rem;font-weight:900;margin:8px 0 14px;letter-spacing:-0.01em}
+  .verdict.hot{color:var(--danger)}
+  .verdict.warm{color:var(--warn)}
+  .verdict.base{color:var(--accent)}
+  .verdict.no{color:var(--muted)}
+  .score-big{font-size:1.8rem;font-weight:700;letter-spacing:-0.01em;line-height:1.15}
+  .score-big .score-num{font-size:2rem;font-weight:900;color:var(--accent)}
+  .score-big .score-sep{color:var(--muted);font-weight:400;margin:0 6px;font-size:1.4rem}
+  .score-big .score-part{display:inline-block;text-align:center}
+  .score-big .score-label{display:block;font-size:0.65rem;font-weight:600;color:var(--muted);letter-spacing:0;text-transform:uppercase;margin-top:2px}
+  .meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+  .meta .chip{background:#0f172a;border:1px solid var(--border);color:var(--muted);padding:8px 12px;border-radius:10px;font-size:0.82rem}
+  .meta .chip strong{color:var(--text)}
+  .groups{margin-bottom:18px}
+  .groups h4{font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+  .group-pill{display:inline-block;background:#132a3d;border:1px solid rgba(56,191,248,0.35);color:#bae6fd;padding:6px 12px;border-radius:999px;font-size:0.85rem;margin-right:8px;margin-bottom:6px}
+  .recommend{background:#0f172a;border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
+  .problem-card{background:#0f172a;border:1px solid var(--accent);border-radius:12px;padding:16px;margin-bottom:16px}
+  .problem-card h4{font-size:0.95rem;margin-bottom:10px;color:var(--accent)}
+  .problem-card .pc-row{display:flex;gap:12px;padding:8px 0;border-top:1px solid var(--border);font-size:0.9rem;line-height:1.4}
+  .problem-card .pc-row:first-of-type{border-top:none;padding-top:0}
+  .problem-card .pc-label{flex:0 0 130px;color:var(--muted);font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:.05em}
+  .problem-card .pc-value{color:var(--text)}
+  .recommend h4{font-size:0.95rem;margin-bottom:6px;color:var(--accent)}
+  .recommend p{font-size:0.9rem;color:var(--muted);margin-bottom:6px}
+  .recommend .sol{font-weight:800;color:#cbd5e1}
+  .next-step{background:#0f172a;border:1px solid var(--border);border-radius:12px;padding:16px}
+  .next-step h4{font-size:0.95rem;margin-bottom:6px;color:var(--text)}
+  .next-step p{font-size:0.9rem;color:var(--muted)}
+  /* export */
+  .export{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+  .muted{color:var(--muted);font-size:0.85rem}
+  footer{margin-top:30px;color:var(--muted);font-size:0.8rem;text-align:center;padding-bottom:20px}
+  .hidden{display:none}
+  .toast{position:fixed;bottom:20px;right:20px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:12px 18px;border-radius:10px;box-shadow:var(--shadow);transform:translateY(120px);transition:transform .3s;z-index:50;font-size:0.9rem}
+  .toast.show{transform:translateY(0)}
+  .ui-hidden{display:none !important}
+  /* модальное окно согласия на обработку ПДн */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(2,5,12,.8);backdrop-filter:blur(3px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+  .modal-backdrop.show{display:flex}
+  .modal{background:#0f172a;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);width:100%;max-width:660px;max-height:88vh;display:flex;flex-direction:column;animation:fadeIn .25s ease}
+  .modal-head{padding:18px 20px 12px;border-bottom:1px solid var(--border)}
+  .modal-head h3{font-size:1rem;color:var(--text)}
+  .modal-head p{color:var(--muted);font-size:.85rem;margin-top:4px}
+  .modal-body{padding:16px 20px;overflow:auto;font-size:.9rem;color:#cbd5e1;line-height:1.6}
+  .modal-body h4{font-size:.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 6px}
+  .modal-body h4:first-child{margin-top:0}
+  .modal-body p{margin-bottom:8px}
+  .modal-body ul{margin:0 0 8px 18px}
+  .modal-body li{margin-bottom:4px}
+  .modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+  @media(max-width:560px){.modal{max-height:92vh}.modal-foot .btn{flex:1 1 auto;justify-content:center}}
+
+/* ---------- ФОН ---------- */
+.bg-layer{
+  position:fixed;inset:0;z-index:-1;
+  background:#0a0c14;
+  background-image:radial-gradient(circle at 15% 20%, rgba(56,191,248,0.08), transparent 40%),
+                   radial-gradient(circle at 85% 80%, rgba(14,165,233,0.06), transparent 40%);
+}
+.bg-glow{
+  position:fixed;z-index:-1;border-radius:50%;filter:blur(64px);opacity:0.35;animation:float 12s ease-in-out infinite;
+}
+.glow-1{width:520px;height:520px;background:#38bdf8;top:-120px;left:-140px;animation-delay:0s;}
+.glow-2{width:420px;height:420px;background:#0ea5e9;bottom:-100px;right:-130px;animation-delay:4s;}
+.glow-3{width:360px;height:360px;background:#818cf8;top:40%;left:45%;animation-delay:8s;}
+@keyframes float{0%,100%{transform:translate(0,0)}33%{transform:translate(24px,-16px)}66%{transform:translate(-20px,28px)}}
+
+.bg-grid{
+  position:fixed;inset:0;z-index:-1;
+  background-image:linear-gradient(rgba(56,191,248,0.04) 1px, transparent 1px),
+                   linear-gradient(90deg,rgba(56,191,248,0.04) 1px, transparent 1px);
+  background-size:32px 32px;
+  mask-image:radial-gradient(circle at center, black 40%, transparent 85%);
+  opacity:0.6;
+}
+.bg-noise{
+  position:fixed;inset:0;z-index:-1;
+  opacity:0.04;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Карточки — стекло и подсветка */
+.card{
+  background:rgba(18,25,42,0.7);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px 20px;margin-bottom:14px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.card:hover{border-color:#334155;background:rgba(23,33,56,0.8)}
+</style>
+</head>
+<body>
+  <div class="bg-layer"></div>
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+  <div class="bg-glow glow-3"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-noise"></div>
+<div class="container">
+  <header>
+    <div class="lang"><b>RU</b> · <a href="index-en.html" hreflang="en">EN</a></div>
+    <div class="brand"><div>
+      <h1>Опросник боли</h1>
+      <div class="sub">Опишите одну задачу, которая отнимает время. В конце получите карточку проблемы</div>
+    </div></div>
+  </header>
+
+  <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+  <div class="progress-text" id="progressText">Шаг 1 из 6</div>
+  <div class="save-status" id="saveStatus"></div>
+
+  <!-- Step 1: интро + данные компании -->
+  <section class="step active" id="step1">
+    <div class="step-title"><span class="step-num">1</span><span>О компании</span></div>
+    <div class="card">
+      <div class="row">
+        <div>
+          <label>Название компании <span class="required">*</span></label>
+          <input id="fCompany" placeholder="ООО «Ромашка»">
+          <span id="errCompany" class="field-error"></span>
+        </div>
+      </div>
+      <div style="margin-top:12px">
+        <label>Имя контактного лица <span class="required">*</span></label>
+        <input id="fContactName" placeholder="Иван Петров">
+        <span id="errContactName" class="field-error"></span>
+      </div>
+      <div class="row">
+        <div>
+          <label>Роль <span style="color:#94a3b8">(необязательно)</span></label>
+          <input id="fContactRole" placeholder="коммерческий директор">
+        </div>
+        <div>
+          <label>Отдел <span style="color:#94a3b8">(необязательно)</span></label>
+          <input id="fContactDept" placeholder="продажи">
+        </div>
+      </div>
+      <div style="margin-top:12px">
+        <label>Telegram / email / телефон <span style="color:#94a3b8">(необязательно)</span></label>
+        <input id="fContactInfo" placeholder="@ivanpetrov или ivan@roma.shka">
+        <span class="field-hint">Если не укажете связь, после опросника мы не сможем с вами связаться.</span>
+        <span id="errContactInfo" class="field-error"></span>
+      </div>
+      <div style="margin-top:14px">
+        <label>Сколько сотрудников?</label>
+        <div class="inline" id="staffSize">
+          <label class="inline-item"><input type="radio" name="staff" value="1-10"><span class="wrap">1–10</span></label>
+          <label class="inline-item"><input type="radio" name="staff" value="11-50"><span class="wrap">11–50</span></label>
+          <label class="inline-item"><input type="radio" name="staff" value="51-200"><span class="wrap">51–200</span></label>
+          <label class="inline-item"><input type="radio" name="staff" value="200+"><span class="wrap">200+</span></label>
+        </div>
+      </div>
+    </div>
+    <div class="nav"><button class="btn btn-ghost btn-sm" id="btnBack1">← Назад</button><button class="btn btn-primary" id="btnNext1">Далее →</button></div>
+    <div style="margin-top:16px;text-align:center">
+      <a class="btn btn-ghost btn-sm" href="guide.html">Что обычно автоматизируют →</a>
+    </div>
+  </section>
+
+  <!-- Step 2: входные вопросы (ветка по выбранной группе) -->
+  <section class="step" id="step2">
+    <div class="step-title"><span class="step-num">2</span><span>Входные вопросы</span></div>
+    <div class="step-desc">Сначала опишите свою главную задачу, затем ответьте на универсальный вопрос про рутину. Уточняющие вопросы показываются только для выбранной группы болей — не нужно описывать чужие процессы.</div>
+
+    <!-- Одна конкретная задача + симптомы -->
+    <div class="card" id="mainTaskCard">
+      <div style="margin-bottom:12px">
+        <label style="font-weight:600;display:block;margin-bottom:6px">Одна конкретная задача, которая больше всего отнимает время</label>
+        <textarea id="fMainTask" rows="2" placeholder="Например: каждую вечернюю заявку переношу в CRM вручную"></textarea>
+      </div>
+      <div style="margin-top:10px">
+        <label style="font-size:0.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:6px">Похожие симптомы (отметьте все, что есть у вас)</label>
+        <div class="inline" id="symptomChips"></div>
+      </div>
+    </div>
+
+    <!-- Универсальный вопрос для всех (скрыт из интерфейса, оставлен как справочные данные) -->
+    <div class="card" id="universalQuestionCard">
+      <div style="margin-bottom:8px">
+        <div style="font-size:0.95rem;color:var(--text)">Что вы делаете руками каждый день?</div>
+        <div class="muted" style="font-size:0.8rem;margin-top:2px">Ядро рутины</div>
+      </div>
+      <div style="margin-top:8px">
+        <label>Ваш ответ</label>
+        <textarea id="fEntryФ0" rows="2" placeholder="Коротко по сути…"></textarea>
+      </div>
+      <div style="margin-top:6px">
+        <label class="inline-item" style="display:inline-flex;align-items:center;gap:8px">
+          <input type="checkbox" id="entryФ0NeZnaiu" aria-checked="false">
+          <span style="font-weight:600">Не знаю</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Баннер текущего фокуса (показывается после выбора основной группы) -->
+    <div id="focusBanner" style="margin-bottom:12px;padding:10px;background:#1e3a5a;border-left:4px solid var(--accent);border-radius:6px;display:none">
+      <span style="font-weight:600;color:var(--text)">Сейчас разбираем:</span> <span id="focusBannerText" style="color:var(--accent);font-weight:600"></span>
+    </div>
+
+    <!-- Выбор основной группы (одна на проход) -->
+    <div id="focusSelector" style="margin-top:16px;padding:12px;background:#141b2d;border:1px solid var(--border);border-radius:10px;display:none">
+      <div style="font-weight:600;color:var(--text);margin-bottom:8px">Основная проблема для этого прохода</div>
+      <div id="focusOptions" class="inline" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+      <div class="muted" style="margin-top:8px">Остальные отмеченные симптомы перенесутся в очередь следующих проходов.</div>
+    </div>
+
+    <!-- Уточняющие вопросы только для выбранной focusGroup -->
+    <div id="groupEntryQuestions" class="card" style="margin-top:12px;display:none"></div>
+
+    <!-- Выбор одного симптома с кодом из справочника (для выбранной focusGroup) -->
+    <div id="symptomSelector" style="margin-top:12px;padding:12px;background:#141b2d;border:1px solid var(--border);border-radius:10px;display:none">
+      <div style="font-weight:600;color:var(--text);margin-bottom:8px">Выберите один симптом, который описывает вашу боль</div>
+      <div id="symptomOptions" class="inline" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+      <div class="muted" style="margin-top:8px">Один симптом = один проход. Остальные симптомы этой группы можно описать при следующем прохождении.</div>
+    </div>
+
+    <!-- Уточнение выбранного симптома (собственные слова сотрудника) -->
+    <div id="symptomClarification" style="margin-top:12px;padding:12px;background:#141b2d;border:1px solid var(--border);border-radius:10px;display:none">
+      <div style="font-weight:600;color:var(--text);margin-bottom:8px">Уточните про симптом <span id="symptomClarificationCode" style="color:var(--accent);font-weight:700"></span></div>
+      <div style="margin-bottom:8px">
+        <label style="display:block;margin-bottom:4px">Сотрудник, который выполняет эту рутину <span style="color:#94a3b8">(имя, роль)</span></label>
+        <input id="symptomEmployee" placeholder="Например: Иван Петров, кладовщик">
+      </div>
+      <div style="margin-bottom:8px">
+        <label style="display:block;margin-bottom:4px">Своё описание проблемы <span style="color:#94a3b8">(как бы вы описали эту боль своими словами)</span></label>
+        <textarea id="symptomDescription" rows="2" placeholder="Например: каждую вечернюю заявку переношу в CRM вручную, трачу ~30 минут"></textarea>
+      </div>
+      <div style="margin-bottom:8px">
+        <label style="display:block;margin-bottom:4px">Пример последнего случая <span style="color:#94a3b8">(когда, что произошло, сколько потеряли)</span></label>
+        <textarea id="symptomLastCase" rows="2" placeholder="Например: вчера вечерняя заявка от клиента потеряли, не успели перезвонить"></textarea>
+      </div>
+    </div>
+
+    <!-- Блок «Не знаю / другая группа» -->
+    <div id="otherCard" style="margin-top:12px;padding:12px;background:#141b2d;border:1px solid var(--border);border-radius:10px;display:none">
+      <div style="font-weight:800;color:var(--accent);font-size:0.8rem;margin-bottom:4px">ДРУГОЕ</div>
+      <div style="font-size:0.95rem;color:var(--text);margin-bottom:4px">Ни одна группа не подходит</div>
+      <div class="muted" style="font-size:0.8rem;margin-bottom:8px">Если не попали ни в одну из вышеперечисленных</div>
+      <div style="margin-top:8px">
+        <label class="inline-item" style="display:flex;align-items:center;gap:8px">
+          <input type="checkbox" id="entryOther" aria-checked="false">
+          <span style="font-weight:600">Не знаю / другая группа</span>
+        </label>
+      </div>
+      <div style="margin-top:8px">
+        <label>Уточните, какая боль у вас (своими словами):</label>
+        <textarea id="entryOtherText" rows="2" placeholder="Например: потерянные вечерние заявки, ручной сверки…"></textarea>
+      </div>
+    </div>
+
+    <div class="nav"><button class="btn btn-ghost btn-sm" id="btnBack2">← Назад</button><button class="btn btn-primary" id="btnNext2">Далее →</button></div>
+  </section>
+
+  <!-- Step 3: углубление по выбранным группам -->
+  <section class="step" id="step3">
+    <div class="step-title"><span class="step-num">3</span><span>Углубление по группам</span></div>
+    <div class="step-desc">По выбранным группам задаём сигнальные вопросы. Оцените, насколько это про вашу компанию.</div>
+    <div id="deepQuestions" class="card"></div>
+    <div class="nav"><button class="btn btn-ghost btn-sm" id="btnBack3">← Назад</button><button class="btn btn-primary" id="btnNext3">Далее →</button></div>
+  </section>
+
+  <!-- Step 4: сигналы (чек-лист) -->
+  <section class="step" id="step4">
+    <div class="step-title"><span class="step-num">4</span><span>Сильные сигналы</span></div>
+    <div class="step-desc">Отметьте то, что точно про вас. «+» добавляет баллы к оценке, «−» уменьшает.</div>
+    <div id="signalList" class="card"></div>
+    <!-- Итоговая сумма по выбранным сигналам -->
+    <div id="signalSummary" style="margin-top:12px;padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:#0f172a;display:none"></div>
+    <!-- Уточнение при противоречии (боль + «всё работает») -->
+    <div id="signalContradiction" style="margin-top:10px;padding:10px 14px;border:1px solid var(--warn);border-radius:10px;background:#2a1b1b;display:none">
+      <div style="font-size:0.8rem;color:var(--warn);font-weight:600;margin-bottom:6px">Обнаружено противоречие</div>
+      <div style="font-size:0.85rem;color:var(--text);margin-bottom:8px">Вы отметили признаки боли и одновременно «всё работает», «только думаем» или «нет бюджета на ИТ». Это может быть реальная смешанная ситуация — уточните, пожалуйста, чтобы не исказить оценку.</div>
+      <textarea id="signalContradictionText" rows="2" placeholder="Например: боль подтверждена для отдела логистики, а бюджет на внедрение пока не выделен…"></textarea>
+    </div>
+    <div class="nav"><button class="btn btn-ghost btn-sm" id="btnBack4">← Назад</button><button class="btn btn-primary" id="btnNext4">Далее →</button></div>
+  </section>
+
+  <!-- Step 5: пожелания / комментарий -->
+  <section class="step" id="step5">
+    <div class="step-title"><span class="step-num">5</span><span>Дополнительно</span></div>
+    <div class="step-desc">Что важно учесть при подготовке коммерческого предложения.</div>
+    <div class="card">
+      <!-- Используемые системы — единый набор, называвшийся в Ф3 (шаг 2). Показываем для проверки и дополнения. -->
+      <div style="margin-bottom:12px">
+        <label>Используемые системы <span style="color:#94a3b8">(уже упомянуты в ответах выше)</span></label>
+        <div id="systemsChips" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px"></div>
+        <div style="display:flex;gap:6px">
+          <input id="fSystemAdd" placeholder="Добавить систему…" style="flex:1;min-width:140px">
+          <button id="btnSystemAdd" class="btn btn-sm">Добавить</button>
+        </div>
+        <div class="field-hint" style="margin-top:4px">Например: Битрикс24, 1С, Excel, CRM, сайт на Тильде, таблицы Google.</div>
+      </div>
+      <div style="margin-top:12px">
+        <label>Ограничения доступа к системам <span style="color:#94a3b8">(необязательно)</span></label>
+        <textarea id="fAccessConstraints" rows="2" placeholder="Например: нет прав администратора в 1С, доступ только из офиса…"></textarea>
+      </div>
+      <div style="margin-top:12px">
+        <label>Возможные способы интеграции <span style="color:#94a3b8">(необязательно)</span></label>
+        <textarea id="fIntegrationOptions" rows="2" placeholder="Например: API, выгрузки Excel, почта, подключение через подрядчика…"></textarea>
+      </div>
+
+      <!-- Ограничения из справочника (условно) -->
+      <div id="restrictionsBlock" style="margin-top:16px;padding:12px;background:#141b2d;border:1px solid var(--border);border-radius:10px;display:none">
+        <div style="font-weight:600;color:var(--text);margin-bottom:8px">Ограничения и требования (из справочника)</div>
+        <div style="margin-bottom:8px">
+          <label class="inline-item" style="display:inline-flex;align-items:center;gap:8px">
+            <input type="radio" name="restrictionsHas" value="yes" id="restrYes" aria-checked="false">
+            <span class="wrap">Есть ограничения на внешние сервисы</span>
+          </label>
+          <label class="inline-item" style="display:inline-flex;align-items:center;gap:8px;margin-left:16px">
+            <input type="radio" name="restrictionsHas" value="no" id="restrNo" aria-checked="false">
+            <span class="wrap">Нет особых ограничений</span>
+          </label>
+        </div>
+        <div id="restrictionsFields" style="margin-top:10px;display:none">
+          <div style="margin-top:10px">
+            <label>Какие системы разрешено использовать внешним сервисам <span style="color:#94a3b8">(не секретные данные)</span></label>
+            <textarea id="fAllowedSystems" rows="2" placeholder="Например: только внутренние системы, облако РФ…"></textarea>
+          </div>
+          <div style="margin-top:10px">
+            <label>Кто согласует внедрение <span style="color:#94a3b8">(должность/роль)</span></label>
+            <input id="fApprover" placeholder="Например: ИТ-директор, юрист, собственник">
+          </div>
+          <div style="margin-top:10px">
+            <label>Какие данные нельзя передавать внешним сервисам <span style="color:#94a3b8">(категории, не сами данные)</span></label>
+            <textarea id="fNoExternalData" rows="2" placeholder="Например: персональные данные клиентов, договоры, расценки…"></textarea>
+          </div>
+          <div style="margin-top:10px">
+            <label>Отраслевые требования <span style="color:#94a3b8">(необязательно)</span></label>
+            <textarea id="fIndustryRequirements" rows="2" placeholder="Например: лицензия ФСТЭК, требования банка…"></textarea>
+          </div>
+          <div style="margin-top:10px">
+            <label>Языки и юрисдикция <span style="color:#94a3b8">(необязательно)</span></label>
+            <input id="fLanguageJurisdiction" placeholder="Например: русский, РФ, GDPR не распространяется">
+          </div>
+          <!-- Рекомендация при ограничениях -->
+          <div id="restrictionsRecommend" style="margin-top:10px;padding:8px;background:#2a1b1b;border:1px solid var(--warn);border-radius:8px;color:var(--text);font-size:0.85rem">
+            <strong>При наличии ограничений:</strong> перед обещанием решения проведём дополнительную техническую проверку (соответствие систем, юрисдикции, согласование с ИТ/юристом).
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <label>Что отдаёте на аутсорс сейчас и сколько это стоит?</label>
+        <textarea id="fOutsource" placeholder="Например: контекстная реклама — 50 000 ₽/мес, ведение соцсетей — 30 000 ₽/мес"></textarea>
+      </div>
+      <div style="margin-top:12px">
+        <label>Готовы ли показать сценарий рутины? <span style="color:#94a3b8 font-weight:400">(бесплатный демо-прототип подтверждается отдельно, не является уже согласованным)</span></label>
+        <div class="inline" id="fDemoReady">
+          <label class="inline-item"><input type="radio" name="demo" value="yes"><span class="wrap">Да, готовы</span></label>
+          <label class="inline-item"><input type="radio" name="demo" value="maybe"><span class="wrap">Нужно обсудить</span></label>
+          <label class="inline-item"><input type="radio" name="demo" value="no"><span class="wrap">Пока нет</span></label>
+        </div>
+      </div>
+      <!-- Детали демо — показываются при «Да, готовы» / «Нужно обсудить» -->
+      <div id="demoDetail" style="margin-top:10px;padding:10px;background:#141b2d;border:1px solid var(--border);border-radius:10px;display:none">
+        <label>Ответственный за согласование демо <span style="color:#94a3b8">(кто будет согласовывать с принимающим решение)</span></label>
+        <input id="fDemoResponsible" placeholder="Имя, роль (например: Петров, руководитель отдела)">
+        <div style="margin-top:8px">
+          <label>Планируемая дата демо</label>
+          <input type="date" id="fDemoDate">
+        </div>
+      </div>
+      <div id="demoMaybeHint" style="margin-top:8px;padding:8px;background:#2a1b1b;border:1px solid var(--warn);border-radius:8px;color:var(--text);font-size:0.85rem;display:none">
+        <strong>Нужно обсудить:</strong> согласуйте демо с принимающим решение. Бесплатный прототип не является уже согласованным — это уточняется на созвоне.
+      </div>
+      <div style="margin-top:12px">
+        <label>Комментарий менеджеру</label>
+        <textarea id="fComment" placeholder="Особенности компании, ограничения, предпочтительное время звонка"></textarea>
+      </div>
+    </div>
+    <div class="nav"><button class="btn btn-ghost btn-sm" id="btnBack5">← Назад</button><button class="btn btn-primary" id="btnNext5">Сохранить анкету и получить результат →</button></div>
+  </section>
+
+  <!-- Step 6: результат -->
+  <section class="step hidden" id="step6">
+    <div class="step-title"><span class="step-num">6</span><span>Итог и рекомендация</span></div>
+    <div class="step-desc">Скоринг, приоритетные группы и следующее действие.</div>
+    <div class="result" id="resultCard">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div>
+          <h2 id="resTitle">Результат опроса</h2>
+          <div class="verdict" id="resVerdict">—</div>
+        </div>
+        <div style="text-align:right">
+          <div class="score-big" id="resScore">0</div>
+        </div>
+      </div>
+      <div class="meta" id="resMeta"></div>
+      <div class="problem-card" id="resProblemCard">
+        <h4>Боль</h4>
+        <div class="pc-row"><span class="pc-label">Боль</span><span class="pc-value" id="pcPainTitle">—</span></div>
+        <div class="pc-row"><span class="pc-label">Код боли</span><span class="pc-value" id="pcSymptomCode">—</span></div>
+        <div class="pc-row"><span class="pc-label">Сотрудник</span><span class="pc-value" id="pcEmployee">—</span></div>
+        <div class="pc-row"><span class="pc-label">Пример последнего случая</span><span class="pc-value" id="pcSymptomLastCase">—</span></div>
+        <div class="pc-row"><span class="pc-label">Измеренный масштаб</span><span class="pc-value" id="pcPainScale">—</span></div>
+      </div>
+
+      <!-- Подтверждение или исправление диагноза -->
+      <div id="diagnosisConfirmBlock" style="margin-top:16px;padding:12px;background:#141b2d;border:1px solid var(--border);border-radius:10px">
+        <div style="font-weight:600;color:var(--text);margin-bottom:8px">Подтвердить диагноз?</div>
+        <label class="inline-item" style="display:inline-flex;align-items:center;gap:8px">
+          <input type="radio" name="diagnosisConfirm" value="yes" id="diagYes" aria-checked="false"><span class="wrap">Да, всё верно</span>
+        </label>
+        <label class="inline-item" style="display:inline-flex;align-items:center;gap:8px;margin-left:16px">
+          <input type="radio" name="diagnosisConfirm" value="no" id="diagNo" aria-checked="false"><span class="wrap">Исправить (вернуться к шагу 2)</span>
+        </label>
+      </div>
+      <div class="groups" id="resGroups"></div>
+      <div class="recommend" id="resRecommend"></div>
+      <div class="next-step" id="resNext"></div>
+
+      <!-- Справка: что обычно автоматизируют -->
+      <div class="next-step" style="margin-top:16px">
+        <h4>Сравнить с типичными случаями</h4>
+        <p>Если хотите понять, насколько ваша задача типична, — посмотрите, что обычно автоматизируют в 12 отраслях и с каких 8 групп процессов чаще всего начинают.</p>
+        <a class="btn btn-ghost btn-sm" href="guide.html" target="_blank" rel="noopener" style="margin-top:10px">Что обычно автоматизируют →</a>
+      </div>
+
+      <!-- Панель отправки (отдельная от расчёта результата) -->
+      <div id="submitPanel" style="margin-top:18px;padding:14px;background:#141b2d;border:1px solid var(--border);border-radius:10px">
+        <div style="font-weight:600;color:var(--text);margin-bottom:8px">Отправить анкету</div>
+        <div id="submitPreview" style="font-size:0.8rem;color:var(--muted);margin-bottom:10px;line-height:1.5"></div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-bottom:8px">
+          Ответы сохранятся в защищённую базу и останутся в локальном черновике браузера. Секретные данные не передаются.
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" id="btnSubmit">Отправить анкету</button>
+          <button class="btn btn-ghost btn-sm" id="btnSubmitRetry" style="display:none">Повторить</button>
+          <span id="submitStatus" style="font-size:0.8rem;color:var(--text);margin-left:10px"></span>
+          <span id="submitSpinner" style="display:none;margin-left:8px">…</span>
+        </div>
+      </div>
+
+      <div class="export">
+        <button class="btn btn-ghost btn-sm" id="btnBack6">← Назад</button>
+        <button class="btn btn-ghost btn-sm" id="btnCopy">Скопировать текст результата</button>
+        <button class="btn btn-ghost btn-sm" id="btnExport">Скачать JSON</button>
+        <input type="file" id="btnImportFile" accept=".json" style="display:none">
+        <button class="btn btn-ghost btn-sm" id="btnImport">Загрузить JSON</button>
+        <button class="btn btn-primary btn-sm" id="btnRestart">Пройти заново</button>
+      </div>
+    </div>
+  </section>
+</div>
+<footer>Опросник боли · автоматизация бизнес-процессов</footer>
+<div class="toast" id="toast">Скопировано в буфер обмена</div>
+
+<!-- Согласие на обработку персональных данных (152-ФЗ, ст.9) -->
+<div class="modal-backdrop" id="pdModal" role="dialog" aria-modal="true" aria-labelledby="pdModalTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="pdModalTitle">Согласие на обработку персональных данных</h3>
+      <p>Прочитайте условия и подтвердите согласие, чтобы продолжить.</p>
+    </div>
+    <div class="modal-body" id="pdConsentText"></div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost btn-sm" id="pdConsentCancel">Не согласен</button>
+      <button class="btn btn-primary btn-sm" id="pdConsentAccept">Согласен, продолжить</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= ДАННЫЕ ИЗ ДОКУМЕНТА (Опросник боли.odt) ================= */
+const GROUPS = {
+  Г1: { id:'Г1', name:'Лиды и заявки', short:'Быстрые продажи', desc:'Заявки теряются вне рабочего времени, нет продающего сайта, менеджер отвечает на однотипные вопросы, перенос заявок в CRM вручную, продукт не объясняется текстом.', solutions:'Ч (автоответ + квалификация) · S · A · V (калькулятор, конфигуратор, демо)', effect:'Заявки с ночи и выходных не теряются, менеджер не отвечает на однотипное.', who:'Менеджеры по продажам и входящие клиенты.', cost:'Число потерянных заявок × средний чек.' },
+  Г2: { id:'Г2', name:'Клиентская поддержка', short:'Поддержка и база знаний', desc:'Однотипные вопросы клиентов, знания в головах старожилов, очереди в час пик, разбросанные инструкции, нет покрытия ночью.', solutions:'Ч (статусы заказов, FAQ-бот, первая линия) · R (база знаний, корпоративный помощник)', effect:'Первая линия отвечает сразу, старожилов не дёргают по мелочам.', who:'Отдел поддержки и клиенты в очереди.', cost:'Часы на однотипные вопросы × ставка + скорость ответа.' },
+  Г3: { id:'Г3', name:'Рутина и документы', short:'Автоматизация операций', desc:'Набивка документов вручную, копирование данных между системами, согласования по почте, ручные отчёты.', solutions:'A (интеграции) · V (генератор документов, портал заявок, автоотчёты, дашборды)', effect:'Документы и отчёты собираются сами, ручного копирования нет.', who:'Бухгалтерия, ассистенты, офис-менеджеры.', cost:'Часы ручной набивки и копирования × ставка в месяц.' },
+  Г4: { id:'Г4', name:'Знания и HR', short:'Внутренний RAG', desc:'Долгий онбординг, знания уходят с сотрудниками, HR тонет в переписке, внутренние запросы через чат коллегам.', solutions:'R (онбординг-ассистент, зафиксировать БЗ) · Ч (скрининг-бот)', effect:'Новичок входит в работу быстрее, знания не уходят с людьми.', who:'HR, наставники, новые сотрудники.', cost:'Дни онбординга × зарплата новичка + часы HR на переписку.' },
+  Г5: { id:'Г5', name:'Склад и закупки', short:'Складской учёт', desc:'Склад в Excel, расхождения с реальностью, сверки с контрагентами вручную, дефициты замечают поздно, дебиторка по памяти.', solutions:'A + V (остатки онлайн, автосверка, дашборд, автозаказ, алерты, трекёр должников)', effect:'Остатки онлайн, дефициты видны заранее, сверки идут сами.', who:'Кладовщики, закупщики, бухгалтерия.', cost:'Часы сверок × ставка + списания от расхождений.' },
+  Г6: { id:'Г6', name:'Маркетинг и продажи', short:'Маркетинг и аналитика', desc:'Неизвестна стоимость заявки по каналам, прайс обновляется через подрядчика, SMM и рассылки вручную, анкеты с мероприятий на бумаге.', solutions:'S + A (сквозная аналитика) · V (самообновляемый каталог, генерация и планирование, QR-анкета в CRM)', effect:'Видно стоимость заявки по каждому каналу, каталог обновляется сам.', who:'Маркетолог и собственник.', cost:'Рекламный бюджет, который тратится без аналитики.' },
+  Г7: { id:'Г7', name:'Старые программы', short:'Легаси и кастом', desc:'Система старая, а улучшения для сотрудников постоянно откладываются — поэтому работа держится на рутине.', solutions:'V (новые модули рядом, быстрая сборка) · A (API-мосты) · V + A (единый дашборд)', effect:'Новые модули рядом с легаси, данные собраны в одну картину.', who:'ИТ и все, кто ждёт доработки.', cost:'Счёты подрядчика за мелкие доработки.' },
+  Г8: { id:'Г8', name:'Управление и цифры', short:'Дашборды и процессы', desc:'Собственник не видит цифры онлайн, процессы не описаны, статусы на планёрках, сотрудники заняты непрофильными задачами.', solutions:'V (панель собственника) · A + R (зафиксировать процессы) · A (уведомления) + V (трекер) · Ч + A + V', effect:'Цифры онлайн, планёрки короче, решения принимаются быстрее.', who:'Собственник и директора.', cost:'Часы планёрок и сбора отчётов × ставки руководителей.' }
+};
+const HIDDEN_GROUPS = ['Г1', 'Г2', 'Г6', 'Г8'];
+
+// Универсальный вопрос для всех — точка входа, без привязки к группе
+const UNIVERSAL_ENTRY_QUESTION = {
+  id: 'Ф0',
+  q: 'Что вы делаете руками каждый день?',
+  what: 'Ядро рутины'
+};
+
+// Уточняющие вопросы по группам — показываются только для выбранной focusGroup.
+// По 1–2 вопроса на группу, чтобы экран не был長ой простыней из 5 общих вопросов.
+const GROUP_ENTRY_QUESTIONS = {
+  Г1: [
+    { id:'ФГ1.1', q:'Заявки поступают в нерабочее время (вечер, выходной)?', groups:['Г1'] },
+    { id:'ФГ1.2', q:'Менеджер отвечает на однотипные вопросы (доставка, возврат, сроки)?', groups:['Г1'] }
+  ],
+  Г2: [
+    { id:'ФГ2.1', q:'Однотипных вопросов от клиентов больше 30% (статусы, сроки, оплата)?', groups:['Г2'] },
+    { id:'ФГ2.2', q:'Знания сидят в голове 2–3 человек? Если они уволятся — никто не знает, как оформлять возврат', groups:['Г2'] }
+  ],
+  Г3: [
+    { id:'ФГ3.1', q:'Данные переносятся между системами вручную (из 1С в Excel, из Excel в CRM)?', groups:['Г3'] },
+    { id:'ФГ3.2', q:'Договора, счета, акты набираются вручную из шаблона?', groups:['Г3'] }
+  ],
+  Г4: [
+    { id:'ФГ4.1', q:'Долгий онбординг — новичок неделю дёргает наставника по мелочам?', groups:['Г4'] },
+    { id:'ФГ4.2', q:'HR тонет в переписке с кандидатами и читает резюме вручную?', groups:['Г4'] }
+  ],
+  Г5: [
+    { id:'ФГ5.1', q:'Склад живёт в Excel и расходится с реальностью?', groups:['Г5'] },
+    { id:'ФГ5.2', q:'Сверки с контрагентами вручную по выгрузкам построчно?', groups:['Г5'] }
+  ],
+  Г7: [
+    { id:'ФГ7.1', q:'Основной учёт на легаси-системе, которую страшно трогать?', groups:['Г7'] },
+    { id:'ФГ7.2', q:'Мелкая доработка у подрядчика стоит как проект?', groups:['Г7'] }
+  ],
+  Г8: [
+    { id:'ФГ8.1', q:'Собственник не видит цифры онлайн, спрашивает директоров и ждёт отчёт?', groups:['Г8'] },
+    { id:'ФГ8.2', q:'Статусы выясняются на планёрках по полтора часа?', groups:['Г8'] }
+  ]
+};
+
+// Отображаемое имя симптома без служебного префикса "s"
+function symptomLabel(id){ return String(id||'').replace(/^s/, ''); }
+
+// Понятные симптомы — только подсказка, не автовыбор группы
+const SYMPTOMS = [
+  { id:'symЗаявкиВечер', text:'Заявки теряются по вечерам и выходным', group:'Г1' },
+  { id:'sОднотипныеВопросы', text:'Однотипные вопросы клиентов (статусы, сроки, оплата)', group:'Г2' },
+  { id:'sРучнаяПереносДанных', text:'Данные переносятся между системами вручную', group:'Г3' },
+  { id:'sДокументыВручную', text:'Договора, счета, акты набираются вручную', group:'Г3' },
+  { id:'sЗнанияУходят', text:'Знания уходят с сотрудниками, долгий онбординг', group:'Г4' },
+  { id:'sСкладExcel', text:'Склад в Excel, сверки с контрагентами вручную', group:'Г5' },
+  { id:'sНетАналитики', text:'Неизвестна стоимость заявки по каналам', group:'Г6' },
+  { id:'sПрайсВручную', text:'Прайс и каталог обновляются вручную через подрядчика', group:'Г6' },
+  { id:'sЛегаси', text:'Легаси-система, мелкая доработка стоит как проект', group:'Г7' },
+  { id:'sНетЦифр', text:'Собственник не видит цифры онлайн, статусы на планёрках', group:'Г8' }
+];
+
+// Сигнальные вопросы по группам (Г2 … Г8)
+const DEEP_QUESTIONS = [
+  { id:'Г1.1', group:'Г1', q:'Заявки теряются в нерабочее время? (клиент написал в 21:00, ответ утром — уже купил у конкурента)', how:'Клиент написал в 21:00, ответ утром — уже купил у конкурента', solutions:'Ч (автоответ + квалификация)' },
+  { id:'Г1.2', group:'Г1', q:'Есть ли у вас продающий сайт, и приносит ли он хотя бы одну заявку в неделю?', how:'«Работаем по сарафану», сайт есть, но стыдно показывать', solutions:'S' },
+  { id:'Г1.3', group:'Г1', q:'Менеджер отвечает на однотипные вопросы (доставка, возврат, сроки отправки)?', how:'«А доставка сколько? А возврат? Когда отправите?»', solutions:'Ч + R' },
+  { id:'Г1.4', group:'Г1', q:'Заявки из почты и мессенджеров переносятся в CRM вручную?', how:'Почта и мессенджеры → таблица → CRM, кто-то копирует', solutions:'A' },
+  { id:'Г1.5', group:'Г1', q:'Продукт сложно объяснить текстом на сайте, нужен звонок продажника?', how:'Продукт понятен только своим продажникам', solutions:'S + V (калькулятор, конфигуратор, демо)' },
+
+  { id:'Г2.1', group:'Г2', q:'Доля однотипных вопросов клиентов 30–70%? (статусы, сроки, оплата, инструкции)', how:'Статусы, сроки, оплата, инструкции', solutions:'Ч (статусы заказов, FAQ-бот)' },
+  { id:'Г2.2', group:'Г2', q:'Знания сидят в голове 2–3 старожилов? Если они уволятся — никто не знает, как оформлять возврат', how:'Они уволились — никто не знает, как оформлять возврат', solutions:'R (по регламентам и БЗ)' },
+  { id:'Г2.3', group:'Г2', q:'Очереди в час пик, время ожидания растёт, покупатели уходят?', how:'Время ожидания растёт, покупатели уходят', solutions:'Ч (первая линия)' },
+  { id:'Г2.4', group:'Г2', q:'Инструкции разбросаны по 15 файлам: почта, диски, чаты, голова Ивана?', how:'Почта, диски, чаты, голова Ивана', solutions:'R (корпоративный помощник)' },
+  { id:'Г2.5', group:'Г2', q:'Нет покрытия вне часов работы, ночные и праздничные запросы теряются?', how:'Ночные и праздничные запросы теряются', solutions:'Ч (офлайн-приём)' },
+
+  { id:'Г3.1', group:'Г3', q:'Набивка однотипных документов вручную (счета, договоры, акты из шаблона)?', how:'Счета, договоры, акты из шаблона с ручной заменой полей', solutions:'A + V (генератор документов)' },
+  { id:'Г3.2', group:'Г3', q:'Данные копируются между системами вручную (из 1С в Excel, из Excel в CRM, из CRM на почту)?', how:'Из 1С в Excel, из Excel в CRM, из CRM на почту', solutions:'A (интеграции)' },
+  { id:'Г3.3', group:'Г3', q:'Внутренние заявки и согласования идут по почте или в чате?', how:'Цепочки писем «согласуйте, пожалуйста»', solutions:'V (портал заявок с маршрутами)' },
+  { id:'Г3.4', group:'Г3', q:'Отчёты собираются вручную (кто-то каждую пятницу три часа сводит Excel)?', how:'Кто-то каждую пятницу три часа сводит Excel', solutions:'A + V (автоотчёты, дашборды)' },
+
+  { id:'Г4.1', group:'Г4', q:'Долгий онбординг — новичок неделю дёргает наставника по мелочам?', how:'Новичок неделю дёргает наставника по мелочам', solutions:'R (онбординг-ассистент)' },
+  { id:'Г4.2', group:'Г4', q:'Регламенты и инструкции существуют и актуальны? Или ключевые процессы знал только один человек?', how:'Ключевые процессы знал только один человек', solutions:'R (зафиксировать БЗ заранее)' },
+  { id:'Г4.3', group:'Г4', q:'HR тонет в переписке с кандидатами и читает резюме вручную?', how:'Однотипные вопросы, ручное чтение резюме', solutions:'Ч (скрининг-бот)' },
+  { id:'Г4.4', group:'Г4', q:'Сотрудники пишут в чат коллегам за справками и доступами?', how:'«Кому писать за справкой? Как оформить отпуск?»', solutions:'Ч + R' },
+
+  { id:'Г5.1', group:'Г5', q:'Склад живёт в Excel и расходится с реальностью?', how:'Сайт показывает то, чего нет; продажи «в воздух»', solutions:'A + V (остатки онлайн, инвентаризация)' },
+  { id:'Г5.2', group:'Г5', q:'Сверки с контрагентами вручную по выгрузкам построчно?', how:'Бухгалтер сравнивает выгрузки построчно', solutions:'A + V (автосверка)' },
+  { id:'Г5.3', group:'Г5', q:'Дефициты замечаете, когда товар уже кончился? Нет прогноза и алертов по остаткам?', how:'Нет прогноза и алертов по остаткам', solutions:'V (дашборд, автозаказ, алерты)' },
+  { id:'Г5.4', group:'Г5', q:'Дебиторка контролируется по памяти («кому звонить — помнит Вера»)?', how:'«Кому звонить — помнит Вера»', solutions:'V (трекер должников + напоминания)' },
+
+  { id:'Г6.1', group:'Г6', q:'Знаете стоимость заявки по каждому рекламному каналу?', how:'Реклама есть, эффекта не видно', solutions:'S + A (сквозная аналитика)' },
+  { id:'Г6.2', group:'Г6', q:'Прайс и каталог обновлять неудобно — правки через подрядчика, дорого и долго?', how:'Правки через подрядчика, дорого и две недели', solutions:'V (самообновляемый каталог)' },
+  { id:'Г6.3', group:'Г6', q:'SMM и рассылки ведутся вручную, одно и то же публикуют по площадкам руками?', how:'Одно и то же постят по площадкам руками', solutions:'A + V (генерация и планирование)' },
+  { id:'Г6.4', group:'Г6', q:'Анкеты с мероприятий на бумаге, потом переносятся в CRM вручную?', how:'Анкеты потом вручную переносят в CRM', solutions:'A + V (QR-анкета сразу в CRM)' },
+
+  { id:'Г7.1', group:'Г7', q:'Основной учёт на легаси-системе, которую страшно трогать?', how:'Основной учёт на устаревшей версии', solutions:'V (новые модули рядом) + A (API-мосты)' },
+  { id:'Г7.2', group:'Г7', q:'Мелкая доработка у подрядчика стоит как проект (например, 100 000 ₽ за простую форму)?', how:'Подрядчик просит 100 тысяч за простую форму', solutions:'V (быстрый сбор своими силами)' },
+  { id:'Г7.3', group:'Г7', q:'Чтобы узнать «сколько мы заработали на X», нужно долго собирать цифры вручную?', how:'В каждой системе своя правда, цифры расходятся', solutions:'A + V (единый дашборд)' },
+  { id:'Г7.4', group:'Г7', q:'Есть внутренний сервис, который просили давно, но «руки не дошли»?', how:'Логин-портал, заявки на оборудование лежат в бэклоге', solutions:'V' },
+
+  { id:'Г8.1', group:'Г8', q:'Собственник не видит цифры онлайн, спрашивает директоров и ждёт отчёт?', how:'Спрашивает директоров, ждёт отчёт', solutions:'V (панель собственника)' },
+  { id:'Г8.2', group:'Г8', q:'Процессы компании где-то описаны, есть регламенты?', how:'«Как принято», нет регламентов — нет входа для RAG', solutions:'A + R (сначала зафиксировать процессы)' },
+  { id:'Г8.3', group:'Г8', q:'Статусы выясняются на планёрках по полтора часа или в системе?', how:'Совещания по полтора часа ради статусов', solutions:'A (уведомления) + V (трекер)' },
+  { id:'Г8.4', group:'Г8', q:'Сотрудники заняты непрофильными задачами (сисадмин сводит отчёты, бухгалтер заказывает канцелярию)?', how:'Сисадмин сводит отчёты, бухгалтер заказывает канцелярию', solutions:'Ч + A + V' }
+];
+
+const SIGNALS = [
+  { id:'с1', text:'Могу точно назвать, сколько времени съедает рутина: минуты или часы за раз', groups:['любая'], pts:+2 },
+  { id:'с2', text:'Одни и те же данные переносим руками между системами (например, из 1С в Excel, из Excel в CRM)', groups:['Г3','Г7'], pts:+2 },
+  { id:'с3', text:'Больше трети обращений клиентов — однотипные вопросы: статус заказа, сроки, оплата', groups:['Г2'], pts:+2 },
+  { id:'с4', text:'Клиенты пишут вечером или в выходной, и заявки теряются до утра', groups:['Г1'], pts:+2 },
+  { id:'с5', text:'В компании уже есть база знаний или регламенты — есть на что опереться при внедрении', groups:['Г4'], pts:+2 },
+  { id:'с6', text:'Есть бюджет на автоматизацию: знаем, сколько готовы тратить', groups:['любая'], pts:+2 },
+  { id:'с7', text:'Решение о покупке принимаю я сам (владелец или директор)', groups:['любая'], pts:+2 },
+  { id:'с8', text:'Склад ведём в Excel, остатки сверяем вручную', groups:['Г5'], pts:+1 },
+  { id:'с9', text:'Не знаем, сколько стоит заявка и какой канал привлекает клиентов', groups:['Г6'], pts:+1 },
+  { id:'с10', text:'Нам ничего менять не нужно — всё и так работает', groups:['—'], pts:-2 },
+  { id:'с11', text:'Интерес из любопытства: думаем, но делать ничего не планируем', groups:['—'], pts:-2 },
+  { id:'с12', text:'ИТ-систем нет, и бюджета на них не планируем', groups:['—'], pts:-1 }
+];
+
+const VERDICTS = {
+  hot: { label:'ГОРЯЧИЙ', cls:'hot', desc:'Разговор только про 1–2 сильнейшие группы. Звонок в течение 48 часов, демо по его сценарию.', threshold:8 },
+  warm: { label:'ТЁПЛЫЙ', cls:'warm', desc:'Выслать кейс именно по его группе боли, предложить бесплатный мини-прототип.', threshold:4 },
+  base: { label:'В БАЗУ', cls:'base', desc:'Общая рассылка, вернуться на следующей выставке.', threshold:0 },
+  no: { label:'НЕ ТРАТИТЬ РЕСУРС', cls:'no', desc:'Меньше 0 баллов.', threshold:-999 },
+  insufficient: { label:'НЕДОСТАТОЧНО ДАННЫХ', cls:'insufficient', desc:'Не подтверждена ни одна боль (глубинные вопросы без оценки Редко/Регулярно/Постоянно) и нет сигналов. Невозможно выявить приоритетную проблему без ответов.', threshold:-998 }
+};
+
+// Версия правил скорфинга (справочник сигналов и глубинных вопросов).
+// Любое изменение весов/порогов — требует инкремента версии и записи в CHANGELOG.
+const SCORING_RULES_VERSION = '1.1';
+
+/* ================= КЛАССИФИКАЦИЯ СИГНАЛОВ =================
+   Сигналы делятся на две группы:
+   - боль (выраженность проблемы сотрудника) — независимы от бюджета
+   - коммерческая готовность (бюджет, полномочия, отрицательные признаки)
+*/
+const PAIN_SIGNAL_IDS = new Set(['с1','с2','с3','с4','с8','с9']);
+const COMMERCIAL_SIGNAL_IDS = new Set(['с5','с6','с7','с10','с11','с12']);
+
+function signalType(id){
+  if(PAIN_SIGNAL_IDS.has(id)) return 'pain';
+  if(COMMERCIAL_SIGNAL_IDS.has(id)) return 'commercial';
+  return 'unknown';
+}
+
+/* ================= ЕДИНЫЙ НАБОР ИСПОЛЬЗУЕМЫХ СИСТЕМ (IT-стек) =================
+   Системы называются в Ф3 (шаг 2) и ранее вводились повторно на шаге 5 (fHas).
+   Храним один набор state.systems, показываем для проверки и дополнения на шаге 5.
+*/
+const KNOWN_SYSTEMS = [
+  '1с','excel','crm','битрикс24','amocrm','google таблицы','google sheets','таблицы',
+  'сайт','тильда','wordpress','телеграм','whatsapp','виртуальная АТС','asterisk',
+  'телефония','erp','моисклад','мой склад','планфикс','трекер','документы'
+];
+
+function normalizeSystem(s){
+  return s.trim().replace(/\s+/,' ').replace(/^,|,$/g,'').trim();
+}
+function addSystemsFromText(text){
+  if(!text) return false;
+  let changed = false;
+  const lower = text.toLowerCase();
+  KNOWN_SYSTEMS.forEach(k=>{
+    if(lower.includes(k) && !state.systems.some(s=>s.toLowerCase()===k)){
+      state.systems.push(k.charAt(0).toUpperCase()+k.slice(1));
+      changed = true;
+    }
+  });
+  return changed;
+}
+function addSystemManual(s){
+  s = normalizeSystem(s);
+  if(!s || s.length<2 || s.length>60) return false;
+  if(state.systems.some(x=>x.toLowerCase()===s.toLowerCase())) return false;
+  state.systems.push(s);
+  return true;
+}
+function removeSystem(s){
+  state.systems = state.systems.filter(x=>x!==s);
+  state.has = state.systems.join(', ');
+  saveDraft();
+  renderSystemsChips();
+}
+
+/* Отрисовать чипы используемых систем */
+function renderSystemsChips(){
+  const box = $('#systemsChips');
+  if(!box) return;
+  box.innerHTML = '';
+  state.systems.forEach(s=>{
+    const wrap = document.createElement('span');
+    wrap.className = 'inline-item';
+    wrap.style.display = 'inline-flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.padding = '4px 8px';
+    wrap.style.background = '#1e2a3a';
+    wrap.style.border = '1px solid var(--border)';
+    wrap.style.borderRadius = '12px';
+    wrap.style.fontSize = '0.8rem';
+    wrap.style.color = 'var(--text)';
+    wrap.innerHTML = `<span style="color:var(--muted)">${s}</span>
+      <button type="button" style="background:none;border:none;color:var(--muted);cursor:pointer;padding:0 2px;font-size:0.9rem;line-height:1" title="Удалить">&times;</button>`;
+    wrap.querySelector('button').addEventListener('click',()=>removeSystem(s));
+    box.appendChild(wrap);
+  });
+}
+
+/* ================= АВТОПОДСТАНОВКА СИГНАЛОВ ИЗ СТРУКТУРИРОВАННЫХ ФАКТОВ =================
+   Только структурированные ответы (шкала глубины, метрики эффекта) подставляют сигналы.
+   Свободный текст из входных вопросов (entryAnswers) — только подсказка, не бесспорный факт.
+*/
+const AUTO_SIGNAL_RULES = [
+  { signalId:'с1', check:()=>Boolean(state.effectMetrics['Г3.2']?.qtyPerDay && state.effectMetrics['Г3.2']?.minsPerOp),
+    source:()=>'Метрика Г3.2: ' + state.effectMetrics['Г3.2'].qtyPerDay + ' × ' + state.effectMetrics['Г3.2'].minsPerOp + ' минут/день' },
+  { signalId:'с2', check:()=>Number(state.deep['Г3.1']||0)>=1 || Number(state.deep['Г3.2']||0)>=1,
+    source:()=>'Глубинный вопрос Г3: перенос данных между системами подтверждён' },
+  { signalId:'с8', check:()=>Number(state.deep['Г5.1']||0)>=1 || Number(state.deep['Г5.2']||0)>=1,
+    source:()=>'Глубинный вопрос Г5: склад в Excel / сверки вручную подтверждены' },
+  { signalId:'с9', check:()=>state.deep['Г6.1']===0,
+    source:()=>'Глубинный вопрос Г6.1: стоимость заявки по каналам не отслеживается' },
+];
+
+function applyAutoSignals(){
+  let changed = false;
+  const focusGroup = state.focusGroup || null;
+  AUTO_SIGNAL_RULES.forEach(rule=>{
+    if(!rule.check()) return;
+    const sig = SIGNALS.find(s=>s.id===rule.signalId);
+    if(!sig) return;
+    if(signalRelevantToGroup(sig, focusGroup)){
+      if(!state.signals.has(rule.signalId)){
+        state.signals.add(rule.signalId);
+        state.autoSignalSources[rule.signalId] = rule.source();
+        changed = true;
+      }
+    } else if(focusGroup){
+      if(!state.signalsForNextPass.has(rule.signalId)){
+        state.signalsForNextPass.add(rule.signalId);
+        state.autoSignalSources[rule.signalId] = rule.source() + ' (другая группа)';
+        changed = true;
+      }
+    }
+  });
+  return changed;
+}
+
+/* ================= СОГЛАСИЕ НА ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ =================
+   Основа — ст. 9 Федерального закона от 27.07.2006 № 152-ФЗ
+   «О персональных данных» (в действующей редакции):
+   ч.1 — согласие свободное, конкретное, информированное, однозначное; оформляется
+         ОТДЕЛЬНО от иных документов (здесь — отдельное модальное окно);
+   ч.3 — оператор обязан иметь доказательство получения согласия: в анкете
+         сохраняются дата, время и версия текста согласия.
+   Текст намеренно короткий и человеческим языком: без реквизитов юрлица.
+   ------------------------------------------------------------------ */
+const PD_CONSENT_VERSION = '1.0'; // версия текста согласия: меняется при правке текста
+
+/* ---------- модальное окно согласия ---------- */
+
+// действие, которое выполняется после того, как пользователь подтвердил согласие
+let pdAfterAccept = null;
+
+function buildPdConsentHtml(){
+  return `
+    <p>Отправляя анкету, вы соглашаетесь на обработку персональных данных: ФИО, должность и отдел, контактные данные (телефон, email или Telegram), название компании и сведения о рабочих процессах, которые вы опишете.</p>
+
+    <p>Данные нужны, чтобы разобрать описанные процессы, оценить трудозатраты и подготовить предложение по автоматизации, а также чтобы связаться с вами по результатам.</p>
+
+    <p>Согласие можно отозвать в любой момент — напишите нам тем способом, которым мы с вами связываемся (телефон, email или Telegram из анкеты).</p>`;
+}
+
+function openPdConsentModal(){
+  const modal = $('#pdModal');
+  if(!modal) return;
+  $('#pdConsentText').innerHTML = buildPdConsentHtml();
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  $('#pdConsentAccept').focus();
+}
+
+function closePdConsentModal(){
+  const modal = $('#pdModal');
+  if(!modal) return;
+  modal.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+
+/* ================= STATE ================= */
+const state = {
+  companyName: '', contactName: '', contactRole: '', contactDept: '', contactInfo: '', staff: '',
+  systems: [],          // один набор используемых систем (единый источник истины)
+  accessConstraints: '', // ограничения доступа к системам
+  integrationOptions: '', // возможные способы интеграции
+  restrictions: {       // ограничения из справочника (не собираем секретные данные)
+    hasExternalRestrictions: false,
+    allowedSystems: '',
+    approver: '',
+    noExternalData: '',
+    industryRequirements: '',
+    languageJurisdiction: ''
+  },
+  entryAnswers: {},      // id вопроса -> текст ответа (Ф0, ФГx.y и т.д.)
+  entryOtherId: '',      // вариант «Не знаю» на универсальном вопросе
+  entryGroups: new Set(), // все отмеченные группы (включая отложенные)
+  focusGroup: null,   // одна основная проблема для текущего прохода
+  nextPassGroups: [], // группы, отложенные на следующие проходы
+  entryOther: false, // «Не знаю / другая группа» (на уровне групп)
+  entryOtherText: '', // уточнение своими словами
+  mainTask: '',      // одна конкретная задача
+  symptoms: new Set(), // отмеченные симптомы (идентификаторы SYMPTOMS)
+  selectedSymptomId: '', // код выбранного симптома (Г5.1 и т.д.) — один на проход
+  symptomEmployee: '',   // сотрудник, который страдает / выполняет эту рутину
+  symptomDescription: '', // собственное описание проблемы сотрудником
+  symptomLastCase: '',   // пример последнего случая
+  deep: {},         // код симптома -> оценка 0..3 или 'na'
+  signals: new Set(), // id сигналов
+  autoSignalSources: {}, // signalId -> текст источника (автоподставленные сигналы)
+  signalsForNextPass: new Set(), // сигналы других групп, отложенные для следующего прохода
+  signalClarification: '', // уточнение при противоречии боль + «всё работает»
+  has: '', outsource: '', demo: '', demoResponsible: '', demoDate: '', comment: '', diagnosisConfirm: '',
+  effectMetrics: {},   // { 'Г3.2': { qtyPerDay, minsPerOp, dataSource, dataRecipient }, 'Г1.4': { crmAutoShare } }
+  workDaysPerWeek: '', // число рабочих дней в неделю (для недельного расчёта)
+  pdConsent: { given:false, at:'', version:PD_CONSENT_VERSION }, // согласие на обработку ПДн (152-ФЗ, ст.9)
+};
+
+/* Полный сброс состояния анкеты для повторного прохода без перезагрузки страницы */
+function resetState(){
+  state.companyName = ''; state.contactName = ''; state.contactRole = ''; state.contactDept = ''; state.contactInfo = ''; state.staff = '';
+  state.systems = [];
+  state.accessConstraints = ''; state.integrationOptions = '';
+  state.restrictions = { hasExternalRestrictions: false, allowedSystems: '', approver: '', noExternalData: '', industryRequirements: '', languageJurisdiction: '' };
+  state.entryAnswers = {}; state.entryOtherId = '';
+  state.entryGroups = new Set(); state.focusGroup = null; state.nextPassGroups = [];
+  state.entryOther = false; state.entryOtherText = ''; state.mainTask = '';
+  state.symptoms = new Set(); state.selectedSymptomId = '';
+  state.symptomEmployee = ''; state.symptomDescription = ''; state.symptomLastCase = '';
+  state.deep = {}; state.signals = new Set(); state.autoSignalSources = {};
+  state.signalsForNextPass = new Set(); state.signalClarification = '';
+  state.has = ''; state.outsource = ''; state.demo = ''; state.demoResponsible = ''; state.demoDate = ''; state.comment = ''; state.diagnosisConfirm = '';
+  state.effectMetrics = {}; state.workDaysPerWeek = '';
+  state.pdConsent = { given:false, at:'', version:PD_CONSENT_VERSION }; // согласие спрашивается заново
+}
+
+const DRAFT_KEY = 'ferma_oprosnik_draft';
+// версия схемы черновика: при изменении старый черновик сбрасывается автоматически
+const DRAFT_VERSION = '3.0';
+const DRAFT_VERSION_KEY = 'ferma_oprosnik_draft_version';
+
+// состояние отправки в таблицу (защита от повторных дублей)
+let isSubmitting = false;
+let submitted = false;
+
+/* ---------- черновик (localStorage) ---------- */
+
+function saveDraft() {
+  try {
+    const serializable = {
+      ...state,
+      entryGroups: [...state.entryGroups],
+      signals: [...state.signals],
+      signalsForNextPass: [...state.signalsForNextPass],
+      symptoms: [...state.symptoms],
+      selectedSymptomId: state.selectedSymptomId,
+      symptomEmployee: state.symptomEmployee,
+      symptomDescription: state.symptomDescription,
+      symptomLastCase: state.symptomLastCase,
+      entryOther: state.entryOther,
+      entryOtherText: state.entryOtherText,
+      signalClarification: state.signalClarification
+    };
+    serializable.__draftVersion = DRAFT_VERSION;
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(serializable));
+    localStorage.setItem(DRAFT_VERSION_KEY, DRAFT_VERSION);
+    showSaveStatus('saved', 'Сохранено');
+    setTimeout(() => $('#saveStatus').textContent = '', 1500);
+  } catch (e) {
+    showSaveStatus('saving', 'Ошибка сохранения');
+  }
+}
+
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    if (!raw) return false;
+    const d = JSON.parse(raw);
+    // старый черновик другой версии схемы — сбрасываем, чтобы не ломать новую логику
+    if (d.__draftVersion !== DRAFT_VERSION) {
+      localStorage.removeItem(DRAFT_KEY);
+      localStorage.setItem(DRAFT_VERSION_KEY, DRAFT_VERSION);
+      return false;
+    }
+    Object.assign(state, d);
+    delete state.__draftVersion;
+    // согласие: в старых черновиках его нет, а согласие по другой версии текста не принимается
+    const pc = d.pdConsent || {};
+    state.pdConsent = {
+      given: !!pc.given && pc.version === PD_CONSENT_VERSION,
+      at: pc.at || '',
+      version: PD_CONSENT_VERSION
+    };
+    state.entryGroups = new Set(d.entryGroups || []);
+    state.signals = new Set(d.signals || []);
+    state.signalsForNextPass = new Set(d.signalsForNextPass || []);
+    state.symptoms = new Set(d.symptoms || []);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function showSaveStatus(kind, text) {
+  const el = $('#saveStatus');
+  el.textContent = text;
+  el.className = 'save-status ' + kind;
+}
+
+/* ---------- экспорт / импорт JSON ---------- */
+
+function serializeExport(){
+  const { score, verdict, activeGroups, topGroups, painScore, commercialScore, painBreakdown, commercialBreakdown, groupBonus, signalBonus, scoringRulesVersion, hasConfirmedPain, hasAnySignal } = calc();
+  const now = new Date().toISOString();
+  const sym = state.selectedSymptomId || '';
+  const fg = state.focusGroup || null;
+  const painCode = sym || (fg? GROUPS[fg]?.code || '' : '');
+  const companyKey = (state.companyName || '').toLowerCase().replace(/[^а-яёa-z0-9]+/g,'_') || 'noname';
+  return {
+    schemaVersion: '2.0',
+    exportedAt: now,
+    case_id: 'case_' + Date.now(),
+    company_id: 'comp_' + companyKey + '_' + Date.now(),
+    employee_id: 'emp_' + (state.symptomEmployee || 'unknown') + '_' + Date.now(),
+    companyName: state.companyName || '',
+    contactName: state.contactName || '',
+    contactRole: state.contactRole || '',
+    contactDept: state.contactDept || '',
+    contactInfo: state.contactInfo || '',
+    staff: state.staff || '',
+    mainTask: state.mainTask || '',
+    focusGroup: fg || null,
+    focusGroupName: fg? GROUPS[fg].name : '',
+    nextPassGroups: state.nextPassGroups || [],
+    entryGroups: [...state.entryGroups],
+    entryAnswers: { ...state.entryAnswers },
+    entryOther: state.entryOther,
+    entryOtherText: state.entryOtherText || '',
+    entryOtherId: state.entryOtherId || '',
+    symptomCode: painCode,
+    selectedSymptomId: sym,
+    symptomEmployee: state.symptomEmployee || '',
+    symptomDescription: state.symptomDescription || '',
+    symptomLastCase: state.symptomLastCase || '',
+    painScale: $('#pcPainScale')? $('#pcPainScale').textContent : '',
+    deep: { ...state.deep },
+    effectMetrics: { ...state.effectMetrics },
+    workDaysPerWeek: state.workDaysPerWeek || '',
+    signals: [...state.signals],
+    signalsForNextPass: [...state.signalsForNextPass],
+    autoSignalSources: { ...state.autoSignalSources },
+    signalClarification: state.signalClarification || '',
+    score: score || 0,
+    painScore: painScore || 0,
+    commercialScore: commercialScore || 0,
+    score_breakdown: {
+      groupBonus: groupBonus || 0,
+      signalBonus: signalBonus || 0,
+      painBreakdown: painBreakdown || [],
+      commercialBreakdown: commercialBreakdown || []
+    },
+    verdict: verdict? verdict.label : '',
+    verdictDesc: verdict? verdict.desc : '',
+    scoringRulesVersion: scoringRulesVersion || '1.0',
+    hasConfirmedPain: !!hasConfirmedPain,
+    hasAnySignal: !!hasAnySignal,
+    recommendation: buildRecommendationText(),
+    next_action: $('#resNext')? $('#resNext').querySelector('p')?.textContent || '' : '',
+    has: state.has || '',
+    systems: [...state.systems],
+    accessConstraints: state.accessConstraints || '',
+    integrationOptions: state.integrationOptions || '',
+    outsource: state.outsource || '',
+    restrictions: { ...state.restrictions },
+    demo: state.demo || '',
+    demoResponsible: state.demoResponsible || '',
+    demoDate: state.demoDate || '',
+    comment: state.comment || '',
+    diagnosisConfirm: state.diagnosisConfirm || '',
+    pdConsent: {
+      given: !!state.pdConsent.given,
+      at: state.pdConsent.at || '',
+      version: state.pdConsent.version || PD_CONSENT_VERSION
+    }
+  };
+}
+
+function importFromJson(data){
+  try {
+    if(!data) throw new Error('пустой файл');
+    const scalarFields = [
+      'companyName','contactName','contactRole','contactDept','contactInfo','staff',
+      'mainTask','focusGroup','entryOther','entryOtherText','entryOtherId',
+      'selectedSymptomId','symptomEmployee','symptomDescription','symptomLastCase',
+      'workDaysPerWeek','signalClarification','has','accessConstraints','integrationOptions',
+      'outsource','demo','demoResponsible','demoDate','comment','diagnosisConfirm'
+    ];
+    scalarFields.forEach(f=>{ if(f in data) state[f] = data[f]; });
+    if(Array.isArray(data.entryGroups)) state.entryGroups = new Set(data.entryGroups);
+    if(Array.isArray(data.signals)) state.signals = new Set(data.signals);
+    if(Array.isArray(data.signalsForNextPass)) state.signalsForNextPass = new Set(data.signalsForNextPass);
+    if(Array.isArray(data.systems)) state.systems = [...data.systems];
+    if(Array.isArray(data.symptoms)) state.symptoms = new Set(data.symptoms);
+    if(data.entryAnswers && typeof data.entryAnswers === 'object') state.entryAnswers = { ...data.entryAnswers };
+    if(data.deep && typeof data.deep === 'object') state.deep = { ...data.deep };
+    if(data.effectMetrics && typeof data.effectMetrics === 'object') state.effectMetrics = { ...data.effectMetrics };
+    if(data.autoSignalSources && typeof data.autoSignalSources === 'object') state.autoSignalSources = { ...data.autoSignalSources };
+    if(data.restrictions && typeof data.restrictions === 'object') state.restrictions = { ...state.restrictions, ...data.restrictions };
+    if(Array.isArray(data.nextPassGroups)) state.nextPassGroups = [...data.nextPassGroups];
+    // согласие из файла не импортируем: доказательством является отметка в этой сессии
+    return true;
+  } catch(e){
+    console.error('import error', e);
+    return false;
+  }
+}
+
+/* ---------- автосохранение при вводе ---------- */
+
+function wireAutoSave() {
+  // текстовые поля
+  $('#fCompany')?.addEventListener('input', () => { state.companyName = $('#fCompany').value.trim(); saveDraft(); });
+  $('#fContactName')?.addEventListener('input', () => { state.contactName = $('#fContactName').value.trim(); saveDraft(); });
+  $('#fContactRole')?.addEventListener('input', () => { state.contactRole = $('#fContactRole').value.trim(); saveDraft(); });
+  $('#fContactDept')?.addEventListener('input', () => { state.contactDept = $('#fContactDept').value.trim(); saveDraft(); });
+  $('#fContactInfo')?.addEventListener('input', () => { state.contactInfo = $('#fContactInfo').value.trim(); saveDraft(); });
+  $('#fSystemAdd')?.addEventListener('input', () => { /* ввод, не сохраняем каждый символ */ });
+  $('#btnSystemAdd')?.addEventListener('click', () => {
+    const v = $('#fSystemAdd').value.trim();
+    if(addSystemManual(v)){
+      $('#fSystemAdd').value = '';
+      renderSystemsChips();
+    }
+  });
+  $('#fSystemAdd')?.addEventListener('keydown',(e)=>{
+    if(e.key === 'Enter'){ e.preventDefault(); $('#btnSystemAdd').click(); }
+  });
+  $('#fAccessConstraints')?.addEventListener('input', () => { state.accessConstraints = $('#fAccessConstraints').value.trim(); saveDraft(); });
+  $('#fIntegrationOptions')?.addEventListener('input', () => { state.integrationOptions = $('#fIntegrationOptions').value.trim(); saveDraft(); });
+  $('#fOutsource')?.addEventListener('input', () => { state.outsource = $('#fOutsource').value.trim(); saveDraft(); });
+
+  // Ограничения из справочника
+  document.querySelectorAll('input[name="restrictionsHas"]').forEach(r => r.addEventListener('change', () => {
+    state.restrictions.hasExternalRestrictions = r.value === 'yes';
+    const show = r.value === 'yes';
+    $('#restrictionsFields').style.display = show ? 'block' : 'none';
+    $('#restrictionsRecommend').style.display = show ? 'block' : 'none';
+    saveDraft();
+  }));
+  $('#fAllowedSystems')?.addEventListener('input', () => { state.restrictions.allowedSystems = $('#fAllowedSystems').value.trim(); saveDraft(); });
+  $('#fApprover')?.addEventListener('input', () => { state.restrictions.approver = $('#fApprover').value.trim(); saveDraft(); });
+  $('#fNoExternalData')?.addEventListener('input', () => { state.restrictions.noExternalData = $('#fNoExternalData').value.trim(); saveDraft(); });
+  $('#fIndustryRequirements')?.addEventListener('input', () => { state.restrictions.industryRequirements = $('#fIndustryRequirements').value.trim(); saveDraft(); });
+  $('#fLanguageJurisdiction')?.addEventListener('input', () => { state.restrictions.languageJurisdiction = $('#fLanguageJurisdiction').value.trim(); saveDraft(); });
+  $('#fComment')?.addEventListener('input', () => { state.comment = $('#fComment').value.trim(); saveDraft(); });
+
+  // подтверждение диагноза
+  document.querySelectorAll('input[name="diagnosisConfirm"]').forEach(r => r.addEventListener('change', () => {
+    state.diagnosisConfirm = document.querySelector('input[name="diagnosisConfirm"]:checked')?.value || '';
+    saveDraft();
+    if(state.diagnosisConfirm === 'no'){
+      showStep(2);
+    }
+  }));
+
+  // радиобаттоны staff
+  document.querySelectorAll('input[name="staff"]').forEach(r => r.addEventListener('change', () => {
+    state.staff = document.querySelector('input[name="staff"]:checked')?.value || '';
+    saveDraft();
+  }));
+  $('#fMainTask')?.addEventListener('input', () => {
+    state.mainTask = $('#fMainTask').value.trim();
+    saveDraft();
+  });
+
+  // радиобаттоны demo
+  document.querySelectorAll('input[name="demo"]').forEach(r => r.addEventListener('change', () => {
+    state.demo = document.querySelector('input[name="demo"]:checked')?.value || '';
+    toggleDemoDetail();
+    saveDraft();
+  }));
+  $('#fDemoResponsible')?.addEventListener('input', () => { state.demoResponsible = $('#fDemoResponsible').value.trim(); saveDraft(); });
+  $('#fDemoDate')?.addEventListener('input', () => { state.demoDate = $('#fDemoDate').value.trim(); saveDraft(); });
+
+  // «Не знаю / другая группа»
+  $('#entryOther')?.addEventListener('change', () => {
+    state.entryOther = $('#entryOther').checked;
+    saveDraft();
+  });
+  $('#entryOtherText')?.addEventListener('input', () => {
+    state.entryOtherText = $('#entryOtherText').value.trim();
+    saveDraft();
+  });
+
+  // уточнения симптома
+  $('#symptomEmployee')?.addEventListener('input', () => { state.symptomEmployee = $('#symptomEmployee').value.trim(); saveDraft(); });
+  $('#symptomDescription')?.addEventListener('input', () => { state.symptomDescription = $('#symptomDescription').value.trim(); saveDraft(); });
+  $('#symptomLastCase')?.addEventListener('input', () => { state.symptomLastCase = $('#symptomLastCase').value.trim(); saveDraft(); });
+}
+
+/* ---------- заполнение полей из state при открытии шага ---------- */
+
+function populateStep(n) {
+  if (n === 1) {
+    $('#fCompany').value = state.companyName || '';
+    $('#fContactName').value = state.contactName || '';
+    $('#fContactRole').value = state.contactRole || '';
+    $('#fContactDept').value = state.contactDept || '';
+    $('#fContactInfo').value = state.contactInfo || '';
+    if (state.staff) {
+      const r = $(`input[name="staff"][value="${state.staff}"]`);
+      if (r) r.checked = true;
+    }
+  }
+  if (n === 2) {
+    // восстановить универсальный ответ Ф0
+    const f0 = $('#fEntryФ0');
+    if (f0) f0.value = state.entryAnswers['Ф0'] || '';
+    const f0nez = $('#entryФ0NeZnaiu');
+    if (f0nez) { f0nez.checked = state.entryOtherId === 'Ф0'; f0nez.setAttribute('aria-checked', f0nez.checked ? 'true' : 'false'); }
+    // восстановить «Не знаю / другая группа»
+    const eo = $('#entryOther');
+    eo.checked = state.entryOther || false;
+    eo.setAttribute('aria-checked', eo.checked ? 'true' : 'false');
+    $('#entryOtherText').value = state.entryOtherText || '';
+    // восстановить главную задачу
+    $('#fMainTask').value = state.mainTask || '';
+    // восстановить симптомы
+    SYMPTOMS.forEach(s=>{
+      const cb = $(`#sym-${s.id}`);
+      if(cb){ cb.checked = state.symptoms.has(s.id); cb.setAttribute('aria-checked', cb.checked ? 'true' : 'false'); }
+    });
+    // восстановить фокус и радио-кнопки основной группы
+    if(state.focusGroup){
+      const r = $(`input[name="focusGroup"][value="${state.focusGroup}"]`);
+      if(r) r.checked = true;
+      $('#focusBanner').style.display = 'block';
+      $('#focusBannerText').textContent = GROUPS[state.focusGroup]?.name || state.focusGroup;
+      $('#focusSelector').style.display = 'block';
+      $('#groupEntryQuestions').style.display = 'block';
+      renderGroupEntryQuestions(state.focusGroup);
+    }
+    // восстановить выбранный симптом и поля уточнения
+    if(state.selectedSymptomId){
+      const sr = $(`input[name="selectedSymptom"][value="${state.selectedSymptomId}"]`);
+      if(sr) sr.checked = true;
+      $('#symptomClarification').style.display = 'block';
+      $('#symptomClarificationCode').textContent = symptomLabel(state.selectedSymptomId);
+    }
+    $('#symptomEmployee').value = state.symptomEmployee || '';
+    $('#symptomDescription').value = state.symptomDescription || '';
+    $('#symptomLastCase').value = state.symptomLastCase || '';
+    if(state.entryOther){
+      $('#focusSelector').style.display = 'none';
+      $('#focusBanner').style.display = 'none';
+      $('#groupEntryQuestions').style.display = 'none';
+      $('#otherCard').style.display = 'block';
+    }
+  }
+  if (n === 3) {
+    // карточки глубинных вопросов строятся при переходе с шага 2;
+    // при прямой загрузке или перезагрузке на шаге 3 их ещё нет — строим здесь
+    if(!$('#deepQuestions .deep-card')) renderDeepQuestions();
+    // восстановить оценки deep (кнопки шкалы)
+    document.querySelectorAll('.scale button.active').forEach(b => b.classList.remove('active'));
+    Object.keys(state.deep).forEach(id => {
+      const b = $(`.scale button[data-id="${id}"][value="${state.deep[id]}"]`);
+      if (b) b.classList.add('active');
+    });
+    updateScaleHints();
+  }
+  if (n === 4) {
+    // восстановить сигналы
+    document.querySelectorAll('.signal-item input[type="checkbox"]').forEach(cb => {
+      cb.checked = state.signals.has(cb.value);
+      cb.setAttribute('aria-checked', cb.checked?'true':'false');
+    });
+    renderSignalSummary();
+    checkSignalContradiction();
+  }
+  if (n === 5) {
+    renderSystemsChips();
+    $('#fAccessConstraints').value = state.accessConstraints || '';
+    $('#fIntegrationOptions').value = state.integrationOptions || '';
+    $('#fOutsource').value = state.outsource || '';
+    $('#fComment').value = state.comment || '';
+    // ограничения
+    const r = $(`input[name="restrictionsHas"][value="${state.restrictions.hasExternalRestrictions?'yes':'no'}"]`);
+    if(r) r.checked = true;
+    r?.setAttribute('aria-checked', r.checked?'true':'false');
+    const show = state.restrictions.hasExternalRestrictions;
+    $('#restrictionsBlock').style.display = 'block';
+    $('#restrictionsFields').style.display = show ? 'block' : 'none';
+    $('#restrictionsRecommend').style.display = show ? 'block' : 'none';
+    $('#fAllowedSystems').value = state.restrictions.allowedSystems || '';
+    $('#fApprover').value = state.restrictions.approver || '';
+    $('#fNoExternalData').value = state.restrictions.noExternalData || '';
+    $('#fIndustryRequirements').value = state.restrictions.industryRequirements || '';
+    $('#fLanguageJurisdiction').value = state.restrictions.languageJurisdiction || '';
+    if (state.demo) {
+      const r = $(`input[name="demo"][value="${state.demo}"]`);
+      if (r) r.checked = true;
+    }
+    $('#fDemoResponsible').value = state.demoResponsible || '';
+    $('#fDemoDate').value = state.demoDate || '';
+    toggleDemoDetail();
+  }
+}
+
+/* Показать/скрыть детали демо и подсказку для «Нужно обсудить» */
+function toggleDemoDetail(){
+  const detail = $('#demoDetail');
+  const hint = $('#demoMaybeHint');
+  const demo = state.demo || document.querySelector('input[name="demo"]:checked')?.value || '';
+  const show = demo === 'yes' || demo === 'maybe';
+  if(detail) detail.style.display = show ? 'block' : 'none';
+  if(hint) hint.style.display = demo === 'maybe' ? 'block' : 'none';
+}
+
+/* ================= RENDERERS ================= */
+const $ = (sel) => document.querySelector(sel);
+const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+let navSuppressHash = false;
+function showStep(n, opts){
+  const silent = opts && opts.silent;
+  if(!silent && location.hash !== '#step'+n){
+    navSuppressHash = true;
+    history.pushState({step:n}, '', '#step'+n);
+  }
+  $$('.step').forEach(s=>s.classList.remove('active'));
+  const el = $(`#step${n}`);
+  if(el) el.classList.add('active');
+  const total = 6;
+  const pct = Math.round((n/total)*100);
+  $('#progressBar').style.width = pct + '%';
+  $('#progressText').textContent = `Шаг ${n} из ${total}`;
+  window.scrollTo({top:0, behavior:'smooth'});
+  // автоподставляем сигналы из структурированных фактов при входе на шаг 4
+  if(n === 4) applyAutoSignals();
+  populateStep(n);
+}
+
+/* Перерисовывает радио-выбор симптома для текущей focusGroup */
+function renderSymptomOptions(){
+  const symptomOptionsBox = $('#symptomOptions');
+  if(!symptomOptionsBox) return;
+  symptomOptionsBox.innerHTML = '';
+  if(!state.focusGroup){
+    $('#symptomSelector').style.display = 'none';
+    $('#symptomClarification').style.display = 'none';
+    return;
+  }
+  const groupSymptoms = SYMPTOMS.filter(s=>s.group===state.focusGroup);
+  // сбросить выбор, если он не относится к текущей группе
+  if(state.selectedSymptomId && !groupSymptoms.some(s=>s.id===state.selectedSymptomId)){
+    state.selectedSymptomId = '';
+  }
+  groupSymptoms.forEach(s=>{
+    const wrap = document.createElement('label');
+    wrap.className = 'inline-item';
+    wrap.style.display = 'inline-flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.marginRight = '8px';
+    const isChecked = state.selectedSymptomId === s.id;
+    wrap.innerHTML = `<input type="radio" name="selectedSymptom" value="${s.id}" ${isChecked?'checked':''} aria-checked="${isChecked}" role="radio"><span class="wrap">${symptomLabel(s.id)} — ${s.text}</span>`;
+    const radio = wrap.querySelector('input');
+    radio.addEventListener('change', ()=>{
+      state.selectedSymptomId = s.id;
+      $('#symptomClarification').style.display = 'block';
+      $('#symptomClarificationCode').textContent = symptomLabel(s.id);
+      symptomOptionsBox.querySelectorAll('input[name="selectedSymptom"]').forEach(r=>{
+        r.setAttribute('aria-checked', r.value === s.id);
+      });
+      saveDraft();
+    });
+    symptomOptionsBox.appendChild(wrap);
+  });
+  if(groupSymptoms.length === 1){
+    state.selectedSymptomId = groupSymptoms[0].id;
+    $('#symptomSelector').style.display = 'none';
+    $('#symptomClarification').style.display = 'block';
+    $('#symptomClarificationCode').textContent = symptomLabel(groupSymptoms[0].id);
+  } else {
+    $('#symptomSelector').style.display = 'block';
+  }
+}
+
+function renderEntryQuestions(){
+  // Универсальный вопрос Ф0 — слушатели (элемент уже в HTML)
+  const fEntryФ0 = $('#fEntryФ0');
+  fEntryФ0?.addEventListener('input', () => {
+    state.entryAnswers['Ф0'] = fEntryФ0.value.trim();
+    saveDraft();
+  });
+  $('#entryФ0NeZnaiu')?.addEventListener('change', () => {
+    const cb = $('#entryФ0NeZnaiu');
+    state.entryOtherId = cb.checked ? 'Ф0' : '';
+    cb.setAttribute('aria-checked', cb.checked ? 'true' : 'false');
+    saveDraft();
+  });
+
+  // Симптомы — чипсы с чекбоксами (скрыты симптомы скрытых групп)
+  const symptomBox = $('#symptomChips');
+  symptomBox.innerHTML = '';
+  SYMPTOMS.filter(s=>!HIDDEN_GROUPS.includes(s.group)).forEach(s=>{
+    const wrap = document.createElement('label');
+    wrap.className = 'inline-item';
+    wrap.style.display = 'inline-flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.marginRight = '8px';
+    const isChecked = state.symptoms.has(s.id);
+    wrap.innerHTML = `<input type="checkbox" id="sym-${s.id}" aria-checked="${isChecked}" ${isChecked?'checked':''}><span class="wrap">${s.text}</span>`;
+    const cb = wrap.querySelector('input');
+    cb.addEventListener('change', () => {
+      if(cb.checked){ state.symptoms.add(s.id); cb.setAttribute('aria-checked','true'); }
+      else { state.symptoms.delete(s.id); cb.setAttribute('aria-checked','false'); }
+      saveDraft();
+    });
+    symptomBox.appendChild(wrap);
+  });
+
+  // Выбор focusGroup — радио кнопки для всех групп
+  const focusOptions = $('#focusOptions');
+  focusOptions.innerHTML = '';
+  const groupCodes = Object.keys(GROUPS).filter(g=>!HIDDEN_GROUPS.includes(g));
+  groupCodes.forEach(g=>{
+    const wrap = document.createElement('label');
+    wrap.className = 'inline-item';
+    wrap.style.display = 'inline-flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.marginRight = '8px';
+    const checked = state.focusGroup === g;
+    wrap.innerHTML = `<input type="radio" name="focusGroup" value="${g}" ${checked?'checked':''} aria-checked="${checked}" role="radio"><span class="wrap">${GROUPS[g].name}</span>`;
+    const radio = wrap.querySelector('input');
+    radio.addEventListener('change', ()=>{
+      state.focusGroup = g;
+      state.selectedSymptomId = '';
+      state.nextPassGroups = groupCodes.filter(x=>x!==g);
+      renderSymptomOptions();
+      $('#focusBannerText').textContent = GROUPS[g].name;
+      $('#focusBanner').style.display = 'block';
+      $('#focusSelector').style.display = 'block';
+      $('#otherCard').style.display = 'none';
+      $('#entryOther').checked = false;
+      renderGroupEntryQuestions(g);
+      // обновить aria-checked у всех радио этой группы
+      focusOptions.querySelectorAll('input[name="focusGroup"]').forEach(r=>{
+        r.setAttribute('aria-checked', r.value === g);
+      });
+      saveDraft();
+    });
+    focusOptions.appendChild(wrap);
+  });
+
+
+  // Показать селектор фокуса (если не выбрано «другая группа»)
+  if(groupCodes.length > 0 && !state.entryOther){
+    $('#focusSelector').style.display = 'block';
+    $('#focusBanner').style.display = 'block';
+    if(state.focusGroup){
+      $('#focusBannerText').textContent = GROUPS[state.focusGroup]?.name || state.focusGroup;
+      const r = $(`input[name="focusGroup"][value="${state.focusGroup}"]`);
+      if(r) r.checked = true;
+    } else {
+      // выбрать первую группу по умолчанию
+      const firstG = groupCodes[0];
+      state.focusGroup = firstG;
+      state.nextPassGroups = groupCodes.filter(x=>x!==firstG);
+      $('#focusBannerText').textContent = GROUPS[firstG].name;
+      const r = $(`input[name="focusGroup"][value="${firstG}"]`);
+      if(r) r.checked = true;
+    }
+    renderSymptomOptions();
+    renderGroupEntryQuestions(state.focusGroup);
+    $('#otherCard').style.display = 'none';
+  } else if(state.entryOther){
+    $('#focusSelector').style.display = 'none';
+    $('#focusBanner').style.display = 'none';
+    $('#groupEntryQuestions').style.display = 'none';
+    $('#otherCard').style.display = 'block';
+    $('#entryOther').checked = true;
+  }
+
+  // «Не знаю / другая группа»
+  $('#entryOther')?.addEventListener('change', () => {
+    const cb = $('#entryOther');
+    state.entryOther = cb.checked;
+    cb.setAttribute('aria-checked', cb.checked ? 'true' : 'false');
+    if(state.entryOther){
+      $('#focusSelector').style.display = 'none';
+      $('#focusBanner').style.display = 'none';
+      $('#groupEntryQuestions').style.display = 'none';
+      state.focusGroup = null;
+    } else {
+      $('#focusSelector').style.display = 'block';
+      $('#focusBanner').style.display = 'block';
+      $('#groupEntryQuestions').style.display = 'block';
+    }
+    saveDraft();
+  });
+  $('#entryOtherText')?.addEventListener('input', () => {
+    state.entryOtherText = $('#entryOtherText').value.trim();
+    saveDraft();
+  });
+}
+
+/** Рендерит уточняющие вопросы только для выбранной группы */
+function renderGroupEntryQuestions(groupCode){
+  const container = $('#groupEntryQuestions');
+  const qs = GROUP_ENTRY_QUESTIONS[groupCode] || [];
+  container.innerHTML = '';
+  if(qs.length === 0){
+    container.style.display = 'none';
+    return;
+  }
+  container.style.display = 'block';
+  const gdata = GROUPS[groupCode];
+  const header = document.createElement('div');
+  header.style.cssText = 'margin-bottom:8px';
+  header.innerHTML = `
+    <div style="font-size:0.95rem;color:var(--text)">${gdata.name}</div>
+    <div class="muted" style="font-size:0.8rem;margin-top:2px">${gdata.desc}</div>
+  `;
+  container.appendChild(header);
+  qs.forEach(q=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.marginBottom = '8px';
+    card.innerHTML = `
+      <div style="margin-bottom:8px">
+        <div style="font-size:0.95rem;color:var(--text)">${q.q}</div>
+      </div>
+      <div style="margin-top:8px">
+        <label>Ваш ответ</label>
+        <textarea class="entry-ans" data-id="${q.id}" rows="2" placeholder="Коротко по сути…"></textarea>
+      </div>
+      <div style="margin-top:6px">
+        <label class="inline-item" style="display:inline-flex;align-items:center;gap:8px">
+          <input type="checkbox" class="entry-neznaiu" data-id="${q.id}">
+          <span style="font-weight:600">Не знаю</span>
+        </label>
+      </div>
+    `;
+    const ta = card.querySelector('textarea');
+    const cb = card.querySelector('.entry-neznaiu');
+
+    // восстановить из state
+    if(state.entryAnswers[q.id] !== undefined) ta.value = state.entryAnswers[q.id];
+    cb.checked = state.entryOtherId === q.id;
+    if(cb.checked) ta.disabled = true;
+
+    ta.addEventListener('input', () => {
+      state.entryAnswers[q.id] = ta.value.trim();
+      addSystemsFromText(ta.value);
+      saveDraft();
+    });
+    cb.addEventListener('change', () => {
+      if(cb.checked){
+        state.entryOtherId = q.id;
+        ta.value = '';
+        ta.disabled = true;
+      } else {
+        state.entryOtherId = '';
+        ta.disabled = false;
+      }
+      saveDraft();
+    });
+
+    container.appendChild(card);
+  });
+}
+
+// Расчёт эффекта для Г3.2: количество × длительность = дневные минуты, × рабочие дни = недельные
+function calcEffectГ32(){
+  const m = state.effectMetrics['Г3.2'] || {};
+  const qty = Number(m.qtyPerDay) || 0;
+  const mins = Number(m.minsPerOp) || 0;
+  const daily = qty * mins;
+  if(!qty || !mins) return 'Введите количество и длительность, чтобы увидеть расчёт';
+  let html = `${qty} × ${mins} = ${daily} минут/день`;
+  const wd = Number(state.workDaysPerWeek) || 0;
+  if(wd){
+    const weekly = daily * wd;
+    html += `; ${daily} × ${wd} = ${weekly} минут/неделю (${(weekly/60).toFixed(1)} часов)`;
+  } else {
+    html += `; укажите рабочие дни в неделю для недельного значения`;
+  }
+  return html;
+}
+
+/* Предметное решение по боли (не sales-текст вердикта).
+   Для ручного переноса данных/заявок в CRM — интеграция входящих каналов,
+   устранение ручного ввода, обработка дублей и ошибок.
+   Сравниваем с Г1.4 (заявки из почты/мессенджеров в CRM) и выбираем
+   основной код по контексту: Г1.4 — если именно перенос заявок, иначе Г3.2. */
+function buildRecommendationText(){
+  const focus = state.focusGroup;
+  const symptom = state.selectedSymptomId;
+  const m32 = state.effectMetrics['Г3.2'] || {};
+  const m14 = state.effectMetrics['Г1.4'] || {};
+
+  // Является ли боль «перенос данных/заявок между системами вручную»
+  const manualTransfer = symptom === 'сРучнаяПереносДанных'
+    || symptom === 'sДокументыВручную'
+    || focus === 'Г3'
+    || focus === 'Г1'
+    || (m32.qtyPerDay || m32.minsPerOp)
+    || m14.crmAutoShare;
+
+  if(!manualTransfer){
+    const g = focus? GROUPS[focus] : null;
+    return g? g.name + ': ' + g.solutions : 'Общий аудит процессов и типовой автоматизационный скрипт.';
+  }
+
+  // Сравниваем с Г1.4 и выбираем основной код по контексту
+  let mainCode = 'Г3.2';
+  let what = 'данных между системами';
+  if(focus === 'Г1' || Number(state.deep['Г1.4']||0) >= 1){
+    mainCode = 'Г1.4';
+    what = 'заявок из почты и мессенджеров в CRM';
+  }
+
+  let txt = 'Интеграция входящих каналов с CRM; устранение ручного ввода; обработка дублей и ошибок.';
+  txt += ' Основной код по контексту: ' + mainCode + ' (' + what + ').';
+  if(m32.qtyPerDay || m32.minsPerOp) txt += ' Измерено: ' + calcEffectГ32() + '.';
+  if(m14.crmAutoShare) txt += ' Доля в CRM автоматически: ' + m14.crmAutoShare + '%.';
+  return txt;
+}
+
+/* Измеренный масштаб боли: метрики эффекта (Г3.2, Г1.4) в одной строке */
+function buildPainScale(){
+  const m32 = state.effectMetrics['Г3.2'] || {};
+  const m14 = state.effectMetrics['Г1.4'] || {};
+  const parts = [];
+  if(m32.qtyPerDay || m32.minsPerOp){
+    parts.push(calcEffectГ32());
+    if(m32.dataSource || m32.dataRecipient){
+      parts.push('Источники: ' + (m32.dataSource || '—') + '; Получатели: ' + (m32.dataRecipient || '—'));
+    }
+  }
+  if(m14.crmAutoShare){
+    parts.push('Доля в CRM автоматически: ' + m14.crmAutoShare + '%');
+  }
+  return parts.length ? parts.join(' | ') : '—';
+}
+
+function updateEffectCalcs(){
+  const el = document.getElementById('calc-Г3.2');
+  if(el) el.textContent = calcEffectГ32();
+  const wdEl = document.getElementById('calc-weekly');
+  if(wdEl){
+    const m = state.effectMetrics['Г3.2'] || {};
+    const qty = Number(m.qtyPerDay) || 0;
+    const mins = Number(m.minsPerOp) || 0;
+    const wd = Number(state.workDaysPerWeek) || 0;
+    if(qty && mins && wd){
+      const weekly = qty * mins * wd;
+      wdEl.textContent = `= ${weekly} минут/неделю (${(weekly/60).toFixed(1)} часов)`;
+    } else {
+      wdEl.textContent = '';
+    }
+  }
+}
+
+function renderDeepQuestions(){
+  const container = $('#deepQuestions');
+  // один проход — одна боль: углубляемся только в focusGroup
+  let groups = state.focusGroup ? [state.focusGroup] : [];
+  if(groups.length === 0){
+    container.innerHTML = '<div style="padding:16px;color:var(--muted)">Не выбрана основная проблема для этого прохода.</div>' +
+      '<button class="btn btn-primary" id="btnBackToGroup" style="margin-top:12px">Вернуться к выбору группы</button>';
+    $('#btnBackToGroup')?.addEventListener('click',()=>showStep(2));
+    return;
+  }
+  container.innerHTML = '';
+
+  // показать, что остальные отложены в очередь
+  if(state.nextPassGroups && state.nextPassGroups.length > 0){
+    const queueHint = document.createElement('div');
+    queueHint.style.cssText = 'margin-bottom:12px;padding:8px;background:#1e3a5a;border-left:4px solid var(--accent);border-radius:6px;font-size:0.85rem';
+    queueHint.innerHTML = `<span style="font-weight:600;color:var(--text)">В очереди на следующие проходы:</span> ${state.nextPassGroups.map(g=>GROUPS[g].name).join(', ')}`;
+    container.appendChild(queueHint);
+  }
+
+  // Легенда с проверяемыми критериями шкалы (одинаковые для всех вопросов)
+  const legend = document.createElement('div');
+  legend.className = 'scale-legend';
+  legend.innerHTML = `
+    <b>Как оценивать:</b>
+    <b>Не про нас</b> — никогда не происходило.<br>
+    <b>Редко</b> — до 2–3 раз в месяц, до 15 минут за раз.<br>
+    <b>Регулярно</b> — раз в неделю и чаще, 15–60 минут за раз.<br>
+    <b>Постоянно</b> — ежедневно, более часа за раз, или ошибки каждый день.<br>
+    <b>Не знаю</b> — не могу ответить (не учитывается в скоринге, отдельно от «Не про нас»).
+  `;
+  container.appendChild(legend);
+
+  // Поле рабочих дней в неделю (общее для расчёта недельного эффекта)
+  const workDaysBlock = document.createElement('div');
+  workDaysBlock.style.cssText = 'margin-bottom:12px;padding:10px;background:#141b2d;border:1px solid var(--border);border-radius:10px';
+  workDaysBlock.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px">
+      <label style="font-size:0.8rem;color:var(--muted);margin-bottom:0">Рабочих дней в неделю</label>
+      <input type="number" id="workDaysPerWeek" min="1" max="7" step="1" style="width:110px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;background:#0f172a;color:var(--text)" value="${state.workDaysPerWeek || ''}" placeholder="Напр. 5">
+      <span id="calc-weekly" style="margin-left:10px;font-size:0.8rem;color:var(--accent);font-weight:700"></span>
+    </div>
+  `;
+  container.appendChild(workDaysBlock);
+
+  // Слушатель пересчёта недельного эффекта
+  const wdInput = workDaysBlock.querySelector('#workDaysPerWeek');
+  wdInput.addEventListener('input', () => {
+    let v = wdInput.value.trim();
+    if(v !== ''){
+      let n = Math.round(Number(v));
+      if(!Number.isFinite(n)) n = 1;
+      n = Math.min(7, Math.max(1, n));
+      if(String(n) !== v){ wdInput.value = String(n); v = String(n); }
+    }
+    state.workDaysPerWeek = v;
+    updateEffectCalcs();
+    saveDraft();
+  });
+
+  groups.forEach(g=>{
+    const gdata = GROUPS[g];
+    const qs = DEEP_QUESTIONS.filter(q=>q.group===g);
+    const box = document.createElement('div');
+    box.className = 'card';
+    box.innerHTML = `
+      <div style="margin-bottom:12px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="badge badge-group ui-hidden">${g}</span>
+          <h3 style="font-size:1rem">${gdata.name}</h3>
+        </div>
+        <div style="font-size:0.86rem;color:var(--muted)">${gdata.desc}</div>
+      </div>
+      <div id="deep-${g}" style="display:flex;flex-direction:column;gap:10px"></div>
+    `;
+    const qbox = box.querySelector(`#deep-${g}`);
+    qs.forEach(q=>{
+      const item = document.createElement('div');
+      item.className = 'deep-card';
+      item.innerHTML = `
+        <div class="deep-header">
+          <span class="deep-code ui-hidden">${q.id}</span>
+          <div>
+            <div class="deep-title">${q.q}</div>
+            <div class="deep-how">${q.how}</div>
+          </div>
+        </div>
+        <div class="scale-wrap">
+          <div class="scale">
+            <button type="button" data-id="${q.id}" value="0" class="na" title="Никогда не происходило">Не про нас</button>
+            <button type="button" data-id="${q.id}" value="1" title="До 2–3 раз в месяц, до 15 минут за раз">Редко</button>
+            <button type="button" data-id="${q.id}" value="2" title="Раз в неделю и чаще, 15–60 минут за раз">Регулярно</button>
+            <button type="button" data-id="${q.id}" value="3" title="Ежедневно, больше часа за раз, или ошибки каждый день">Постоянно</button>
+            <button type="button" data-id="${q.id}" value="na" class="neznayu" title="Не могу ответить — в скоринге не учитывается">Не знаю</button>
+          </div>
+          <div class="scale-hint">↔ шкала не помещается — листайте вбок</div>
+        </div>
+      `;
+      qbox.appendChild(item);
+
+      // метрики эффекта под конкретными глубокими вопросами
+      if(q.id === 'Г3.2'){
+        const m = state.effectMetrics['Г3.2'] || {};
+        const em = document.createElement('div');
+        em.className = 'effect-metric';
+        em.innerHTML = `
+          <div class="em-row">
+            <div style="flex:1;min-width:140px">
+              <label>Количество переносов в день</label>
+              <input type="number" data-id="${q.id}" data-field="qtyPerDay" placeholder="Напр. 30" value="${m.qtyPerDay ?? ''}">
+            </div>
+            <div style="flex:1;min-width:140px">
+              <label>Минут на один перенос</label>
+              <input type="number" data-id="${q.id}" data-field="minsPerOp" placeholder="Напр. 4" value="${m.minsPerOp ?? ''}">
+            </div>
+          </div>
+          <div class="effect-calc" id="calc-Г3.2">${calcEffectГ32()}</div>
+          <div class="em-row">
+            <div style="flex:1;min-width:140px">
+              <label>Источники данных</label>
+              <input data-id="${q.id}" data-field="dataSource" placeholder="Напр. 1С, Excel" value="${m.dataSource ?? ''}">
+            </div>
+            <div style="flex:1;min-width:140px">
+              <label>Получатели данных</label>
+              <input data-id="${q.id}" data-field="dataRecipient" placeholder="Напр. CRM, почта" value="${m.dataRecipient ?? ''}">
+            </div>
+          </div>
+        `;
+        item.appendChild(em);
+      } else if(q.id === 'Г1.4'){
+        const m = state.effectMetrics['Г1.4'] || {};
+        const em = document.createElement('div');
+        em.className = 'effect-metric';
+        em.innerHTML = `
+          <div>
+            <label>Доля автоматически попадающих в CRM заявок (%)</label>
+            <input type="number" data-id="${q.id}" data-field="crmAutoShare" min="0" max="100" placeholder="Напр. 20" value="${m.crmAutoShare ?? ''}">
+          </div>
+        `;
+        item.appendChild(em);
+      }
+      // restore оценки шкалы
+      if(state.deep[q.id] !== undefined){
+        const btns = item.querySelectorAll('.scale button');
+        btns.forEach(b=>{
+          b.classList.toggle('active', b.value === state.deep[q.id]);
+        });
+      }
+      // restore структурированных метрик эффекта (Г3.2 / Г1.4)
+      if(q.id === 'Г3.2' || q.id === 'Г1.4'){
+        const m = state.effectMetrics[q.id] || {};
+        item.querySelectorAll('.effect-metric input').forEach(inp=>{
+          if(m[inp.dataset.field] !== undefined) inp.value = m[inp.dataset.field];
+        });
+      }
+    });
+    container.appendChild(box);
+  });
+  // apply selection styling
+  document.querySelectorAll('.scale button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const parent = btn.closest('.scale');
+      parent.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      state.deep[btn.dataset.id] = btn.value;
+    });
+  });
+  // слушатели ввода метрик эффекта
+  document.querySelectorAll('.effect-metric input').forEach(inp=>{
+    inp.addEventListener('input', ()=>{
+      const did = inp.dataset.id;
+      const fld = inp.dataset.field;
+      if(!state.effectMetrics[did]) state.effectMetrics[did] = {};
+      state.effectMetrics[did][fld] = inp.value.trim();
+      if(did === 'Г3.2'){ const c = document.getElementById('calc-Г3.2'); if(c) c.textContent = calcEffectГ32(); }
+      saveDraft();
+    });
+  });
+  // пересчёт недельки при изменении qty/mins
+  ['qtyPerDay','minsPerOp'].forEach(f=>{
+    document.querySelectorAll(`.effect-metric input[data-field="${f}"]`).forEach(inp=>{
+      inp.addEventListener('input', ()=>{ const c = document.getElementById('calc-Г3.2'); if(c) c.textContent = calcEffectГ32(); });
+    });
+  });
+  updateEffectCalcs();
+
+  // Подсказка: решения не подменяют диагноз на этом этапе
+  const hint = document.createElement('div');
+  hint.style.cssText = 'margin-top:12px;padding:10px;background:#141b2d;border:1px solid var(--border);border-radius:10px;font-size:0.8rem;color:var(--muted)';
+  hint.innerHTML = '<b>Решение покажется в результате.</b> Здесь мы только фиксируем наличие боли. Конкретные технологии подбираются после подтверждения, чтобы не подменять диагноз выбором продукта.';
+  container.appendChild(hint);
+}
+
+/* Подсказка о прокрутке шкалы: показываем, если шкала не помещается по ширине */
+function updateScaleHints(){
+  document.querySelectorAll('.scale-wrap').forEach(wrap=>{
+    const sc = wrap.querySelector('.scale');
+    const last = sc && sc.lastElementChild;
+    if(!sc || !last) return;
+    const over = last.getBoundingClientRect().right > sc.getBoundingClientRect().right + 1;
+    wrap.classList.toggle('overflow', over);
+  });
+}
+
+function signalRelevantToGroup(s, focusGroup){
+  // 'любая' и '—' — общие признаки квалификации, доступны всегда
+  if(s.groups.includes('любая') || s.groups.includes('—')) return true;
+  if(!focusGroup) return false;
+  return s.groups.includes(focusGroup);
+}
+
+function renderSignals(){
+  const container = $('#signalList');
+  container.innerHTML = '';
+
+  const focusGroup = state.focusGroup || null;
+  const relevant = SIGNALS.filter(s=>signalRelevantToGroup(s, focusGroup));
+  const other = SIGNALS.filter(s=>!signalRelevantToGroup(s, focusGroup));
+
+  // Заголовок раздела
+  const sectionTitle = document.createElement('div');
+  sectionTitle.style.cssText = 'font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-weight:600';
+  sectionTitle.textContent = focusGroup? `Сигналы для группы "${GROUPS[focusGroup].name}"` : 'Общие сигналы';
+  container.appendChild(sectionTitle);
+
+  // Релевантные сигналы
+  relevant.forEach(s=>{
+    renderSignalItem(container, s, focusGroup);
+  });
+
+  // Сигналы других групп — отдельно, с предложением сохранить для нового прохода
+  if(other.length > 0 && focusGroup){
+    const divider = document.createElement('div');
+    divider.style.cssText = 'margin-top:16px;padding-top:12px;border-top:1px solid var(--border)';
+    divider.innerHTML = `
+      <div style="font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-weight:600">Сигналы других групп</div>
+      <div style="font-size:0.8rem;color:var(--muted);margin-bottom:10px">Не относятся к текущей боли. Можно сохранить для следующего прохода (очередь групп).</div>
+    `;
+    container.appendChild(divider);
+    other.forEach(s=>{
+      renderSignalItem(container, s, focusGroup, true);
+    });
+  }
+  renderSignalSummary();
+  checkSignalContradiction();
+}
+
+function renderSignalItem(container, s, focusGroup, isOtherGroup=false){
+  const autoSource = state.autoSignalSources[s.id];
+  const isAuto = Boolean(autoSource);
+  const isInNextPass = state.signalsForNextPass.has(s.id);
+  const isSelected = state.signals.has(s.id);
+  const item = document.createElement('div');
+  item.className = 'signal-item' + (isSelected?' selected':'') + (isAuto?' auto':'') + (isOtherGroup?' other-group':'');
+  item.innerHTML = `
+    <input type="checkbox" role="checkbox" aria-checked="${isInNextPass}" ${isInNextPass?'checked':''} value="${s.id}" style="width:auto;margin-right:8px">
+    <span class="signal-text">${s.text}${isAuto?' <span class="auto-badge">Авто</span>':''}${isOtherGroup? ` <span class="other-badge">Другая группа: ${s.groups.map(g=>GROUPS[g]?.name).filter(Boolean).join(', ')}</span>`:''}</span>
+    ${isAuto? `<span class="signal-source">Источник: ${autoSource}</span>` : ''}
+    <span class="signal-pts">${s.pts>0?'+'+s.pts:s.pts}</span>
+  `;
+  const cb = item.querySelector('input');
+  function applySelection(){
+    const checked = cb.checked;
+    item.classList.toggle('selected', checked);
+    cb.setAttribute('aria-checked', checked?'true':'false');
+    if(isOtherGroup){
+      if(checked){ state.signalsForNextPass.add(s.id); }
+      else { state.signalsForNextPass.delete(s.id); }
+      saveDraft();
+      return;
+    }
+    if(checked){
+      state.signals.add(s.id);
+      if(isAuto) state.autoSignalSources[s.id] = autoSource;
+      // с10 («всё работает») и с12 («нет систем и бюджета») — взаимоисключающие
+      if(s.id==='с10' || s.id==='с12'){
+        const otherId = s.id==='с10' ? 'с12' : 'с10';
+        state.signals.delete(otherId);
+        delete state.autoSignalSources[otherId];
+        const otherCb = document.querySelector(`.signal-item input[value="${otherId}"]`);
+        if(otherCb){
+          otherCb.checked = false;
+          otherCb.setAttribute('aria-checked','false');
+          otherCb.closest('.signal-item')?.classList.remove('selected');
+        }
+      }
+    } else {
+      state.signals.delete(s.id);
+      if(isAuto) delete state.autoSignalSources[s.id];
+    }
+    saveDraft();
+    renderSignalSummary();
+    checkSignalContradiction();
+  }
+  cb.addEventListener('change', applySelection);
+  // клик по строке — только фокус/toggle через чекбокс, не напрямую
+  item.addEventListener('click',(e)=>{
+    if(e.target === cb || e.target.closest('input')) return;
+    cb.click();
+  });
+  container.appendChild(item);
+}
+
+/* Итоговая сумма по выбранным сигналам (боль + коммерческая готовность) */
+function renderSignalSummary(calcResult){
+  const box = $('#signalSummary');
+  const focusGroup = state.focusGroup || null;
+  const res = calcResult || calc();
+  const selected = [...state.signals].filter(id=>{
+    const s = SIGNALS.find(x=>x.id===id);
+    return s && signalRelevantToGroup(s, focusGroup);
+  });
+  if(!selected.length){
+    box.style.display = 'none';
+    box.innerHTML = '';
+    return;
+  }
+  const groupBonus = res.groupBonus !== undefined ? res.groupBonus : 0;
+  const signalBonus = res.signalBonus !== undefined ? res.signalBonus : 0;
+  const version = res.scoringRulesVersion ? (' v' + res.scoringRulesVersion) : '';
+  let painSum = 0, commercialSum = 0;
+  const rows = selected.map(id=>{
+    const s = SIGNALS.find(x=>x.id===id);
+    const t = signalType(id);
+    if(t === 'pain') painSum += s.pts;
+    if(t === 'commercial') commercialSum += s.pts;
+    const cls = t === 'pain' ? 'var(--accent)' : (t === 'commercial' ? 'var(--text)' : 'var(--muted)');
+    // авто-сигнал из глубинного вопроса уже учтён в бонусе группы — показываем это, а не лишние баллы
+    const entry = (res.painSignalBreakdown || []).find(b=>b.id===id);
+    const skipped = entry && entry.skipped;
+    const pts = skipped ? 0 : s.pts;
+    const note = skipped ? ' <span style="color:var(--muted);font-size:0.75rem">(уже учтён в бонусе группы)</span>' : '';
+    return `<div style="font-size:0.8rem;display:flex;justify-content:space-between;gap:10px;margin-bottom:3px">
+      <span style="color:var(--text);flex:1">${s.text}${note}</span>
+      <span style="color:${cls};font-weight:800;white-space:nowrap">${skipped?'—':(pts>0?'+'+pts:pts)}</span>
+    </div>`;
+  }).join('');
+  const total = (groupBonus + signalBonus + commercialSum);
+  box.innerHTML = `
+    <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;font-weight:600">Выбранные сигналы и вклад в скоринг${version}</div>
+    ${rows}
+    ${groupBonus>0? `<div style="font-size:0.8rem;display:flex;justify-content:space-between;gap:10px;margin-bottom:3px">
+      <span style="color:var(--text);flex:1">Бонус за глубину группы</span>
+      <span style="color:var(--accent);font-weight:800;white-space:nowrap">+${groupBonus}</span>
+    </div>` : ''}
+    <div style="margin-top:6px;padding-top:6px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:0.85rem;font-weight:700">
+      <span style="color:var(--accent)">Боль: <span style="white-space:nowrap">${(groupBonus+signalBonus)>0?'+'+(groupBonus+signalBonus):(groupBonus+signalBonus)}</span></span>
+      <span style="color:var(--text)">Готовность: <span style="white-space:nowrap">${commercialSum>0?'+'+commercialSum:commercialSum}</span></span>
+      <span style="color:var(--text)">Итого: <span style="white-space:nowrap">${total>0?'+'+total:total}</span></span>
+    </div>
+  `;
+  box.style.display = 'block';
+}
+
+/* Проверка противоречия: боль + «всё работает / только думаем / нет бюджета» — просим уточнение, не запрещаем */
+function checkSignalContradiction(){
+  const hasPain = [...state.signals].some(id=>PAIN_SIGNAL_IDS.has(id) && SIGNALS.find(s=>s.id===id) && signalRelevantToGroup(SIGNALS.find(s=>s.id===id), state.focusGroup||null));
+  const hasNegative = state.signals.has('с10') || state.signals.has('с11') || state.signals.has('с12');
+  const box = $('#signalContradiction');
+  const txt = $('#signalContradictionText');
+  if(hasPain && hasNegative){
+    box.style.display = 'block';
+    txt.value = state.signalClarification || '';
+    txt.addEventListener('input',()=>{ state.signalClarification = txt.value.trim(); saveDraft(); });
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+/* ================= LOGIC ================= */
+function calc(){
+  // --- Оценка боли (выраженность проблемы сотрудника) ---
+  let painScore = 0;
+  const painBreakdown = [];
+
+  // Глубинные вопросы → только оценка боли
+  const groupScores = {};
+  let hasConfirmedPain = false; // есть хотя бы одна оценка 1/2/3 (Редко/Регулярно/Постоянно)
+  DEEP_QUESTIONS.forEach(q=>{
+    const v = state.deep[q.id];
+    if(v === undefined || v === 'na') return;
+    if(!groupScores[q.group]) groupScores[q.group] = [];
+    groupScores[q.group].push(Number(v));
+    if(Number(v) >= 1) hasConfirmedPain = true;
+  });
+  // за каждую группу с avg >= 1.5 добавляем +2, за среднюю >=1 +1
+  const activeGroups = new Set();
+  let groupBonus = 0; // баллы за глубинные вопросы (бонус группы)
+  Object.entries(groupScores).forEach(([g, vals])=>{
+    if(HIDDEN_GROUPS.includes(g)) return;
+    const avg = vals.reduce((a,b)=>a+b,0)/vals.length;
+    const pts = avg >= 1.5 ? 2 : (avg >= 1 ? 1 : 0);
+    if(pts > 0){
+      painScore += pts;
+      groupBonus += pts;
+      activeGroups.add(g);
+      painBreakdown.push({ type:'group', group:g, pts, text: GROUPS[g].name + ' (глубина ' + avg.toFixed(1) + ')' });
+    }
+  });
+
+  // Сигналы боли (только релевантные для focusGroup).
+  // Защита от повторного учёта одного и того же факта:
+  // если сигнал был автоподставлен из глубинного вопроса (источник содержит
+  // «Глубинный вопрос»), его баллы уже учтены в groupBonus — не добавляем повторно.
+  const painSignalBreakdown = [];
+  let signalBonus = 0;
+  [...state.signals].forEach(id=>{
+    const s = SIGNALS.find(x=>x.id===id);
+    if(!s) return;
+    if(!signalRelevantToGroup(s, state.focusGroup || null)) return;
+    if(signalType(id) !== 'pain') return;
+    const src = state.autoSignalSources[id] || '';
+    const autoFromDepth = src && src.indexOf('Глубинный вопрос') === 0;
+    if(autoFromDepth){
+      // уже учтён через глубинный вопрос — не добавляем повторно
+      painSignalBreakdown.push({ id:s.id, text:s.text, pts:0, source:src, skipped:'уже учтён в глубинном вопросе' });
+      return;
+    }
+    painScore += s.pts;
+    signalBonus += s.pts;
+    painSignalBreakdown.push({ id:s.id, text:s.text, pts:s.pts, source:src || null });
+  });
+
+  // --- Оценка коммерческой готовности ---
+  let commercialScore = 0;
+  const commercialBreakdown = [];
+  [...state.signals].forEach(id=>{
+    const s = SIGNALS.find(x=>x.id===id);
+    if(!s) return;
+    if(!signalRelevantToGroup(s, state.focusGroup || null)) return;
+    if(signalType(id) !== 'commercial') return;
+    commercialScore += s.pts;
+    commercialBreakdown.push({ id:s.id, text:s.text, pts:s.pts, source: state.autoSignalSources[s.id] || null });
+  });
+
+  // лимит входа: не более 3 групп для follow-up (по документу)
+  const topGroups = [...activeGroups].sort((a,b)=>{
+    const ga = groupScores[a] || [];
+    const gb = groupScores[b] || [];
+    const aa = ga.length? ga.reduce((x,y)=>x+y,0)/ga.length : 0.5;
+    const bb = gb.length? gb.reduce((x,y)=>x+y,0)/gb.length : 0.5;
+    return bb - aa;
+  }).slice(0,3);
+
+  const hasAnySignal = state.signals.size > 0;
+
+  // Недостаточно данных: нет подтверждённой боли и нет сигналов
+  if(!hasConfirmedPain && !hasAnySignal){
+    return {
+      painScore: 0, commercialScore: 0, score: 0,
+      verdict: VERDICTS.insufficient,
+      activeGroups: new Set(), topGroups: [],
+      painBreakdown, commercialBreakdown, painSignalBreakdown,
+      groupBonus: 0, signalBonus: 0,
+      scoringRulesVersion: SCORING_RULES_VERSION,
+      hasConfirmedPain: false, hasAnySignal: false
+    };
+  }
+
+  // Вердикт основывается на оценке боли (независимо от бюджета)
+  let verdict = VERDICTS.no;
+  if(painScore >= 8) verdict = VERDICTS.hot;
+  else if(painScore >= 4) verdict = VERDICTS.warm;
+  else if(painScore >= 0) verdict = VERDICTS.base;
+
+  return {
+    painScore, commercialScore,
+    score: painScore + commercialScore, // для обратной совместимости
+    verdict, activeGroups, topGroups,
+    painBreakdown, commercialBreakdown, painSignalBreakdown,
+    groupBonus, signalBonus,
+    scoringRulesVersion: SCORING_RULES_VERSION,
+    hasConfirmedPain, hasAnySignal
+  };
+}
+
+function renderResult(){
+  const { score, verdict, activeGroups, topGroups, painScore, commercialScore, painBreakdown, commercialBreakdown, painSignalBreakdown, groupBonus, signalBonus, scoringRulesVersion, hasConfirmedPain, hasAnySignal } = calc();
+
+  // Недостаточно данных: нет подтверждённой боли и нет сигналов
+  if(verdict.cls === 'insufficient'){
+    $('#resScore').textContent = '—';
+    $('#resVerdict').textContent = verdict.label;
+    $('#resVerdict').className = 'verdict insufficient';
+
+    // сброс меты
+    $('#resMeta').innerHTML = '<div class="chip"><strong>Статус</strong>: ' + verdict.desc + '</div>';
+
+    // группы — пусто
+    const groupsBox = $('#resGroups');
+    groupsBox.innerHTML = '<h4 style="font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Приоритетные группы болей</h4><span style="color:var(--muted);font-size:0.9">Не определено — нет подтверждённых ответов.</span>';
+
+    // карточка проблемы — заглушка
+    $('#pcPainTitle').textContent = state.symptomDescription || state.mainTask || 'Задача не указана';
+    $('#pcSymptomCode').textContent = '—';
+    $('#pcEmployee').textContent = '—';
+    $('#pcSymptomLastCase').textContent = '—';
+    $('#pcPainScale').textContent = '—';
+
+    // recommendation
+    const rec = $('#resRecommend');
+    rec.innerHTML = `
+      <h4>Рекомендуемое решение</h4>
+      <p>${verdict.desc}</p>
+    `;
+
+    // next step
+    const next = $('#resNext');
+    next.innerHTML = `<h4>Следующий шаг</h4><p>Вернитесь на шаг 2–3, подтвердите хотя бы одну боль оценкой «Редко», «Регулярно» или «Постоянно», или отметьте сигналы на шаге 4.</p>`;
+    return;
+  }
+
+  $('#resScore').innerHTML = '<span class="score-part"><span class="score-num">'+painScore+'</span><span class="score-label">боль</span></span><span class="score-sep">/</span><span class="score-part"><span class="score-num">'+commercialScore+'</span><span class="score-label">готовность</span></span>';
+  renderSignalSummary({ groupBonus, signalBonus, scoringRulesVersion, painBreakdown, painSignalBreakdown });
+  $('#resVerdict').textContent = verdict.label;
+  $('#resVerdict').className = 'verdict ' + verdict.cls;
+
+  // meta
+  const meta = [
+    { strong:'Компания', val: state.companyName || '—' },
+    { strong:'Имя', val: state.contactName || '—' },
+    { strong:'Роль', val: state.contactRole || '—' },
+    { strong:'Отдел', val: state.contactDept || '—' },
+    { strong:'Связь', val: state.contactInfo || '—' },
+    { strong:'Группы', val: [...activeGroups].map(g=>GROUPS[g].name).join(', ') || '—' }
+  ];
+  $('#resMeta').innerHTML = meta.map(m=>`<div class="chip"><strong>${m.strong}</strong>: ${m.val}</div>`).join('');
+
+  // groups
+  const groupsBox = $('#resGroups');
+  groupsBox.innerHTML = '<h4 style="font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Приоритетные группы болей</h4>';
+  if(topGroups.length){
+    groupsBox.innerHTML += topGroups.map(g=>`<span class="group-pill">${GROUPS[g].name}</span>`).join('');
+  } else {
+    groupsBox.innerHTML += '<span style="color:var(--muted);font-size:0.9">Явных приоритетов не выявлено.</span>';
+  }
+
+  // Разбор вклада факторов: боль и коммерческая готовность
+  const factorsBox = document.createElement('div');
+  factorsBox.style.cssText = 'margin-top:16px;padding:12px;background:#141b2d;border:1px solid var(--border);border-radius:10px';
+  factorsBox.innerHTML = `
+    <h4 style="font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Разбор оценок</h4>
+    <div style="display:flex;gap:16px;margin-bottom:10px">
+      <div style="flex:1;padding:8px;background:#1e2a3a;border-radius:6px">
+        <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase">Боль (выраженность проблемы)</div>
+        <div style="font-size:1.2rem;font-weight:700;color:var(--accent)">${painScore}</div>
+        <ul style="font-size:0.8rem;color:var(--text);margin:6px 0 0;padding-left:16px">
+          ${painBreakdown.map(b=>`<li>${b.text}${b.pts>0?' <span style="color:var(--accent)">+'+b.pts+'</span>':''}</li>`).join('') || '<li style="color:var(--muted)">—</li>'}
+        </ul>
+      </div>
+      <div style="flex:1;padding:8px;background:#1e2a3a;border-radius:6px">
+        <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase">Готовность к покупке</div>
+        <div style="font-size:1.2rem;font-weight:700;color:${commercialScore>=0?'var(--text)':'var(--warn)'}">${commercialScore}</div>
+        <ul style="font-size:0.8rem;color:var(--text);margin:6px 0 0;padding-left:16px">
+          ${commercialBreakdown.map(b=>`<li>${b.text}${b.pts>0?' <span style="color:var(--accent)">+'+b.pts+'</span>':' <span style="color:var(--warn)">'+b.pts+'</span>'}</li>`).join('') || '<li style="color:var(--muted)">—</li>'}
+        </ul>
+      </div>
+    </div>
+    <div style="font-size:0.75rem;color:var(--muted);margin-top:6px">Вердикт («Горячий/Тёплый/В базу») определяется оценкой боли независимо от бюджета. Подтверждённая боль сохраняется при любом бюджете.</div>
+  `;
+  groupsBox.parentNode.insertBefore(factorsBox, groupsBox.nextSibling);
+
+  // Рекомендация при ограничениях из справочника: дополнительная техническая проверка
+  if(state.restrictions.hasExternalRestrictions){
+    const restrictBox = document.createElement('div');
+    restrictBox.style.cssText = 'margin-top:16px;padding:12px;background:#2a1b1b;border:1px solid var(--warn);border-radius:10px';
+    const parts = [];
+    if(state.restrictions.noExternalData) parts.push('<strong>Нельзя передавать внешним сервисам:</strong> ' + state.restrictions.noExternalData);
+    if(state.restrictions.industryRequirements) parts.push('<strong>Отраслевые требования:</strong> ' + state.restrictions.industryRequirements);
+    if(state.restrictions.languageJurisdiction) parts.push('<strong>Языки и юрисдикция:</strong> ' + state.restrictions.languageJurisdiction);
+    if(state.restrictions.approver) parts.push('<strong>Согласует внедрение:</strong> ' + state.restrictions.approver);
+    restrictBox.innerHTML = `
+      <h4 style="font-size:0.85rem;color:var(--warn);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Техническая проверка перед обещанием решения</h4>
+      <p style="font-size:0.85rem;color:var(--text);margin-bottom:6px">При наличии ограничений на внешние сервисы необходимо провести дополнительную техническую проверку (соответствие систем, юрисдикции, согласование с ИТ/юристом) до финального предложения.</p>
+      ${parts.length? '<ul style="font-size:0.8rem;color:var(--text);margin:0;padding-left:16px">' + parts.map(p=>'<li>'+p+'</li>').join('') + '</ul>' : ''}
+    `;
+    groupsBox.parentNode.insertBefore(restrictBox, factorsBox.nextSibling);
+  }
+
+  // восстановить выбор подтверждения диагноза
+  const diag = document.querySelector(`input[name="diagnosisConfirm"][value="${state.diagnosisConfirm}"]`);
+  if(diag) diag.checked = true;
+
+  // карточка проблемы — боль в качестве главного блока, группа вторична
+  // Заголовок боли: собственное описание сотрудника, иначе главная задача
+  const painTitle = state.symptomDescription || state.mainTask || '—';
+  $('#pcPainTitle').textContent = painTitle;
+  $('#pcSymptomCode').textContent = state.selectedSymptomId || '—';
+  $('#pcEmployee').textContent = state.symptomEmployee || '—';
+  $('#pcSymptomLastCase').textContent = state.symptomLastCase || '—';
+  $('#pcPainScale').textContent = buildPainScale();
+
+  // recommendation — предметное решение по боли, не sales-текст вердикта
+  const rec = $('#resRecommend');
+  rec.innerHTML = `<h4>Рекомендуемое решение</h4><p>${buildRecommendationText()}</p>`;
+
+  // next step — отдельный контакт, без дублирования решения
+  function buildNextStepText(){
+    const demoLabel = state.demo === 'yes'? 'Да' : (state.demo === 'maybe'? 'Нужно обсудить' : 'Нет');
+    const directorSignal = state.signals.has('с7'); // «Решение принимает сам присутствующий»
+    const resp = state.demoResponsible || '—';
+    const date = state.demoDate || 'уточняется';
+
+    // Базовое действие пилота без выдуманных экономий и бюджета
+    const pilotAction = 'Согласовать с директором демонстрацию переноса одной тестовой заявки.';
+    const pilotMetric = 'Метрика пилота: время ручного переноса или доля автоматического попадания в CRM; целевое значение согласовать отдельно.';
+    const directorNote = directorSignal? ' Решение принимает сам присутствующий.' : '';
+
+    if(painScore >= 8){
+      if(demoLabel === 'Да'){
+        return pilotAction + ' Ответственный: ' + resp + '. Дата демо: ' + date + '. ' + pilotMetric + directorNote;
+      }
+      if(demoLabel === 'Нужно обсудить'){
+        return pilotAction + ' ' + pilotMetric + directorNote + ' Дата и ответственный уточняются после согласования с директором.';
+      }
+      return pilotAction + ' Ответственный: ' + resp + '. Дата демо: ' + date + '. ' + pilotMetric + directorNote;
+    }
+    if(painScore >= 4){
+      if(demoLabel === 'Да'){
+        return 'Связаться в течение 3–5 рабочих дней и согласовать демо с принимающим решение. Ответственный: ' + resp + '. Дата демо: ' + date + '.' + directorNote;
+      }
+      if(demoLabel === 'Нужно обсудить'){
+        return pilotAction + ' ' + pilotMetric + directorNote + ' Дата и ответственный уточняются после согласования с директором.';
+      }
+      return 'Связаться в течение 3–5 рабочих дней, уточнить сценарий и согласовать демо с принимающим решение.' + directorNote;
+    }
+    if(painScore >= 0){
+      return 'Добавить в базу лидов, вернуться на следующем контакте.';
+    }
+    return 'Не тратить ресурс на этот лид.';
+  }
+
+  const next = $('#resNext');
+  next.innerHTML = `<h4>Следующий шаг</h4><p>${buildNextStepText()}</p>`;
+}
+
+function exportText(){
+  const { score, verdict, activeGroups, topGroups, painScore, commercialScore } = calc();
+  const lines = [
+    'ОПРОСНИК БОЛИ — ИТОГ',
+    '',
+    'Компания: ' + state.companyName,
+    'Имя: ' + state.contactName,
+    'Роль: ' + state.contactRole,
+    'Отдел: ' + state.contactDept,
+    'Связь: ' + state.contactInfo,
+    'Сотрудников: ' + state.staff,
+    'Главная задача: ' + state.mainTask,
+    'Фокус группы: ' + (state.focusGroup? GROUPS[state.focusGroup].name : '—'),
+    'Очередь групп: ' + (state.nextPassGroups.length? state.nextPassGroups.map(g=>GROUPS[g].name).join('; ') : '—'),
+    'Симптомы: ' + ([...state.symptoms].map(s=>SYMPTOMS.find(x=>x.id===s)?.text).join('; ') || '—'),
+    'Выбранный симптом: ' + (state.selectedSymptomId || '—'),
+    'Сотрудник: ' + state.symptomEmployee,
+    'Описание симптома: ' + state.symptomDescription,
+    'Последний случай: ' + state.symptomLastCase,
+    '',
+    'Входные вопросы:',
+  ];
+  Object.entries(state.entryAnswers).forEach(([id, ans])=>{
+    lines.push(`${id}. Ответ: ${ans || '—'}`);
+  });
+  if(state.entryOtherId){
+    lines.push(`«Не знаю»: ${state.entryOtherId}`);
+  }
+  lines.push('');
+  lines.push('КАРТОЧКА БОЛИ:');
+  lines.push('Боль: ' + $('#pcPainTitle').textContent);
+  lines.push('Код боли: ' + $('#pcSymptomCode').textContent);
+  lines.push('Сотрудник: ' + $('#pcEmployee').textContent);
+  lines.push('Пример последнего случая: ' + $('#pcSymptomLastCase').textContent);
+  lines.push('Измеренный масштаб: ' + $('#pcPainScale').textContent);
+  const m32 = state.effectMetrics['Г3.2'] || {};
+  if(m32.qtyPerDay || m32.minsPerOp){
+    lines.push('Метрика эффекта (Г3.2): ' + calcEffectГ32());
+    if(m32.dataSource || m32.dataRecipient){
+      lines.push('  Источники: ' + (m32.dataSource || '—') + '; Получатели: ' + (m32.dataRecipient || '—'));
+    }
+  }
+  const m14 = state.effectMetrics['Г1.4'] || {};
+  if(m14.crmAutoShare){
+    lines.push('Доля в CRM автоматически (Г1.4): ' + m14.crmAutoShare + '%');
+  }
+  lines.push('');
+  lines.push(`Оценка боли: ${painScore} баллов`);
+  lines.push(`Готовность к покупке: ${commercialScore} баллов`);
+  lines.push(`Итоговый скоринг: ${score} баллов`);
+  lines.push(`Вердикт: ${verdict.label} — ${verdict.desc}`);
+  lines.push('Приоритетные группы: ' + (topGroups.length? topGroups.map(g=>GROUPS[g].name).join(', '):'—'));
+  lines.push('Решение: ' + buildRecommendationText());
+  lines.push('Следующий шаг: ' + $('#resNext').querySelector('p').textContent);
+  lines.push('');
+  lines.push('Что уже есть: ' + state.has);
+  lines.push('Аутсорс: ' + state.outsource);
+  lines.push('Готов к демо: ' + state.demo);
+  if(state.demoResponsible) lines.push('  Ответственный за демо: ' + state.demoResponsible);
+  if(state.demoDate) lines.push('  Дата демо: ' + state.demoDate);
+  lines.push('Комментарий: ' + state.comment);
+  lines.push('Согласие на обработку персональных данных: ' + (state.pdConsent.given? 'да' : 'нет')
+    + (state.pdConsent.given && state.pdConsent.at? ', ' + new Date(state.pdConsent.at).toLocaleString('ru-RU') : '')
+    + ' (версия текста: ' + (state.pdConsent.version || PD_CONSENT_VERSION) + ')');
+  if(state.restrictions.hasExternalRestrictions){
+    lines.push('Ограничения внешних сервисов: да');
+    lines.push('  Разрешённые системы: ' + state.restrictions.allowedSystems);
+    lines.push('  Согласует внедрение: ' + state.restrictions.approver);
+    lines.push('  Нельзя передавать внешним сервисам: ' + state.restrictions.noExternalData);
+    lines.push('  Отраслевые требования: ' + state.restrictions.industryRequirements);
+    lines.push('  Языки и юрисдикция: ' + state.restrictions.languageJurisdiction);
+  }
+  return lines.join('\n');
+}
+
+/* ================= EVENTS ================= */
+// модальное окно согласия на обработку ПДн
+$('#pdConsentAccept').addEventListener('click', ()=>{
+  state.pdConsent = { given:true, at:new Date().toISOString(), version:PD_CONSENT_VERSION };
+  saveDraft();
+  closePdConsentModal();
+  const next = pdAfterAccept; pdAfterAccept = null;
+  if(next) next();
+});
+$('#pdConsentCancel').addEventListener('click', ()=>{
+  pdAfterAccept = null;
+  closePdConsentModal();
+});
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape' && $('#pdModal').classList.contains('show')){
+    pdAfterAccept = null;
+    closePdConsentModal();
+  }
+});
+
+// шаг 1
+$('#btnNext1').addEventListener('click',()=>{
+  const fCompany = $('#fCompany');
+  const fContactName = $('#fContactName');
+  const fContactInfo = $('#fContactInfo');
+  const errCompany = $('#errCompany');
+  const errContactName = $('#errContactName');
+  const errContactInfo = $('#errContactInfo');
+
+  // сброс старых ошибок
+  [fCompany, fContactName, fContactInfo].forEach(f=>f.classList.remove('input-error'));
+  [errCompany, errContactName, errContactInfo].forEach(e=>e.textContent='');
+
+  state.companyName = fCompany.value.trim();
+  state.contactName = fContactName.value.trim();
+  state.contactRole = $('#fContactRole').value.trim();
+  state.contactDept = $('#fContactDept').value.trim();
+  state.contactInfo = fContactInfo.value.trim();
+  const staff = document.querySelector('input[name="staff"]:checked');
+  state.staff = staff? staff.value : '';
+
+  let firstErr = null;
+  if(!state.companyName){ errCompany.textContent='Укажите название компании'; fCompany.classList.add('input-error'); if(!firstErr) firstErr=fCompany; }
+  if(!state.contactName){ errContactName.textContent='Укажите имя контактного лица'; fContactName.classList.add('input-error'); if(!firstErr) firstErr=fContactName; }
+
+  // проверка формата связи только если поле не пустое
+  if(state.contactInfo){
+    const v = state.contactInfo;
+    const isTg = /^@[a-zA-Z0-9_]{5,32}$/.test(v);
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    const digits = v.replace(/\D/g,'').length;
+    const isPhone = digits >= 10 && digits <= 15 && /^[\d\s\+\-\(\)]+$/.test(v);
+    if(!(isTg||isEmail||isPhone)){
+      errContactInfo.textContent='Похоже, это не Telegram (@username), не email и не телефон';
+      fContactInfo.classList.add('input-error');
+      if(!firstErr) firstErr=fContactInfo;
+    }
+  }
+
+  if(firstErr){ firstErr.focus(); return; }
+  // согласие на обработку ПДн (152-ФЗ, ст.9) — без него дальше не идём
+  if(!state.pdConsent.given){
+    pdAfterAccept = ()=>{ saveDraft(); showStep(2); };
+    openPdConsentModal();
+    return;
+  }
+  saveDraft();
+  showStep(2);
+});
+
+// шаг 2
+$('#btnNext2').addEventListener('click', () => {
+  state.mainTask = $('#fMainTask').value.trim();
+
+  // собрать ответы на входные вопросы из DOM
+  state.entryAnswers['Ф0'] = $('#fEntryФ0')?.value.trim() || '';
+  document.querySelectorAll('.entry-ans').forEach(ta=>{
+    state.entryAnswers[ta.dataset.id] = ta.value.trim();
+  });
+  state.entryOtherId = $('#entryФ0NeZnaiu')?.checked ? 'Ф0' : '';
+  document.querySelectorAll('.entry-neznaiu').forEach(cb=>{
+    if(cb.checked) state.entryOtherId = cb.dataset.id;
+  });
+
+  state.entryOther = $('#entryOther').checked;
+  state.entryOtherText = $('#entryOtherText')?.value.trim() || '';
+
+  // entryGroups = фокус + очередь (для совместимости со scoring и бэкендом)
+  state.entryGroups = new Set();
+  if(state.focusGroup) state.entryGroups.add(state.focusGroup);
+  (state.nextPassGroups || []).forEach(g=>state.entryGroups.add(g));
+
+  // если выбрана «другая группа» — нет фокуса, идём к сигналам
+  if(state.entryOther && !state.focusGroup){
+    saveDraft();
+    showStep(4);
+    return;
+  }
+
+  // фокус должен быть выбран
+  if(!state.focusGroup){
+    alert('Выберите основную проблему для этого прохода или отметьте «Не знаю / другая группа»');
+    return;
+  }
+
+  // подхватить выбранный в DOM симптом (на случай, если state отстал)
+  const checkedSym = document.querySelector('input[name="selectedSymptom"]:checked');
+  if(checkedSym) state.selectedSymptomId = checkedSym.value;
+
+  // один симптом обязателен для выбранной группы;
+  // если у группы он единственный — подставляем автоматически
+  if(!state.selectedSymptomId && state.focusGroup){
+    const gs = SYMPTOMS.filter(s=>s.group===state.focusGroup);
+    if(gs.length === 1) state.selectedSymptomId = gs[0].id;
+  }
+  if(!state.selectedSymptomId){
+    alert('Выберите один симптом из справочника для этого прохода');
+    return;
+  }
+
+  // уточнения выбранного симптома
+  state.symptomEmployee = $('#symptomEmployee')?.value.trim() || '';
+  state.symptomDescription = $('#symptomDescription')?.value.trim() || '';
+  state.symptomLastCase = $('#symptomLastCase')?.value.trim() || '';
+
+  saveDraft();
+  renderDeepQuestions();
+  showStep(3);
+});
+
+// шаг 3
+$('#btnNext3').addEventListener('click',()=>{
+  // gather deep values from DOM (ensures captured)
+  document.querySelectorAll('.scale button.active').forEach(b=>{
+    state.deep[b.dataset.id] = b.value;
+  });
+  // сбор метрик эффекта
+  document.querySelectorAll('.effect-metric input').forEach(inp=>{
+    const did = inp.dataset.id;
+    const fld = inp.dataset.field;
+    if(!state.effectMetrics[did]) state.effectMetrics[did] = {};
+    state.effectMetrics[did][fld] = inp.value.trim();
+  });
+  state.workDaysPerWeek = (() => {
+    const raw = $('#workDaysPerWeek')?.value.trim() || '';
+    if(!raw) return '';
+    let n = Math.round(Number(raw));
+    if(!Number.isFinite(n)) return '';
+    return String(Math.min(7, Math.max(1, n)));
+  })();
+
+  // нет подтверждённой боли — не пускать к расчёту
+  const hasConfirmed = Object.values(state.deep).some(v=>Number(v) >= 1);
+  if(!state.focusGroup || !hasConfirmed){
+    alert('Подтвердите хотя бы одну боль оценкой «Редко», «Регулярно» или «Постоянно», либо вернитесь к выбору группы.');
+    return;
+  }
+
+  // автоподставляем сигналы из структурированных фактов (не свободного текста)
+  applyAutoSignals();
+  renderSignals();
+  saveDraft();
+  showStep(4);
+});
+
+// шаг 4
+$('#btnNext4').addEventListener('click',()=>{
+  saveDraft();
+  showStep(5);
+});
+
+// шаг 5
+$('#btnNext5').addEventListener('click', async ()=>{
+  state.has = state.systems.join(', ');
+  state.accessConstraints = $('#fAccessConstraints').value.trim();
+  state.integrationOptions = $('#fIntegrationOptions').value.trim();
+  state.outsource = $('#fOutsource').value.trim();
+  state.restrictions.hasExternalRestrictions = document.querySelector('input[name="restrictionsHas"]:checked')?.value === 'yes';
+  state.restrictions.allowedSystems = $('#fAllowedSystems')?.value.trim() || '';
+  state.restrictions.approver = $('#fApprover')?.value.trim() || '';
+  state.restrictions.noExternalData = $('#fNoExternalData')?.value.trim() || '';
+  state.restrictions.industryRequirements = $('#fIndustryRequirements')?.value.trim() || '';
+  state.restrictions.languageJurisdiction = $('#fLanguageJurisdiction')?.value.trim() || '';
+  const demo = document.querySelector('input[name="demo"]:checked');
+  state.demo = demo? demo.value : '';
+  state.demoResponsible = $('#fDemoResponsible')?.value.trim() || '';
+  state.demoDate = $('#fDemoDate')?.value.trim() || '';
+  state.comment = $('#fComment').value.trim();
+  saveDraft();
+  renderResult();
+  showStep(6);
+  renderSubmitPreview();
+});
+
+/* Подписи для карточки заявки в админке: берём тексты из тех же структур, что и вопросы */
+const DEEP_SCALE_TEXT = { 0:'Не про нас', 1:'Редко', 2:'Регулярно', 3:'Постоянно', 'na':'Не знаю' };
+
+/* Собрать payload для отправки в бэкенд (вызывается только по кнопке «Отправить анкету») */
+function buildPayload(){
+  const { score, verdict, activeGroups, topGroups, painScore, commercialScore } = calc();
+  return {
+    timestamp: new Date().toISOString(),
+    companyName: state.companyName || '',
+    company: state.companyName || '',
+    contactName: state.contactName || '',
+    contact: state.contactName || '',
+    contactRole: state.contactRole || '',
+    contactDept: state.contactDept || '',
+    contactInfo: state.contactInfo || '',
+    staff: state.staff || '',
+    mainTask: state.mainTask || '',
+    symptoms: [...state.symptoms],
+    selectedSymptomId: state.selectedSymptomId || '',
+    symptomEmployee: state.symptomEmployee || '',
+    symptomDescription: state.symptomDescription || '',
+    symptomLastCase: state.symptomLastCase || '',
+    focusGroup: state.focusGroup || null,
+    nextPassGroups: state.nextPassGroups || [],
+    entryAnswers: { ...state.entryAnswers },
+    entryGroups: [...state.entryGroups],
+    deep: state.deep,
+    signals: [...state.signals],
+    effectMetrics: state.effectMetrics,
+    workDaysPerWeek: state.workDaysPerWeek || '',
+    has: state.has || '',
+    outsource: state.outsource || '',
+    demo: state.demo || '',
+    demoResponsible: state.demoResponsible || '',
+    demoDate: state.demoDate || '',
+    comment: state.comment || '',
+    restrictions: state.restrictions,
+    pdConsent: {
+      given: !!state.pdConsent.given,
+      at: state.pdConsent.at || '',
+      version: state.pdConsent.version || PD_CONSENT_VERSION
+    },
+    score: score || 0,
+    verdict: verdict.label,
+    painScore: painScore || 0,
+    commercialScore: commercialScore || 0,
+    activeGroups: [...activeGroups],
+    topGroups: topGroups.map(g=>({id:g, name:GROUPS[g].name})),
+    card: {
+      painTitle: $('#pcPainTitle').textContent,
+      symptomCode: $('#pcSymptomCode').textContent,
+      employee: $('#pcEmployee').textContent,
+      symptomLastCase: $('#pcSymptomLastCase').textContent,
+      painScale: $('#pcPainScale').textContent,
+      diagnosisConfirm: state.diagnosisConfirm || ''
+    },
+    qa: {
+      entry: Object.entries(state.entryAnswers).filter(([,v]) => String(v||'').trim()).map(([id,v]) => ({
+        id,
+        q: id === UNIVERSAL_ENTRY_QUESTION.id ? UNIVERSAL_ENTRY_QUESTION.q
+             : (Object.values(GROUP_ENTRY_QUESTIONS).flat().find(x => x.id === id) || {}).q || id,
+        a: String(v).trim()
+      })),
+      deep: Object.entries(state.deep).map(([id,v]) => ({
+        id,
+        q: (DEEP_QUESTIONS.find(x => x.id === id) || {}).q || id,
+        a: DEEP_SCALE_TEXT[v] !== undefined ? DEEP_SCALE_TEXT[v] : v
+      })),
+      signals: [...state.signals].map(id => ({
+        id,
+        text: (SIGNALS.find(s => s.id === id) || {}).text || id
+      })),
+      symptom: {
+        id: state.selectedSymptomId || '',
+        text: (SYMPTOMS.find(s => s.id === state.selectedSymptomId) || {}).text || ''
+      },
+      effectMetrics: Object.entries(state.effectMetrics).map(([id,m]) => ({ id, data: m })),
+      restrictions: state.restrictions
+    },
+    signalPts: 0
+  };
+}
+
+/* Рендер краткого превью того, что будет отправлено в таблицу */
+function renderSubmitPreview(){
+  const box = $('#submitPreview');
+  if(!box) return;
+  const { painScore, commercialScore } = calc();
+  const fg = state.focusGroup? GROUPS[state.focusGroup].name : '—';
+  const sym = state.selectedSymptomId || '—';
+  const demoLabel = state.demo === 'yes'? 'Да' : (state.demo === 'maybe'? 'Нужно обсудить' : 'Нет');
+  const lines = [
+    '<strong>Компания:</strong> ' + (state.companyName || '—'),
+    '<strong>Контакт:</strong> ' + (state.contactName || '—') + (state.contactRole? ' (' + state.contactRole + ')' : '') + (state.contactDept? ', ' + state.contactDept : ''),
+    '<strong>Связь:</strong> ' + (state.contactInfo || '—'),
+    '<strong>Главная задача:</strong> ' + (state.mainTask || '—'),
+    '<strong>Группа боли:</strong> ' + fg,
+    '<strong>Код боли (симптом):</strong> ' + sym,
+    '<strong>Оценка боли:</strong> ' + painScore + ' / <strong>Готовность:</strong> ' + commercialScore,
+    '<strong>Демо:</strong> ' + demoLabel + (state.demoResponsible? ', ответственный: ' + state.demoResponsible : '') + (state.demoDate? ', дата: ' + state.demoDate : '')
+  ];
+  box.innerHTML = lines.map(l=>'<div>'+l+'</div>').join('');
+}
+
+/* ---------- отправка в бэкенд (отдельная кнопка на шаге 6) ---------- */
+/* После деплоя воркера (worker/README.md) вставьте его URL сюда; пусто = приём выключен */
+const BACKEND_URL = 'https://ferma-survey.drobik832.workers.dev';
+
+$('#btnSubmit').addEventListener('click', async ()=>{
+  if(submitted || isSubmitting) return;
+  // без согласия данные отправлять нельзя (152-ФЗ, ст.9)
+  if(!state.pdConsent.given){
+    pdAfterAccept = ()=>$('#btnSubmit').click();
+    openPdConsentModal();
+    return;
+  }
+  // бэкенд ещё не подключён — не прячем экспорт JSON
+  if(!BACKEND_URL){
+    const st = $('#submitStatus');
+    st.textContent = 'Отправка пока не подключена. Используйте «Скачать JSON».';
+    st.style.color = 'var(--warn)';
+    return;
+  }
+  // без согласия данные отправлять нельзя (152-ФЗ, ст.9)
+  if(!state.pdConsent.given){
+    pdAfterAccept = ()=>$('#btnSubmit').click();
+    openPdConsentModal();
+    return;
+  }
+  isSubmitting = true;
+  const btn = $('#btnSubmit');
+  const retry = $('#btnSubmitRetry');
+  const status = $('#submitStatus');
+  const spinner = $('#submitSpinner');
+  btn.disabled = true;
+  btn.textContent = 'Отправка…';
+  spinner.style.display = 'inline';
+  status.textContent = '';
+  retry.style.display = 'none';
+  try {
+    const res = await fetch(BACKEND_URL + '/submit', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(buildPayload())
+    });
+    if(res.ok){
+      submitted = true;
+      btn.textContent = 'Отправлено ✓';
+      btn.style.background = '#2e7d32';
+      btn.style.borderColor = '#2e7d32';
+      status.textContent = 'Анкета отправлена.';
+      status.style.color = '#2e7d32';
+      spinner.style.display = 'none';
+    } else {
+      throw new Error('HTTP ' + res.status);
+    }
+  } catch(err){
+    isSubmitting = false;
+    btn.disabled = false;
+    btn.textContent = 'Отправить анкету';
+    btn.style.background = '';
+    btn.style.borderColor = '';
+    spinner.style.display = 'none';
+    retry.style.display = 'inline';
+    status.textContent = 'Ошибка отправки. Нажмите «Повторить».';
+    status.style.color = 'var(--warn)';
+    console.error(err);
+  }
+});
+
+$('#btnSubmitRetry').addEventListener('click',()=>{
+  $('#btnSubmit').click();
+});
+
+// шаг 6
+$('#btnBack6').addEventListener('click',()=>showStep(5));
+$('#btnBack5').addEventListener('click',()=>showStep(4));
+$('#btnBack4').addEventListener('click',()=>showStep(3));
+$('#btnBack3').addEventListener('click',()=>showStep(2));
+$('#btnBack2').addEventListener('click',()=>showStep(1));
+$('#btnCopy').addEventListener('click',()=>{
+  navigator.clipboard.writeText(exportText()).then(()=>{
+    const t = $('#toast'); t.textContent = 'Скопировано в буфер обмена';
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 1600);
+  });
+});
+$('#btnExport').addEventListener('click',()=>{
+  const blob = new Blob([JSON.stringify(serializeExport(), null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'oprosnik-result.json'; a.click();
+  URL.revokeObjectURL(url);
+});
+$('#btnImportFile').addEventListener('change',(e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev)=>{
+    try {
+      const data = JSON.parse(ev.target.result);
+      if(importFromJson(data)){
+        const t = $('#toast'); t.textContent = 'Данные загружены из JSON';
+        t.classList.add('show');
+        setTimeout(()=>t.classList.remove('show'), 1600);
+      } else {
+        const t = $('#toast'); t.textContent = 'Ошибка загрузки JSON';
+        t.classList.add('show');
+        setTimeout(()=>t.classList.remove('show'), 1600);
+      }
+    } catch(err){
+      const t = $('#toast'); t.textContent = 'Некорректный JSON';
+      t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'), 1600);
+    }
+  };
+  reader.readAsText(file);
+});
+$('#btnImport').addEventListener('click',()=>{
+  $('#btnImportFile').click();
+});
+$('#btnRestart').addEventListener('click',()=>{
+  if(confirm('Пройти опросник заново? Текущие ответы будут сброшены.')){
+    resetState();
+    localStorage.removeItem(DRAFT_KEY);
+    renderEntryQuestions();
+    showStep(1);
+  }
+});
+
+// навигация браузера: назад/вперёд по шагам
+window.addEventListener('popstate', (e) => {
+  let n = (e.state && e.state.step) || parseInt(String(location.hash).replace('#step',''), 10) || 1;
+  if(!(n >= 1 && n <= 6)) n = 1;
+  showStep(n, { silent: true });
+});
+
+// при изменении ширины окна пересчитываем подсказку о прокрутке шкалы
+window.addEventListener('resize', updateScaleHints);
+
+// инициализация: загрузить черновик, если есть
+loadDraft();
+wireAutoSave();
+renderEntryQuestions();
+// восстановить шаг из hash после перезагрузки
+let initStep = parseInt(String(location.hash).replace('#step',''), 10);
+if(!(initStep >= 1 && initStep <= 6)) initStep = 1;
+if(initStep !== 1){ showStep(initStep, { silent: true }); }
+else { history.replaceState({step:1}, '', '#step1'); showStep(1, { silent: true }); }
+
+// предупреждение перед перезагрузкой/закрытием если есть заполненные данные
+window.addEventListener('beforeunload', (e) => {
+  const hasData = state.companyName || state.contactName || Object.keys(state.entryAnswers).length > 0 ||
+    state.entryGroups.size > 0 || Object.keys(state.deep).length > 0 ||
+    state.signals.size > 0 || state.has || state.outsource || state.comment;
+  if (hasData) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+name = "ferma-survey"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+account_id = "14a392d92c034b33e22af01668044aaf"
+
+[vars]
+# Домены, с которых разрешены запросы: прод Pages + локальная проверка на 8899.
+# Меняется через wrangler secret не нужно — это обычная переменная.
+ALLOWED_ORIGINS = "https://drobik832-sudo.github.io,https://ai-ferma.github.io,http://127.0.0.1:8899"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ferma-survey"
+# После `npx wrangler d1 create ferma-survey` вставьте выданный id:
+database_id = "6e2ec331-14da-4e7b-aecd-c0b9bb4760ae"
