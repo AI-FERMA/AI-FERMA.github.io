@@ -52,6 +52,10 @@
   .notice code{background:rgba(56,189,248,0.1);padding:1px 6px;border-radius:6px;font-size:0.85rem}
   table{width:100%;border-collapse:collapse;font-size:0.85rem}
   th{color:var(--muted);text-align:left;font-weight:600;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+  th.sortable{cursor:pointer;user-select:none}
+  th.sortable:hover{color:var(--text)}
+  th.sortable .arrow{opacity:.35;margin-left:5px;font-size:.7rem}
+  th.sortable[aria-sort="ascending"] .arrow,th.sortable[aria-sort="descending"] .arrow{opacity:1;color:var(--accent)}
   td{padding:8px 10px;border-bottom:1px solid rgba(30,41,59,0.35);vertical-align:top}
   tr.main{cursor:pointer}
   tr.main:hover td{background:rgba(23,33,56,0.5)}
@@ -134,15 +138,20 @@
       <table>
         <thead>
           <tr>
-            <th>#</th><th>Дата</th><th>Компания</th><th>Контакт</th>
+            <th>#</th>
+            <th class="sortable" data-sort="date">Дата<span class="arrow"></span></th>
+            <th class="sortable" data-sort="company">Компания<span class="arrow"></span></th>
+            <th class="sortable" data-sort="contact">Контакт<span class="arrow"></span></th>
             <th class="hide-sm">Связь</th><th class="hide-sm">Главная задача</th>
-            <th>Боль</th><th>Готовн.</th><th>Вердикт</th><th></th>
+            <th class="sortable" data-sort="pain">Боль<span class="arrow"></span></th>
+            <th class="sortable" data-sort="commercial">Готовн.<span class="arrow"></span></th>
+            <th class="sortable" data-sort="verdict">Вердикт<span class="arrow"></span></th><th></th>
           </tr>
         </thead>
         <tbody id="tbody"></tbody>
       </table>
     </div>
-    <div class="muted" style="margin-top:10px">Показаны последние 500 анкет. Клик по строке — полная карточка заявки.</div>
+    <div class="muted" style="margin-top:10px">Показаны последние 500 анкет. Клик по строке — полная карточка заявки. Клик по заголовку таблицы — сортировка (повторный клик меняет направление).</div>
   </div>
 </div>
 
@@ -232,14 +241,44 @@ function load(){
     .catch(err => { $('#loginErr').textContent = err.message; console.error(err); });
 }
 let ITEMS = [];
+let SORT = { key:'date', dir:'desc' };
+/* Порядок вердиктов по значимости (не по алфавиту). */
+const VERDICT_RANK = { 'ГОРЯЧИЙ':0, 'ТЁПЛЫЙ':1, 'В БАЗУ':2, 'НЕДОСТАТОЧНО ДАННЫХ':3, 'НЕ ТРАТИТЬ РЕСУРС':4 };
+function verdictRank(v){ return VERDICT_RANK[String(v || '').trim().toUpperCase()] ?? 5; }
+function sortedIndexes(){
+  const idx = ITEMS.map((_, i) => i);
+  const k = SORT.key, dir = SORT.dir === 'asc' ? 1 : -1;
+  const ts = it => Date.parse(it.created_at) || 0;
+  idx.sort((a, b) => {
+    const A = ITEMS[a], B = ITEMS[b];
+    let d = 0;
+    if(k === 'date') d = ts(A) - ts(B);
+    else if(k === 'company') d = String(A.company || '').localeCompare(String(B.company || ''), 'ru');
+    else if(k === 'contact') d = String(A.contact || '').localeCompare(String(B.contact || ''), 'ru');
+    else if(k === 'pain') d = (Number(A.pain_score) || 0) - (Number(B.pain_score) || 0);
+    else if(k === 'commercial') d = (Number(A.commercial_score) || 0) - (Number(B.commercial_score) || 0);
+    else if(k === 'verdict') d = verdictRank(A.verdict) - verdictRank(B.verdict);
+    if(d === 0) d = ts(B) - ts(A);
+    return d * dir;
+  });
+  return idx;
+}
+function updateSortHead(){
+  document.querySelectorAll('th[data-sort]').forEach(th => {
+    const active = th.dataset.sort === SORT.key;
+    th.setAttribute('aria-sort', active ? (SORT.dir === 'asc' ? 'ascending' : 'descending') : 'none');
+    th.querySelector('.arrow').textContent = active ? (SORT.dir === 'asc' ? '▲' : '▼') : '';
+  });
+}
 function render(items){
   ITEMS = items;
   $('#count').textContent = items.length + ' анкет';
-  $('#tbody').innerHTML = items.map((it, i) => {
+  $('#tbody').innerHTML = sortedIndexes().map((itIdx, rowNo) => {
+    const it = ITEMS[itIdx];
     let p = {};
     try { p = JSON.parse(it.payload); } catch {}
-    return '<tr class="main" data-open="' + i + '">'
-      + '<td class="num">' + (i+1) + '</td>'
+    return '<tr class="main" data-open="' + itIdx + '">'
+      + '<td class="num">' + (rowNo+1) + '</td>'
       + '<td class="num">' + esc(fmtDate(it.created_at)) + '</td>'
       + '<td>' + val(it.company) + '</td>'
       + '<td>' + val(it.contact) + '</td>'
@@ -249,11 +288,12 @@ function render(items){
       + '<td class="score"><b>' + esc(it.commercial_score ?? '') + '</b>/60</td>'
       + '<td><span class="verdict ' + verdictClass(it.verdict) + '">' + esc(it.verdict || '—') + '</span></td>'
       + '<td><div class="cellbtns">'
-      + '<button class="btn btn-ghost btn-sm" data-open="' + i + '">Открыть</button>'
+      + '<button class="btn btn-ghost btn-sm" data-open="' + itIdx + '">Открыть</button>'
       + '<button class="btn btn-danger btn-sm" data-del="' + esc(it.id) + '" title="Удалить">✕</button>'
       + '</div></td>'
       + '</tr>';
   }).join('');
+  updateSortHead();
 }
 function reloadList(){
   return fetch(BACKEND_URL + '/answers', { headers: { 'X-Admin-Key': $('#adminKey').value.trim() } })
@@ -349,6 +389,18 @@ function closeApp(){
 }
 
 /* ================= События ================= */
+document.querySelector('thead').addEventListener('click', e => {
+  const th = e.target.closest('th[data-sort]');
+  if(!th) return;
+  const key = th.dataset.sort;
+  if(SORT.key === key){
+    SORT.dir = SORT.dir === 'asc' ? 'desc' : 'asc';
+  } else {
+    SORT.key = key;
+    SORT.dir = (key === 'date' || key === 'pain' || key === 'commercial') ? 'desc' : 'asc';
+  }
+  render(ITEMS);
+});
 $('#tbody').addEventListener('click', e => {
   const del = e.target.closest('[data-del]');
   if(del){
@@ -391,7 +443,8 @@ $('#appDelete').addEventListener('click', () => {
 $('#btnCsv').addEventListener('click', () => {
   const head = ['id','дата','компания','контакт','роль','связь','главная задача','боль','готовность','вердикт','симптом','согласие'];
   const lines = [head.join(';')];
-  ITEMS.forEach(it => {
+  sortedIndexes().forEach(itIdx => {
+    const it = ITEMS[itIdx];
     let p = {};
     try { p = JSON.parse(it.payload); } catch {}
     const cell = v => '"' + String(v ?? '').replace(/"/g, '""').replace(/\r?\n/g, ' ') + '"';
