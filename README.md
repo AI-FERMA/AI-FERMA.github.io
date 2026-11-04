@@ -3,6 +3,9 @@
 Статичная страница-опросник, свой бэкенд для приёма заявок (Cloudflare Worker + D1)
 и страница просмотра заявок. Без Google Таблиц и без Google Apps Script.
 
+Сайт опубликован в корне домена: репозиторий называется `AI-FERMA.github.io`,
+поэтому адреса без поддомена-репозитория.
+
 ## Что внутри
 
 ```
@@ -39,17 +42,20 @@ apps-script/Code.gs           — резервный вариант: Apps Script
 
 ## Живые адреса
 
-- Сайт: `https://ai-ferma.github.io/FermaCamp/`
-- Страница заявок: `https://ai-ferma.github.io/FermaCamp/answers.html`
+- Сайт: `https://ai-ferma.github.io/`
+- Страница заявок: `https://ai-ferma.github.io/answers.html`
 - Воркер: `https://ferma-survey.drobik832.workers.dev`
 - База D1: `ferma-survey` (`6e2ec331-14da-4e7b-aecd-c0b9bb4760ae`)
 
 ## Как опубликовать на GitHub Pages
 
-1. Репозиторий уже содержит `.github/workflows/pages.yml`: при пуше в `master` (или `main`)
+1. Репозиторий уже содержит `.github/workflows/pages.yml`: при пуше в `main`
    папка `questionnaire/` выкладывается на GitHub Pages.
-2. В настройках репозитория: **Settings → Pages → Source → GitHub Actions**.
-3. После деплоя адрес будет вида `https://<пользователь>.github.io/<репозиторий>/`.
+2. Pages: **Settings → Pages → Source → GitHub Actions**.
+3. Деплой занимает ~1 минуту; адрес: `https://ai-ferma.github.io/`.
+
+Репозиторий называется `AI-FERMA.github.io` — это «user site»: именно такое имя
+нужно, чтобы сайт открывался в корне домена `ai-ferma.github.io`, а не в поддомене.
 
 ## Как подключить приём ответов (Cloudflare Worker + D1)
 
@@ -65,9 +71,12 @@ apps-script/Code.gs           — резервный вариант: Apps Script
 Пока URL пустой, кнопка отправки честно говорит, что приём не подключён, и предлагает
 «Скачать JSON» — выгрузка работает всегда.
 
+Домены, с которых воркер принимает запросы, перечислены в `worker/wrangler.toml`
+(`ALLOWED_ORIGINS`): сейчас это `https://ai-ferma.github.io` и локальный стенд.
+
 ## Как смотреть ответы
 
-Открыть `https://ai-ferma.github.io/FermaCamp/answers.html`, ввести ключ
+Открыть `https://ai-ferma.github.io/answers.html`, ввести ключ
 (тот, что вводился командой `wrangler secret put ADMIN_KEY`). Дальше:
 
 - таблица всех анкет (дата, компания, контакт, задача, баллы, вердикт);
