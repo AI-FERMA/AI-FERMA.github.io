@@ -39,8 +39,8 @@ apps-script/Code.gs           — резервный вариант: Apps Script
 
 ## Живые адреса
 
-- Сайт: `https://ai-ferma.github.io/Ferma-Camp/`
-- Страница заявок: `https://ai-ferma.github.io/Ferma-Camp/answers.html`
+- Сайт: `https://ai-ferma.github.io/FermaCamp/`
+- Страница заявок: `https://ai-ferma.github.io/FermaCamp/answers.html`
 - Воркер: `https://ferma-survey.drobik832.workers.dev`
 - База D1: `ferma-survey` (`6e2ec331-14da-4e7b-aecd-c0b9bb4760ae`)
 
@@ -67,7 +67,7 @@ apps-script/Code.gs           — резервный вариант: Apps Script
 
 ## Как смотреть ответы
 
-Открыть `https://ai-ferma.github.io/Ferma-Camp/answers.html`, ввести ключ
+Открыть `https://ai-ferma.github.io/FermaCamp/answers.html`, ввести ключ
 (тот, что вводился командой `wrangler secret put ADMIN_KEY`). Дальше:
 
 - таблица всех анкет (дата, компания, контакт, задача, баллы, вердикт);

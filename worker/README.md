@@ -55,7 +55,7 @@ curl -X POST https://ferma-survey.<аккаунт>.workers.dev/submit \
 # {"ok":true,"id":1}
 ```
 
-Потом откройте `https://drobik832-sudo.github.io/Ferma/answers.html`, введите ключ — увидите тестовую строку, удалите её кнопкой.
+Потом откройте `https://ai-ferma.github.io/FermaCamp/answers.html`, введите ключ — увидите тестовую строку, удалите её кнопкой.
 
 Домены, с которых разрешены запросы, заданы в `wrangler.toml` (`ALLOWED_ORIGINS`).
 
