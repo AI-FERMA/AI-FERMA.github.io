@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Заполните форму — подбор курса для вашей команды</title>
+<meta name="description" content="Короткая форма: какие курсы нужны и куда внедряем. Мы свяжемся и подготовим пилот.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0a0c14">
+<link rel="icon" type="image/svg+xml" href="questionnaire/favicon.svg">
+<link rel="icon" type="image/x-icon" href="questionnaire/favicon.ico">
+<link rel="apple-touch-icon" href="questionnaire/apple-touch-icon.png">
+<meta name="color-scheme" content="dark">
+<style>
+  :root{
+    --bg:#0a0c14;
+    --card:rgba(18,25,42,0.75);
+    --text:#e8eef7;
+    --muted:#94a3b8;
+    --accent:#38bdf8;
+    --accent-dark:#0ea5e9;
+    --err:#f87171;
+    --border:rgba(30,41,59,0.6);
+    --radius:14px;
+    --shadow:0 10px 30px -10px rgba(0,0,0,0.6);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+    background:var(--bg); color:var(--text);
+    line-height:1.5; min-height:100vh;
+  }
+  a{color:var(--accent);text-decoration:none}
+  .container{max-width:760px;margin:0 auto;padding:24px 16px 80px}
+  header{margin-bottom:8px}
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .brand img{flex:none;border-radius:50%}
+  .brand span{font-weight:800;letter-spacing:.06em;font-size:.85rem;color:var(--muted)}
+  h1{font-size:1.5rem;font-weight:800;letter-spacing:-0.02em;margin:12px 0 6px}
+  .sub{color:var(--muted);font-size:0.95rem;margin-bottom:18px}
+  .card{
+    background:rgba(18,25,42,0.7);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:18px 20px;margin-bottom:14px;
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+  }
+  label.fl{display:block;font-size:0.9rem;font-weight:700;margin:14px 0 6px}
+  label.fl:first-of-type{margin-top:0}
+  .req{color:var(--err);margin-left:2px}
+  input[type=text],textarea{
+    width:100%;background:#0f172a;border:1px solid var(--border);color:var(--text);
+    border-radius:10px;padding:10px 12px;font-size:0.95rem;font-family:inherit;
+  }
+  input[type=text]:focus,textarea:focus{outline:none;border-color:var(--accent)}
+  input::placeholder,textarea::placeholder{color:#475569}
+  textarea{resize:vertical;min-height:72px}
+  .hint{font-size:0.8rem;color:var(--muted);margin-top:4px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 2px}
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid var(--border);
+    border-radius:999px;background:#0f172a;color:var(--muted);font-size:0.88rem;font-weight:600;
+    cursor:pointer;transition:all .2s;user-select:none}
+  .chip input{position:absolute;opacity:0;pointer-events:none}
+  .chip.on{border-color:var(--accent);background:#132a3d;color:var(--accent);box-shadow:0 0 12px rgba(56,191,248,0.25)}
+  .consent{display:flex;gap:10px;align-items:flex-start;margin:18px 0 14px;font-size:0.85rem;color:var(--muted)}
+  .consent input{width:18px;height:18px;accent-color:var(--accent);margin-top:2px;flex:none;cursor:pointer}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;font-size:0.95rem;font-weight:700;cursor:pointer;border:none;transition:all .2s}
+  .btn-primary{background:var(--accent);color:#01151c;box-shadow:0 0 16px rgba(56,191,248,0.35)}
+  .btn-primary:hover{background:#7dd3fc}
+  .btn[disabled]{opacity:.55;cursor:not-allowed}
+  .err-msg{display:none;color:var(--err);font-size:0.82rem;margin-top:8px}
+  .ok{display:none;text-align:center;padding:40px 16px}
+  .ok h2{margin-bottom:8px}
+  .ok p{color:var(--muted);margin-bottom:18px}
+  footer{margin-top:34px;color:var(--muted);font-size:0.8rem;text-align:center;padding-bottom:20px}
+
+  /* ---------- ФОН (из опросника боли) ---------- */
+  .bg-layer{
+    position:fixed;inset:0;z-index:-1;
+    background:#0a0c14;
+    background-image:radial-gradient(circle at 15% 20%, rgba(56,191,248,0.08), transparent 40%),
+                     radial-gradient(circle at 85% 80%, rgba(14,165,233,0.06), transparent 40%);
+  }
+  .bg-glow{
+    position:fixed;z-index:-1;border-radius:50%;filter:blur(64px);opacity:0.35;animation:float 12s ease-in-out infinite;
+  }
+  .glow-1{width:520px;height:520px;background:#38bdf8;top:-120px;left:-140px;animation-delay:0s;}
+  .glow-2{width:420px;height:420px;background:#0ea5e9;bottom:-100px;right:-130px;animation-delay:4s;}
+  .glow-3{width:360px;height:360px;background:#818cf8;top:40%;left:45%;animation-delay:8s;}
+  @keyframes float{0%,100%{transform:translate(0,0)}33%{transform:translate(24px,-16px)}66%{transform:translate(-20px,28px)}}
+  .bg-grid{
+    position:fixed;inset:0;z-index:-1;
+    background-image:linear-gradient(rgba(56,191,248,0.04) 1px, transparent 1px),
+                     linear-gradient(90deg,rgba(56,191,248,0.04) 1px, transparent 1px);
+    background-size:32px 32px;
+    mask-image:radial-gradient(circle at center, black 40%, transparent 85%);
+    opacity:0.6;
+  }
+  .bg-noise{
+    position:fixed;inset:0;z-index:-1;
+    opacity:0.04;
+    pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+</style>
+</head>
+<body>
+<div class="bg-layer"></div>
+<div class="bg-glow glow-1"></div>
+<div class="bg-glow glow-2"></div>
+<div class="bg-glow glow-3"></div>
+<div class="bg-grid"></div>
+<div class="bg-noise"></div>
+<div class="container">
+  <header>
+    <div class="brand"><img src="logo.jpg" alt="FERMA" width="36" height="36"><span>FERMA CAMP</span></div>
+    <h1>Подбор курса для вашей команды</h1>
+    <div class="sub">Две минуты — и мы подготовим предложение под ваш отдел. <a href="tests.html">← К списку курсов</a></div>
+  </header>
+
+  <div id="formWrap">
+  <div class="card">
+    <label class="fl">Компания <span class="req">*</span></label>
+    <input type="text" id="company" placeholder="ООО «Ромашка»">
+    <div class="hint">Как называется ваша организация</div>
+
+    <label class="fl">Контакт <span class="req">*</span></label>
+    <input type="text" id="contact" placeholder="Telegram / email / телефон">
+    <div class="hint">Куда написать после отправки формы</div>
+
+    <label class="fl">Какие курсы нужны? <span class="req">*</span></label>
+    <div class="chips" id="coursesChips">
+      <label class="chip"><input type="checkbox" value="Страж · безопасность LLM-систем">Страж · безопасность LLM</label>
+      <label class="chip"><input type="checkbox" value="Архитектор AI-агентов">Архитектор AI-агентов</label>
+      <label class="chip"><input type="checkbox" value="Арт-директор стендов">Арт-директор стендов</label>
+      <label class="chip"><input type="checkbox" value="Сварка и неразрушающий контроль">Сварка и НК</label>
+    </div>
+    <textarea id="coursesOther" placeholder="Ещё темы / своя программа — опишите в свободной форме (необязательно)"></textarea>
+
+    <label class="fl">Куда внедряем? <span class="req">*</span></label>
+    <input type="text" id="target" placeholder="Ваша LMS / внутренний портал / телефон / сайт / другая система">
+    <div class="hint">Открыть курс можно и по ссылке — укажите, как планируете давать его сотрудникам</div>
+  </div>
+
+  <label class="consent">
+    <input type="checkbox" id="pdConsent">
+    <span>Согласен на обработку указанных в форме данных. Данные используются только для связи по курсам.</span>
+  </label>
+
+  <button class="btn btn-primary" id="submitBtn">Отправить →</button>
+  <div class="err-msg" id="errMsg"></div>
+  </div>
+
+  <div class="ok" id="okBox">
+    <h2>Спасибо!</h2>
+    <p>Форма ушла к нам в таблицу — свяжемся по указанному контакту.</p>
+    <a class="btn btn-primary" href="tests.html">← К курсам</a>
+  </div>
+
+  <footer>FERMA CAMP · интерактивное обучение для команд</footer>
+</div>
+<script>
+const BACKEND_URL = 'https://ferma-survey.drobik832.workers.dev';
+const $ = id => document.getElementById(id);
+document.querySelectorAll('#coursesChips .chip input').forEach(inp => {
+  inp.addEventListener('change', function(){ this.closest('.chip').classList.toggle('on', this.checked); });
+});
+function fail(msg){
+  const el = $('errMsg');
+  el.textContent = msg; el.style.display = 'block';
+}
+$('submitBtn').addEventListener('click', async function(){
+  const btn = this;
+  $('errMsg').style.display = 'none';
+  const company = $('company').value.trim();
+  const contact = $('contact').value.trim();
+  const courses = Array.from(document.querySelectorAll('#coursesChips input:checked')).map(i => i.value);
+  const coursesOther = $('coursesOther').value.trim();
+  const target = $('target').value.trim();
+  if(!company){ fail('Укажите компанию'); return; }
+  if(!contact){ fail('Укажите контакт'); return; }
+  if(!courses.length && !coursesOther){ fail('Отметьте курсы или опишите тему'); return; }
+  if(!target){ fail('Укажите, куда внедряем'); return; }
+  if(!$('pdConsent').checked){ fail('Нужно согласие на обработку данных'); return; }
+  btn.disabled = true;
+  const payload = {
+    timestamp: new Date().toISOString(),
+    form: 'courses-demo',
+    companyName: company,
+    contactName: contact,
+    contactInfo: contact,
+    mainTask: courses.join(', ') + (coursesOther ? ' — ' + coursesOther : ''),
+    courses: courses,
+    coursesOther: coursesOther,
+    target: target,
+    verdict: '',
+    painScore: 0,
+    commercialScore: 0,
+    pdConsent: { given: true, text: 'согласие отмечено в форме подбора курса' }
+  };
+  try{
+    const res = await fetch(BACKEND_URL + '/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if(!res.ok){
+      const e = await res.json().catch(() => ({}));
+      throw new Error(e.error || 'HTTP ' + res.status);
+    }
+    $('formWrap').style.display = 'none';
+    $('okBox').style.display = 'block';
+    window.scrollTo(0, 0);
+  }catch(err){
+    btn.disabled = false;
+    const offline = !navigator.onLine;
+    fail(offline ? 'Нет сети — отправьте форму позже' : 'Не отправилось: ' + err.message + '. Попробуйте ещё раз');
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Интерактивные тренинги AI FERMA — обучение пронизано практикой</title>
+<meta name="description" content="Геймифицированные корпоративные тренинги: безопасность LLM-систем, архитектура AI-агентов, выставочные стенды, сварка и неразрушающий контроль. Технология активного обучения, эффект растёт при повторных проходах.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0a0c14">
+<link rel="canonical" href="https://ai-ferma.github.io/tests.html">
+<link rel="icon" type="image/svg+xml" href="questionnaire/favicon.svg">
+<link rel="icon" type="image/x-icon" href="questionnaire/favicon.ico">
+<link rel="apple-touch-icon" href="questionnaire/apple-touch-icon.png">
+<meta name="color-scheme" content="dark">
+<style>
+  :root{
+    --bg:#0a0c14;
+    --card:rgba(18,25,42,0.75);
+    --text:#e8eef7;
+    --muted:#94a3b8;
+    --accent:#38bdf8;
+    --accent-dark:#0ea5e9;
+    --success:#22c55e;
+    --warn:#f59e0b;
+    --border:rgba(30,41,59,0.6);
+    --radius:14px;
+    --shadow:0 10px 30px -10px rgba(0,0,0,0.6);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+    background:var(--bg); color:var(--text);
+    line-height:1.5; min-height:100vh;
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .container{max-width:860px;margin:0 auto;padding:24px 16px 60px}
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .brand span{font-weight:800;letter-spacing:.06em;font-size:.85rem;color:var(--muted)}
+  .brand svg{flex:none;filter:drop-shadow(0 0 8px rgba(56,191,248,0.25))}
+  h1{font-size:1.7rem;font-weight:800;letter-spacing:-0.02em;margin:14px 0 8px}
+  .lede{color:var(--muted);font-size:0.98rem;max-width:640px}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .tag{display:inline-flex;align-items:center;gap:6px;font-size:0.75rem;font-weight:700;padding:6px 12px;border-radius:999px;border:1px solid var(--border);color:var(--accent);background:rgba(18,25,42,0.6)}
+  .tag.big{font-size:0.8rem;padding:8px 14px}
+  .how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0 6px}
+  @media(max-width:640px){.how{grid-template-columns:1fr}}
+  .how .card h3{margin-bottom:6px}
+  .how .card p{margin:0}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+  @media(max-width:640px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .card h3{font-size:0.95rem;margin-bottom:10px;color:var(--accent)}
+  .card p{color:var(--muted);font-size:0.92rem;margin-bottom:10px}
+  .card .grow{flex:1}
+  .aud{font-size:0.78rem;color:var(--text);background:#0f172a;border:1px solid var(--border);border-radius:6px;padding:2px 8px;display:inline-block;margin-bottom:10px}
+  .lvl{font-size:0.72rem;font-weight:800;color:var(--warn);display:inline-block;margin-bottom:12px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:10px;font-size:0.92rem;font-weight:700;cursor:pointer;transition:all .2s;text-decoration:none}
+  .btn:hover{text-decoration:none}
+  .btn-primary{background:var(--accent);color:#01151c;box-shadow:0 0 16px rgba(56,191,248,0.35)}
+  .btn-primary:hover{background:#7dd3fc;transform:translateY(-1px)}
+  .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+  .btn-ghost:hover{border-color:#334155}
+  .cta{background:linear-gradient(180deg,rgba(56,191,248,0.08),rgba(18,25,42,0.4));border:1px solid var(--border);border-radius:var(--radius);padding:22px 20px;margin-top:26px;text-align:center}
+  .cta h2{font-size:1.05rem;margin-bottom:6px}
+  .cta p{color:var(--muted);font-size:0.9rem;margin-bottom:14px}
+  footer{margin-top:34px;color:var(--muted);font-size:0.8rem;text-align:center;padding-bottom:20px}
+
+  /* ---------- ФОН (из опросника боли) ---------- */
+  .bg-layer{
+    position:fixed;inset:0;z-index:-1;
+    background:#0a0c14;
+    background-image:radial-gradient(circle at 15% 20%, rgba(56,191,248,0.08), transparent 40%),
+                     radial-gradient(circle at 85% 80%, rgba(14,165,233,0.06), transparent 40%);
+  }
+  .bg-glow{
+    position:fixed;z-index:-1;border-radius:50%;filter:blur(64px);opacity:0.35;animation:float 12s ease-in-out infinite;
+  }
+  .glow-1{width:520px;height:520px;background:#38bdf8;top:-120px;left:-140px;animation-delay:0s;}
+  .glow-2{width:420px;height:420px;background:#0ea5e9;bottom:-100px;right:-130px;animation-delay:4s;}
+  .glow-3{width:360px;height:360px;background:#818cf8;top:40%;left:45%;animation-delay:8s;}
+  @keyframes float{0%,100%{transform:translate(0,0)}33%{transform:translate(24px,-16px)}66%{transform:translate(-20px,28px)}}
+  .bg-grid{
+    position:fixed;inset:0;z-index:-1;
+    background-image:linear-gradient(rgba(56,191,248,0.04) 1px, transparent 1px),
+                     linear-gradient(90deg,rgba(56,191,248,0.04) 1px, transparent 1px);
+    background-size:32px 32px;
+    mask-image:radial-gradient(circle at center, black 40%, transparent 85%);
+    opacity:0.6;
+  }
+  .bg-noise{
+    position:fixed;inset:0;z-index:-1;
+    opacity:0.04;
+    pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .card{
+    background:rgba(18,25,42,0.7);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+  }
+
+</style>
+</head>
+<body>
+<div class="bg-layer"></div>
+<div class="bg-glow glow-1"></div>
+<div class="bg-glow glow-2"></div>
+<div class="bg-glow glow-3"></div>
+<div class="bg-grid"></div>
+<div class="bg-noise"></div>
+<div class="container">
+  <header>
+    <div class="brand"><img src="logo.jpg" alt="FERMA" style="border-radius:50%" width="44" height="44"><span>FERMA CAMP</span>
+    </div>
+    <div class="card" style="margin-top:18px;padding:26px 22px">
+      <h1 style="margin:0 0 10px">Интерактивные тренинги-курсы</h1>
+      <p class="lede" style="color:var(--text)">От новичка до директора — каждый уровень открывается, когда пройден предыдущий. Знания закрепляются практикой: решаешь реальные кейсы, получаешь мгновенную обратную связь и XP за точные ответы.</p>
+      <div class="tags">
+        <span class="tag big">🎓 Технология активного обучения (метод Гарвардской школы кейсов)</span>
+        <span class="tag big">🔁 Эффект усиливается при повторных проходах — курс «доучивает» вас на новом материале</span>
+        <span class="tag big">⚡ Открывается в браузере, платформа не нужна</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="how">
+    <div class="card"><h3>📚 Теория сразу с практикой</h3><p>Каждый короткий урок — 1–2 минуты чтения, затем решаем собственные кейсы. Как на MBA, только в телефоне.</p></div>
+    <div class="card"><h3>Интервальное повторение</h3><p>Повторный проход — другой порядок задач и новые кейсы: знания переводятся из «прочитал» в «умеешь». Можно проходить курсом хоть каждый день.</p></div>
+    <div class="card"><h3>📈 Видимый рост</h3><p>Лестница уровней «новичок → директор», серия-комбо, статистика попаданий. Руководитель видит прогресс команды.</p></div>
+  </section>
+
+  <section class="cards">
+    <div class="card">
+      <div>
+        <span class="aud">Для команд, внедряющих ИИ</span><br>
+        <span class="lvl">6 уровней · от 40 мин</span>
+        <h3>Страж · безопасность LLM-систем</h3>
+      </div>
+      <div class="grow">
+        <p>Промпт-инъекции, утечки данных, социальная инженерия против ИИ, безопасный дизайн агентов. защита от новичка до директора ИИ-безопасности.</p>
+      </div>
+      <a class="btn btn-primary" href="tests/llmguard/index.html">Открыть демо →</a>
+    </div>
+
+    <div class="card">
+      <div>
+        <span class="aud">Для разработчиков и аналитиков</span><br>
+        <span class="lvl">6 уровней · от 40 мин</span>
+        <h3>Архитектор AI-агентов</h3>
+      </div>
+      <div class="grow">
+        <p>Контекст, инструменты, плагины, циклы агента и события. Учишься проектировать агентов, которые не рассыпаются в проде.</p>
+      </div>
+      <a class="btn btn-primary" href="tests/agent-po/index.html">Открыть демо →</a>
+    </div>
+
+    <div class="card">
+      <div>
+        <span class="aud">Для expo-подрядчиков и студий</span><br>
+        <span class="lvl">6 уровней</span>
+        <h3>Арт-директор стендов</h3>
+      </div>
+      <div class="grow">
+        <p>Дизайн, материалы и производство выставочных стендов: от брифа клиента до застройки без переделок.</p>
+      </div>
+      <a class="btn btn-primary" href="tests/artdir/index.html">Открыть демо →</a>
+    </div>
+
+    <div class="card">
+      <div>
+        <span class="aud">Для сварочных УЦ и лабораторий</span><br>
+        <span class="lvl">6 уровней</span>
+        <h3>Сварка &amp; неразрушающий контроль</h3>
+      </div>
+      <div class="grow">
+        <p>Подготовка к аттестации НАКС: дефекты, допустимые нормы, методика проверки. Интерактивный тренажёр на спасение дефектной детали.</p>
+      </div>
+      <a class="btn btn-primary" href="tests/weld-ndt/index.html">Открыть демо →</a>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Хотите такой курс для своей команды?</h2>
+    <p>Курс целиком под ваши процессы, возможно внедрение в вашу систему</p>
+    <a class="btn btn-primary" href="form.html">Заполните форму</a>
+  </section>
+
+  <footer>FERMA CAMP · интерактивное обучение для команд</footer>
+</div>
+</body>
+</html>
